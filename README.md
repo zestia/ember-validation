@@ -5,9 +5,9 @@
 ### Example
 
 ```javascript
-const object = {
+import validate from 'ember-validation';
 
-}
+const object = {}
 
 const constraints = {
   name: [
@@ -51,6 +51,11 @@ try {
    */
 }
 ```
+
+### Utils
+
+* [`flattenMessages`](tests/unit/utils-test.js#L5)
+* [`collateMessages`](tests/unit/utils-test.js#L42)
 
 ### Constraints
 
