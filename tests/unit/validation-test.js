@@ -14,7 +14,7 @@ import validate from 'ember-validation';
 import { resolve } from 'rsvp';
 const { assert } = QUnit;
 
-module('util:validation', function() {
+module('validation', function() {
   assert.errorEqual = function(a, b, message) {
     assert.deepEqual(a.result, b.result, message);
   };

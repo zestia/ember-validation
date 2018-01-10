@@ -8,7 +8,7 @@ class FooValidationError extends ValidationError {
   }
 }
 
-module('util:errors', function() {
+module('errors', function() {
   test('ValidationError', function(assert) {
     assert.expect(1);
 
