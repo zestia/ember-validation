@@ -51,9 +51,8 @@
   },
   "keywords": [
     "ember-addon",
-    "autofocus",
-    "input",
-    "textarea"
+    "validation",
+    "validator"
   ],
   "ember-addon": {
     "configPath": "tests/dummy/config"
