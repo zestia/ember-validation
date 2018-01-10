@@ -18,7 +18,7 @@ ember install @zestia/ember-validation
 import validate from '@zestia/ember-validation';
 import { present, maxLength, truthy, email, date } from '@zestia/ember-validation/constraints';
 
-const object = {
+const person = {
   id: 1,
   name: '',
   terms: false,
@@ -31,7 +31,7 @@ const object = {
     id: 2,
     name: ''
   }]
-}
+};
 
 const constraints = {
   name: [
@@ -57,7 +57,7 @@ const constraints = {
 };
 
 try {
-  await validate(object, constraints);
+  await validate(person, constraints);
 } catch(error) {
   console.log(error.result);
   /**
