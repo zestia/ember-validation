@@ -1,8 +1,6 @@
-# ember-validation
+# @zestia/ember-validation
 
-<!--
-<a href="http://emberobserver.com/addons/ember-validation"><img src="http://emberobserver.com/badges/ember-validation.svg"></a> &nbsp; <a href="https://david-dm.org/amk221/ember-validation#badge-embed"><img src="https://david-dm.org/amk221/ember-validation.svg"></a> &nbsp; <a href="https://david-dm.org/amk221/ember-validation#dev-badge-embed"><img src="https://david-dm.org/amk221/ember-validation/dev-status.svg"></a> &nbsp; <a href="http://travis-ci.org/amk221/ember-validation"><img src="https://travis-ci.org/amk221/ember-validation.svg?branch=master"></a>
--->
+<a href="http://emberobserver.com/addons/ember-validation"><img src="http://emberobserver.com/badges/ember-validation.svg"></a> &nbsp; <a href="https://david-dm.org/zestia/ember-validation#badge-embed"><img src="https://david-dm.org/zestia/ember-validation.svg"></a> &nbsp; <a href="https://david-dm.org/zestia/ember-validation#dev-badge-embed"><img src="https://david-dm.org/zestia/ember-validation/dev-status.svg"></a> &nbsp; <a href="http://travis-ci.org/zestia/ember-validation"><img src="https://travis-ci.org/zestia/ember-validation.svg?branch=master"></a>
 
 ### Overview
 
@@ -11,14 +9,14 @@
 
 ### Installation
 ```
-ember install ember-validation
+ember install @zestia/ember-validation
 ```
 
 ### Example
 
 ```javascript
-import validate from 'ember-validation';
-import { present, maxLength, truthy, email, date } from 'ember-validation/constraints';
+import validate from '@zestia/ember-validation';
+import { present, maxLength, truthy, email, date } from '@zestia/ember-validation/constraints';
 
 const object = {}
 

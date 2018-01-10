@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import minLengthConstraint, {
   minLength
-} from 'ember-validation/constraints/min-length';
+} from '@zestia/ember-validation/constraints/min-length';
 
 module('min-length', function() {
   test('#minLength', function(assert) {

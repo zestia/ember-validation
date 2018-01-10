@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import EmberError from '@ember/error';
-import { ValidationError } from 'ember-validation/errors';
+import { ValidationError } from '@zestia/ember-validation/errors';
 
 class FooValidationError extends ValidationError {
   get defaultMessage() {

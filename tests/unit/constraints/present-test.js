@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import presentConstraint from 'ember-validation/constraints/present';
+import presentConstraint from '@zestia/ember-validation/constraints/present';
 
 module('present', function() {
   test('#presentConstraint', function(assert) {

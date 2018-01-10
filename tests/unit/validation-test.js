@@ -1,7 +1,7 @@
 import QUnit, { module, test } from 'qunit';
 import EmberObject from '@ember/object';
 import { readOnly } from '@ember/object/computed';
-import { ValidationError } from 'ember-validation/errors';
+import { ValidationError } from '@zestia/ember-validation/errors';
 import {
   date,
   email,
@@ -9,8 +9,8 @@ import {
   greaterThan,
   minLength,
   present
-} from 'ember-validation/constraints';
-import validate from 'ember-validation';
+} from '@zestia/ember-validation/constraints';
+import validate from '@zestia/ember-validation';
 import { resolve } from 'rsvp';
 const { assert } = QUnit;
 

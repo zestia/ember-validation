@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import truthyConstraint from 'ember-validation/constraints/truthy';
+import truthyConstraint from '@zestia/ember-validation/constraints/truthy';
 
 module('truthy', function() {
   test('#truthyConstraint', function(assert) {

@@ -3,7 +3,7 @@ import { setupTest } from 'ember-qunit';
 import dateConstraint, {
   validDate,
   getLongDateFormat
-} from 'ember-validation/constraints/date';
+} from '@zestia/ember-validation/constraints/date';
 import moment from 'moment';
 
 module('date', function(hooks) {

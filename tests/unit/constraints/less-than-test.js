@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import lessThanConstraint, {
   lessThan
-} from 'ember-validation/constraints/less-than';
+} from '@zestia/ember-validation/constraints/less-than';
 
 module('less-than', function() {
   test('#lessThan', function(assert) {

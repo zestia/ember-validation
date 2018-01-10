@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import phoneNumberConstraint, {
   validPhoneNumber
-} from 'ember-validation/constraints/phone-number';
+} from '@zestia/ember-validation/constraints/phone-number';
 
 module('phone-number', function() {
   test('#validPhoneNumber', function(assert) {

@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { flattenMessages, collateMessages } from 'ember-validation/utils';
+import { flattenMessages, collateMessages } from '@zestia/ember-validation/utils';
 
 module('utils', function() {
   test('#flattenMessages', function(assert) {
