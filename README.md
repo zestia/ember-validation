@@ -2,43 +2,6 @@
 
 <a href="http://emberobserver.com/addons/ember-validation"><img src="http://emberobserver.com/badges/ember-validation.svg"></a> &nbsp; <a href="https://david-dm.org/amk221/ember-validation#badge-embed"><img src="https://david-dm.org/amk221/ember-validation.svg"></a> &nbsp; <a href="https://david-dm.org/amk221/ember-validation#dev-badge-embed"><img src="https://david-dm.org/amk221/ember-validation/dev-status.svg"></a> &nbsp; <a href="https://codeclimate.com/github/amk221/ember-validation"><img src="https://codeclimate.com/github/amk221/ember-validation/badges/gpa.svg" /></a> &nbsp; <a href="http://travis-ci.org/amk221/ember-validation"><img src="https://travis-ci.org/amk221/ember-validation.svg?branch=master"></a>
 
-### Constraints
-
-* big-decimal
-  * `optional`
-  * `message`
-  * `maxIntegerDigits`
-  * `maxDecimalDigits`
-* date
-  * `optional`
-  * `format`
-  * `mesaage`
-* email
-  * `optional`
-  * `message`
-* greaterThan
-  * `value`
-  * `mesaage`
-* lessThan
-  * `value`
-  * `mesaage`
-* maxLength
-  * `max`
-  * `message`
-* minLength
-  * `min`
-  * `message`
-* number
-  * `optional`
-  * `message`
-* phoneNumber
-  * `optional`
-  * `message`
-* present
-  * `message`
-* truthy
-  * `message`
-
 ### Example
 
 ```javascript
@@ -88,6 +51,43 @@ try {
    */
 }
 ```
+
+### Constraints
+
+* bigDecimal
+  * `optional`
+  * `message`
+  * `maxIntegerDigits`
+  * `maxDecimalDigits`
+* date
+  * `optional`
+  * `format`
+  * `mesaage`
+* email
+  * `optional`
+  * `message`
+* greaterThan
+  * `value`
+  * `mesaage`
+* lessThan
+  * `value`
+  * `mesaage`
+* maxLength
+  * `max`
+  * `message`
+* minLength
+  * `min`
+  * `message`
+* number
+  * `optional`
+  * `message`
+* phoneNumber
+  * `optional`
+  * `message`
+* present
+  * `message`
+* truthy
+  * `message`
 
 ### Installation
 ```
