@@ -39,7 +39,7 @@ async function _validateProperty(object, key, constraints) {
   const arrayKey = _arrayKey(key);
 
   if (arrayKey) {
-    const objects = makeArray(get(object, arrayKey));
+    const objects = makeArray(await get(object, arrayKey));
     const results = [];
     for (object of objects) {
       const result = await _validateObject(object, constraints);

@@ -173,12 +173,16 @@ module('validation', function() {
   test('#validate (array of objects)', async function(assert) {
     assert.expect(3);
 
+    const tag1 = { name: '' };
+    const tag2 = { name: '' };
+    const tag3 = { name: 'Family' };
+
     const person = {
       name: '',
-      tags: [
-        { name: '' },
-        { name: '' }
-      ]
+      tags: resolve([
+        tag1,
+        tag2
+      ])
     };
 
     const constraints = {
@@ -212,8 +216,8 @@ module('validation', function() {
     }
 
     person.name = 'Fred';
-    person.tags[0].name = 'Friend';
-    person.tags.push({ name: 'Family' });
+    tag1.name = 'Friend';
+    person.tags = [tag1, tag2, tag3];
 
     try {
       await validate(person, constraints);

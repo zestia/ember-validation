@@ -8,9 +8,10 @@ Validation is just sugar for a load of if statements - the end goal is to know w
 
 This addon lets you validate an object or an array of objects. It will throw an error anything failed a constraint, and if this happens the resulting error will provide you with a structured array of error messages as to why.
 
-###### Note
+###### Notes
 
-Uses [ember-cli-moment-shim](https://github.com/jasonmit/ember-cli-moment-shim) for date validation.
+* Supports promises
+* Uses [ember-cli-moment-shim](https://github.com/jasonmit/ember-cli-moment-shim) for date validation.
 
 ### Installation
 ```
@@ -54,11 +55,11 @@ const constraints = {
     present(),
     date({ format: 'L' })
   ],
-  'tags[]': [
+  'tags[]': {
     name: [
       present()
     ]
-  ]
+  }
 };
 
 try {
