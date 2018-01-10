@@ -6,6 +6,7 @@
 
 ```javascript
 import validate from 'ember-validation';
+import { present, maxLength, truthy, email, date } from 'ember-validation/constraints';
 
 const object = {}
 
