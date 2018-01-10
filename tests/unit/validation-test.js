@@ -173,7 +173,7 @@ module('validation', function() {
   test('#validate (array of objects)', async function(assert) {
     assert.expect(3);
 
-    const party = {
+    const person = {
       name: '',
       tags: [
         { name: '' },
@@ -199,7 +199,7 @@ module('validation', function() {
     };
 
     try {
-      await validate(party, constraints);
+      await validate(person, constraints);
     } catch (error) {
       assert.errorEqual(error, new ValidationError(null, {
         name: ['required value'],
@@ -211,12 +211,12 @@ module('validation', function() {
       }), 'square brackets [] indicates an array of objects to validate');
     }
 
-    party.name = 'Fred';
-    party.tags[0].name = 'Friend';
-    party.tags.push({ name: 'Family' });
+    person.name = 'Fred';
+    person.tags[0].name = 'Friend';
+    person.tags.push({ name: 'Family' });
 
     try {
-      await validate(party, constraints);
+      await validate(person, constraints);
     } catch (error) {
       assert.errorEqual(error, new ValidationError(null, {
         name: [],
@@ -229,12 +229,40 @@ module('validation', function() {
       }));
     }
 
-    party.tags[1].name = 'Acquaintance';
+    person.tags[1].name = 'Acquaintance';
 
-    const result = await validate(party, constraints);
+    const result = await validate(person, constraints);
 
     assert.strictEqual(result, null,
       'validating an array of objects works OK');
+  });
+
+  test('#validate (expecting an array of objects)', async function(assert) {
+    assert.expect(1);
+
+    const person = {
+      name: ''
+    };
+
+    const constraints = {
+      name: [
+        present()
+      ],
+      'tags[]': {
+        name: [
+          present()
+        ]
+      }
+    };
+
+    try {
+      await validate(person, constraints);
+    } catch (error) {
+      assert.errorEqual(error, new ValidationError(null, {
+        name: ['required value'],
+        'tags[]': []
+      }), 'does not blow up if array not found');
+    }
   });
 
   test('#validate (aliasing array errors)', async function(assert) {
@@ -359,7 +387,7 @@ module('validation', function() {
   test('#validate (path properties)', async function(assert) {
     assert.expect(1);
 
-    const party = {
+    const person = {
       name: '',
       organisation: {
         name: '',
@@ -393,7 +421,7 @@ module('validation', function() {
     };
 
     try {
-      await validate(party, constraints);
+      await validate(person, constraints);
     } catch (error) {
       assert.errorEqual(error, new ValidationError(null, {
         name: ['required value'],

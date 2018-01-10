@@ -18,7 +18,20 @@ ember install @zestia/ember-validation
 import validate from '@zestia/ember-validation';
 import { present, maxLength, truthy, email, date } from '@zestia/ember-validation/constraints';
 
-const object = {}
+const object = {
+  id: 1,
+  name: '',
+  terms: false,
+  emailAddress: 'fred@smith',
+  dateOfBirth: null,
+  tags: [{
+    id: 1,
+    name: 'VIP'
+  }, {
+    id: 2,
+    name: ''
+  }]
+}
 
 const constraints = {
   name: [
@@ -35,6 +48,11 @@ const constraints = {
   dateOfBirth: [
     present(),
     date({ format: 'L' })
+  ],
+  'tags[]': [
+    name: [
+      present()
+    ]
   ]
 };
 
@@ -51,13 +69,17 @@ try {
    *      "Please accept the terms"
    *    ],
    *    "emailAddress": [
-   *      "required value",
    *      "invalid email"
    *    ],
    *    "dateOfBirth": [
    *      "required value",
    *      "invalid date, expecting MM/DD/YYYY"
    *    ]
+   *    "tags[]": [{
+   *      "name": []
+   *    }, {
+   *      "name": ["required value"]
+   *    }]
    *  }
    */
 }

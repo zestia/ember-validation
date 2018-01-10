@@ -1,5 +1,6 @@
 import { get } from '@ember/object';
 import { ValidationError } from './errors';
+import { makeArray } from '@ember/array';
 const { isArray } = Array;
 const { keys } = Object;
 
@@ -38,7 +39,7 @@ async function _validateProperty(object, key, constraints) {
   const arrayKey = _arrayKey(key);
 
   if (arrayKey) {
-    const objects = get(object, arrayKey);
+    const objects = makeArray(get(object, arrayKey));
     const results = [];
     for (object of objects) {
       const result = await _validateObject(object, constraints);
