@@ -1,5 +1,9 @@
 # Changelog
 
+1.0.3
+
+* Use `rsvp`
+
 1.0.2
 
 * Make sure arrays are resolved

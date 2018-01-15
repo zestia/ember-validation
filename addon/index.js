@@ -1,6 +1,7 @@
 import { get } from '@ember/object';
 import { ValidationError } from './errors';
 import { makeArray } from '@ember/array';
+import { resolve } from 'rsvp';
 const { isArray } = Array;
 const { keys } = Object;
 
@@ -14,16 +15,17 @@ const example = `
   }
 `;
 
-export default async function validate(object = {}, constraints = {}) {
+export default function validate(object = {}, constraints = {}) {
   if (isArray(object)) {
     throw new Error(example);
   }
-  const result = await _validateObject(object, constraints);
-  if (_hasErrors(result)) {
-    throw new ValidationError(null, result);
-  } else {
-    return null;
-  }
+  return resolve(_validateObject(object, constraints)).then(result => {
+    if (_hasErrors(result)) {
+      throw new ValidationError(null, result);
+    } else {
+      return null;
+    }
+  });
 }
 
 async function _validateObject(object, constraints) {
