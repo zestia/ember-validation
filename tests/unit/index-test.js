@@ -1,6 +1,8 @@
 import QUnit, { module, test } from 'qunit';
 import EmberObject from '@ember/object';
+/* eslint-disable */
 import { readOnly } from '@ember/object/computed';
+/* eslint-enable */
 import { ValidationError } from '@zestia/ember-validation/errors';
 import {
   date,
