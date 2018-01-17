@@ -6,7 +6,7 @@
 
 Validation is just sugar for a load of if statements - the end goal is to know whether or not something was succesful, and why if it wasn't.
 
-This addon lets you validate an object or an array of objects. It will throw an error anything failed a constraint, and if this happens the resulting error will provide you with a structured array of error messages as to why.
+This addon lets you validate an object or an array of objects. It will throw an error if anything failed a constraint, and if this happens the resulting error will provide you with a structured array of error messages as to why.
 
 You can run validation and get the result as a one-off, or alternatively, you can re-compute validation automatically using a computed property.
 
