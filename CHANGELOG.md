@@ -1,9 +1,13 @@
 # Changelog
 
-1.0.4
+1.0.5
 
 * Fix travis builds
 * Fix dependencies
+
+1.0.4
+
+* Lint everything
 
 1.0.3
 
