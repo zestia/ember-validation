@@ -1,5 +1,10 @@
 # Changelog
 
+1.0.4
+
+* Fix travis builds
+* Fix dependencies
+
 1.0.3
 
 * Use `rsvp`
