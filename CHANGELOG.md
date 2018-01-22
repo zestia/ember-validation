@@ -1,5 +1,9 @@
 # Changelog
 
+1.0.6
+
+* Upgrade ember-cli
+
 1.0.5
 
 * Fix travis builds
