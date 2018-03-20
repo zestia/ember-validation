@@ -12,10 +12,12 @@ export function validDate(value, format = moment.ISO_8601) {
 export function getLongDateFormat(format) {
   try {
     const fmt = moment.localeData().longDateFormat(format);
+
     if (fmt) {
       return fmt;
     }
   } catch (error) {}
+
   return format;
 }
 

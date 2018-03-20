@@ -19,6 +19,7 @@ export default function validate(object = {}, constraints = {}) {
   if (isArray(object)) {
     throw new Error(example);
   }
+
   return resolve(_validateObject(object, constraints)).then(result => {
     if (_hasErrors(result)) {
       throw new ValidationError(null, result);
@@ -30,9 +31,11 @@ export default function validate(object = {}, constraints = {}) {
 
 async function _validateObject(object, constraints) {
   const result = {};
+
   for (const key of keys(constraints)) {
     result[key] = await _validateProperty(object, key, constraints[key]);
   }
+
   return result;
 }
 
@@ -43,10 +46,12 @@ async function _validateProperty(object, key, constraints) {
   if (arrayKey) {
     const objects = makeArray(await get(object, arrayKey));
     const results = [];
+
     for (object of objects) {
       const result = await _validateObject(object, constraints);
       results.push(result);
     }
+
     return results;
   } else {
     return _applyConstraints(object, key, constraints);
@@ -65,6 +70,7 @@ function _hasErrors(result) {
     } else if (result[key].length > 0) {
       hasErrors = true;
     }
+
     return hasErrors;
   }, false);
 }
