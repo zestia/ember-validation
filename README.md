@@ -13,7 +13,7 @@ You can run validation and get the result as a one-off, or alternatively, you ca
 ###### Notes
 
 * Supports promises
-* Supports [adhoc constraints](tests/unit/index-test.js#L121)
+* Supports [adhoc constraints](tests/unit/index-test.js#L123)
 * Uses [ember-cli-moment-shim](https://github.com/jasonmit/ember-cli-moment-shim) for date validation.
 
 ### Installation
