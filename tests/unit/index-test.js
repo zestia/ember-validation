@@ -1,4 +1,4 @@
-import QUnit, { module, test } from 'qunit';
+import QUnit, { module, test, skip } from 'qunit';
 import EmberObject from '@ember/object';
 /* eslint-disable */
 import { readOnly } from '@ember/object/computed';
@@ -271,8 +271,11 @@ module('validation', function() {
     }
   });
 
-  test('#validate (aliasing array errors)', async function(assert) {
+  skip('#validate (aliasing array errors)', async function(assert) {
     assert.expect(1);
+
+    // Deprecated ember-meta.descriptor-on-object
+    // https://deprecations-app-prod.herokuapp.com/deprecations/v3.x/#toc_use-defineProperty-to-define-computed-properties
 
     const foo = EmberObject.create({
 
