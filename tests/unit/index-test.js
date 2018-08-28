@@ -294,7 +294,7 @@ module('validation', function() {
 
       async validate() {
         try {
-          await validate(this, this.get('constraints'));
+          await validate(this, this.constraints);
         } catch (error) {
           this.set('errors', error.result);
         }
@@ -303,7 +303,7 @@ module('validation', function() {
 
     await foo.validate();
 
-    assert.errorEqual(foo.get('thingErrors'), [
+    assert.errorEqual(foo.thingErrors, [
       { name: ['required value'] },
       { name: [] },
       { name: ['required value'] }
