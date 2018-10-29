@@ -114,9 +114,11 @@ try {
   * `optional`
   * `message`
 * greaterThan
+  * `optional`
   * `value`
   * `mesaage`
 * lessThan
+  * `optional`
   * `value`
   * `mesaage`
 * maxLength

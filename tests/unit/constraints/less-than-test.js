@@ -18,7 +18,7 @@ module('less-than', function() {
   });
 
   test('#lessThanConstraint', function(assert) {
-    assert.expect(3);
+    assert.expect(5);
 
     let func;
 
@@ -34,5 +34,13 @@ module('less-than', function() {
 
     assert.equal(func(2), 'not small enough',
       'returns custom message if invalid');
+
+    func = lessThanConstraint({ value: 0, optional: true });
+
+    assert.equal(func(0), 'must be less than 0',
+      'zero must be less than zero');
+
+    assert.equal(func(''), null,
+      'value is optional, validates ok');
   });
 });

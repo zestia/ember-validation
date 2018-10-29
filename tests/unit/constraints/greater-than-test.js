@@ -18,7 +18,7 @@ module('greater-than', function() {
   });
 
   test('#greaterThanConstraint', function(assert) {
-    assert.expect(3);
+    assert.expect(5);
 
     let func;
 
@@ -34,5 +34,13 @@ module('greater-than', function() {
 
     assert.equal(func(2), 'not big enough',
       'returns custom message if invalid');
+
+    func = greaterThanConstraint({ value: 0, optional: true });
+
+    assert.equal(func(0), 'must be greater than 0',
+      'zero must be greater than zero');
+
+    assert.equal(func(''), null,
+      'value is optional, validates ok');
   });
 });

@@ -1,4 +1,5 @@
 import { assign } from '@ember/polyfills';
+import { isPresent } from '@ember/utils';
 
 const fullPattern = /^-?(\d+)(?:\.(\d+))?$/;
 const decimalPattern = /^(\d*?)0*$/;
@@ -7,7 +8,7 @@ export default function bigDecimalConstraint(options = {}) {
   options = assign({ maxIntegerDigits: 12, maxDecimalDigits: 3 }, options);
 
   return function(value) {
-    if (!value && options.optional) {
+    if (!isPresent(value) && options.optional) {
       return;
     }
 

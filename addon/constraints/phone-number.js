@@ -1,3 +1,5 @@
+import { isPresent } from '@ember/utils';
+
 const phoneNumberPattern = /^[0-9 \-()+.]+$/i;
 
 export function validPhoneNumber(value) {
@@ -6,7 +8,7 @@ export function validPhoneNumber(value) {
 
 export default function phoneNumberConstraint(options = {}) {
   return function(value) {
-    if (!value && options.optional) {
+    if (!isPresent(value) && options.optional) {
       return;
     }
 

@@ -1,3 +1,5 @@
+import { isPresent } from '@ember/utils';
+
 const numberPattern = /^[0-9,.]+$/i;
 
 export function validNumber(value) {
@@ -6,7 +8,7 @@ export function validNumber(value) {
 
 export default function numberConstraint(options = {}) {
   return function(value) {
-    if (!value && options.optional) {
+    if (!isPresent(value) && options.optional) {
       return;
     }
 

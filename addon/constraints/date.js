@@ -1,8 +1,9 @@
 import { assign } from '@ember/polyfills';
+import { isPresent } from '@ember/utils';
 import moment from 'moment';
 
 export function validDate(value, format = moment.ISO_8601) {
-  if (value) {
+  if (isPresent(value)) {
     return moment(value, format, true).isValid();
   } else {
     return false;
@@ -25,7 +26,7 @@ export default function dateConstraint(options) {
   return function(value) {
     options = assign({ format: moment.ISO_8601 }, options);
 
-    if (!value && options.optional) {
+    if (!isPresent(value) && options.optional) {
       return;
     }
 
