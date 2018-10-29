@@ -1,6 +1,6 @@
 # Changelog
 
-1.0.7
+1.0.9
 
 * Make greater and lesser than constraints be optional
 
