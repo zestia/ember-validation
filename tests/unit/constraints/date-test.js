@@ -49,19 +49,19 @@ module('date', function(hooks) {
   test('#getLongDateFormat', function(assert) {
     assert.expect(4);
 
-    assert.equal(getLongDateFormat('L'), 'DD/MM/YYYY',
-      'converts shorthand to longhand');
+    assert.equal(getLongDateFormat('L'), 'DD/MM/YYYY', 'converts shorthand to longhand');
 
     moment.locale('en-us');
 
-    assert.equal(getLongDateFormat('L'), 'MM/DD/YYYY',
-      'converts shorthand to longhand, responds to change of locale');
+    assert.equal(
+      getLongDateFormat('L'),
+      'MM/DD/YYYY',
+      'converts shorthand to longhand, responds to change of locale'
+    );
 
-    assert.equal(getLongDateFormat('XYZ'), 'XYZ',
-      'lets incorrect formats pass through');
+    assert.equal(getLongDateFormat('XYZ'), 'XYZ', 'lets incorrect formats pass through');
 
-    assert.equal(getLongDateFormat(), null,
-      'does not blow up');
+    assert.equal(getLongDateFormat(), null, 'does not blow up');
   });
 
   test('#dateConstraint', function(assert) {
@@ -71,30 +71,36 @@ module('date', function(hooks) {
 
     func = dateConstraint({ format: 'D-M/YY' });
 
-    assert.equal(func('1-12/98'), null,
-      'returns nothing when valid');
+    assert.equal(func('1-12/98'), null, 'returns nothing when valid');
 
-    assert.equal(func('foo'), 'invalid date, expecting D-M/YY',
-      'returns default message if invalid including specified format');
+    assert.equal(
+      func('foo'),
+      'invalid date, expecting D-M/YY',
+      'returns default message if invalid including specified format'
+    );
 
     func = dateConstraint({ format: 'L' });
 
-    assert.equal(func('foo'), 'invalid date, expecting DD/MM/YYYY',
-      'returns default message if invalid including parsed format');
+    assert.equal(
+      func('foo'),
+      'invalid date, expecting DD/MM/YYYY',
+      'returns default message if invalid including parsed format'
+    );
 
     moment.locale('en-us');
 
-    assert.equal(func('foo'), 'invalid date, expecting MM/DD/YYYY',
-      'returns default message if invalid, including localised format');
+    assert.equal(
+      func('foo'),
+      'invalid date, expecting MM/DD/YYYY',
+      'returns default message if invalid, including localised format'
+    );
 
     func = dateConstraint({ optional: true });
 
-    assert.equal(func(''), null,
-      'returns nothing if invalid, but optional');
+    assert.equal(func(''), null, 'returns nothing if invalid, but optional');
 
     func = dateConstraint({ message: 'bad date', optional: true });
 
-    assert.equal(func('xyz'), 'bad date',
-      'returns custom message if invalid');
+    assert.equal(func('xyz'), 'bad date', 'returns custom message if invalid');
   });
 });

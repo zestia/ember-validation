@@ -1,7 +1,5 @@
 import { module, test } from 'qunit';
-import minLengthConstraint, {
-  minLength
-} from '@zestia/ember-validation/constraints/min-length';
+import minLengthConstraint, { minLength } from '@zestia/ember-validation/constraints/min-length';
 
 module('min-length', function() {
   test('#minLength', function(assert) {
@@ -29,15 +27,12 @@ module('min-length', function() {
 
     func = minLengthConstraint({ min: 4 });
 
-    assert.equal(func('hiya'), null,
-      'returns nothing when valid');
+    assert.equal(func('hiya'), null, 'returns nothing when valid');
 
-    assert.equal(func('hi'), 'length must be at least 4',
-      'returns default message if invalid');
+    assert.equal(func('hi'), 'length must be at least 4', 'returns default message if invalid');
 
     func = minLengthConstraint({ min: 6, message: 'too short' });
 
-    assert.equal(func('hello'), 'too short',
-      'returns custom message if invalid');
+    assert.equal(func('hello'), 'too short', 'returns custom message if invalid');
   });
 });

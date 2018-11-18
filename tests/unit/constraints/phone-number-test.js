@@ -23,20 +23,16 @@ module('phone-number', function() {
 
     func = phoneNumberConstraint();
 
-    assert.equal(func('079123456789'), null,
-      'returns nothing when valid');
+    assert.equal(func('079123456789'), null, 'returns nothing when valid');
 
-    assert.equal(func('xyz'), 'invalid phone number',
-      'returns default message if invalid');
+    assert.equal(func('xyz'), 'invalid phone number', 'returns default message if invalid');
 
     func = phoneNumberConstraint({ optional: true });
 
-    assert.equal(func(''), null,
-      'returns nothing if invalid, but optional');
+    assert.equal(func(''), null, 'returns nothing if invalid, but optional');
 
     func = phoneNumberConstraint({ message: 'bad phone', optional: true });
 
-    assert.equal(func('foo@bar'), 'bad phone',
-      'returns custom message if invalid');
+    assert.equal(func('foo@bar'), 'bad phone', 'returns custom message if invalid');
   });
 });

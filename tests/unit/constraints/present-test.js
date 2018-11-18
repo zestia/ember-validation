@@ -9,15 +9,12 @@ module('present', function() {
 
     func = presentConstraint();
 
-    assert.equal(func('hi'), null,
-      'returns nothing when valid');
+    assert.equal(func('hi'), null, 'returns nothing when valid');
 
-    assert.equal(func(''), 'required value',
-      'returns default message if invalid');
+    assert.equal(func(''), 'required value', 'returns default message if invalid');
 
     func = presentConstraint({ message: 'nothing there' });
 
-    assert.equal(func(), 'nothing there',
-      'returns custom message if invalid');
+    assert.equal(func(), 'nothing there', 'returns custom message if invalid');
   });
 });

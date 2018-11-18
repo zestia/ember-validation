@@ -26,14 +26,12 @@ module('validation', function() {
 
     const result = await validate();
 
-    assert.strictEqual(result, null,
-      'no errors by default');
+    assert.strictEqual(result, null, 'no errors by default');
 
     try {
       await validate(null, { foo: [present()] });
     } catch (error) {
-      assert.strictEqual(error instanceof ValidationError, true,
-        'throws a validation error');
+      assert.strictEqual(error instanceof ValidationError, true, 'throws a validation error');
     }
   });
 
@@ -43,48 +41,46 @@ module('validation', function() {
     const object = {};
 
     const constraints = {
-      name: [
-        present()
-      ]
+      name: [present()]
     };
 
     try {
       await validate(object, constraints);
     } catch (error) {
-      assert.errorEqual(error, new ValidationError(null, {
-        name: ['required value']
-      }),
-      'resolves an object matching the original constraints structure with an ' +
-      'array of error messages');
+      assert.errorEqual(
+        error,
+        new ValidationError(null, {
+          name: ['required value']
+        }),
+        'resolves an object matching the original constraints structure with an ' +
+          'array of error messages'
+      );
     }
 
     object.name = 'Fred';
 
     const result = await validate(object, constraints);
 
-    assert.strictEqual(result, null,
-      'resolves null when validation passes');
+    assert.strictEqual(result, null, 'resolves null when validation passes');
   });
 
   test('#validate (multiple constraints)', async function(assert) {
     assert.expect(1);
 
     const constraints = {
-      emailAddress: [
-        present(),
-        email()
-      ]
+      emailAddress: [present(), email()]
     };
 
     try {
       await validate(null, constraints);
     } catch (error) {
-      assert.errorEqual(error, new ValidationError(null, {
-        emailAddress: [
-          'required value',
-          'invalid email'
-        ]
-      }), "multiple constraints are applied to the object's properties");
+      assert.errorEqual(
+        error,
+        new ValidationError(null, {
+          emailAddress: ['required value', 'invalid email']
+        }),
+        "multiple constraints are applied to the object's properties"
+      );
     }
   });
 
@@ -98,25 +94,23 @@ module('validation', function() {
     };
 
     const constraints = {
-      firstName: [
-        present()
-      ],
-      emailAddress: [
-        email()
-      ],
-      dob: [
-        date({ format: 'D-M-YY' })
-      ]
+      firstName: [present()],
+      emailAddress: [email()],
+      dob: [date({ format: 'D-M-YY' })]
     };
 
     try {
       await validate(object, constraints);
     } catch (error) {
-      assert.errorEqual(error, new ValidationError(null, {
-        firstName: ['required value'],
-        emailAddress: ['invalid email'],
-        dob: []
-      }), "constraints are applied to the object's properties");
+      assert.errorEqual(
+        error,
+        new ValidationError(null, {
+          firstName: ['required value'],
+          emailAddress: ['invalid email'],
+          dob: []
+        }),
+        "constraints are applied to the object's properties"
+      );
     }
   });
 
@@ -141,17 +135,19 @@ module('validation', function() {
     };
 
     const constraints = {
-      firstAndLastName: [
-        hasFirstAndLastName()
-      ]
+      firstAndLastName: [hasFirstAndLastName()]
     };
 
     try {
       await validate(object, constraints);
     } catch (error) {
-      assert.errorEqual(error, new ValidationError(null, {
-        firstAndLastName: [message]
-      }), 'can provide an adhoc constraint');
+      assert.errorEqual(
+        error,
+        new ValidationError(null, {
+          firstAndLastName: [message]
+        }),
+        'can provide an adhoc constraint'
+      );
     }
 
     object.firstName = 'Fred';
@@ -159,17 +155,20 @@ module('validation', function() {
     try {
       await validate(object, constraints);
     } catch (error) {
-      assert.errorEqual(error, new ValidationError(null, {
-        firstAndLastName: [message]
-      }), 'precondition: still invalid');
+      assert.errorEqual(
+        error,
+        new ValidationError(null, {
+          firstAndLastName: [message]
+        }),
+        'precondition: still invalid'
+      );
     }
 
     object.lastName = 'Smith';
 
     const result = await validate(object, constraints);
 
-    assert.strictEqual(result, null,
-      'the adhoc constraint works');
+    assert.strictEqual(result, null, 'the adhoc constraint works');
   });
 
   test('#validate (array of objects)', async function(assert) {
@@ -181,16 +180,11 @@ module('validation', function() {
 
     const person = {
       name: '',
-      tags: resolve([
-        tag1,
-        tag2
-      ])
+      tags: resolve([tag1, tag2])
     };
 
     const constraints = {
-      name: [
-        present()
-      ],
+      name: [present()],
       tags: [
         minLength({
           min: 3,
@@ -198,23 +192,22 @@ module('validation', function() {
         })
       ],
       'tags[]': {
-        name: [
-          present()
-        ]
+        name: [present()]
       }
     };
 
     try {
       await validate(person, constraints);
     } catch (error) {
-      assert.errorEqual(error, new ValidationError(null, {
-        name: ['required value'],
-        tags: ['you must have at least 3 tags'],
-        'tags[]': [
-          { name: ['required value'] },
-          { name: ['required value'] }
-        ]
-      }), 'square brackets [] indicates an array of objects to validate');
+      assert.errorEqual(
+        error,
+        new ValidationError(null, {
+          name: ['required value'],
+          tags: ['you must have at least 3 tags'],
+          'tags[]': [{ name: ['required value'] }, { name: ['required value'] }]
+        }),
+        'square brackets [] indicates an array of objects to validate'
+      );
     }
 
     person.name = 'Fred';
@@ -224,23 +217,21 @@ module('validation', function() {
     try {
       await validate(person, constraints);
     } catch (error) {
-      assert.errorEqual(error, new ValidationError(null, {
-        name: [],
-        tags: [],
-        'tags[]': [
-          { name: [] },
-          { name: ['required value'] },
-          { name: [] }
-        ]
-      }));
+      assert.errorEqual(
+        error,
+        new ValidationError(null, {
+          name: [],
+          tags: [],
+          'tags[]': [{ name: [] }, { name: ['required value'] }, { name: [] }]
+        })
+      );
     }
 
     person.tags[1].name = 'Acquaintance';
 
     const result = await validate(person, constraints);
 
-    assert.strictEqual(result, null,
-      'validating an array of objects works OK');
+    assert.strictEqual(result, null, 'validating an array of objects works OK');
   });
 
   test('#validate (expecting an array of objects)', async function(assert) {
@@ -251,23 +242,23 @@ module('validation', function() {
     };
 
     const constraints = {
-      name: [
-        present()
-      ],
+      name: [present()],
       'tags[]': {
-        name: [
-          present()
-        ]
+        name: [present()]
       }
     };
 
     try {
       await validate(person, constraints);
     } catch (error) {
-      assert.errorEqual(error, new ValidationError(null, {
-        name: ['required value'],
-        'tags[]': []
-      }), 'does not blow up if array not found');
+      assert.errorEqual(
+        error,
+        new ValidationError(null, {
+          name: ['required value'],
+          'tags[]': []
+        }),
+        'does not blow up if array not found'
+      );
     }
   });
 
@@ -278,20 +269,13 @@ module('validation', function() {
     // https://deprecations-app-prod.herokuapp.com/deprecations/v3.x/#toc_use-defineProperty-to-define-computed-properties
 
     const foo = EmberObject.create({
-
       thingErrors: readOnly('errors.things[]'),
 
-      things: [
-        { name: '' },
-        { name: 'foo' },
-        { name: '' }
-      ],
+      things: [{ name: '' }, { name: 'foo' }, { name: '' }],
 
       constraints: {
         'things[]': {
-          name: [
-            present()
-          ]
+          name: [present()]
         }
       },
 
@@ -306,11 +290,11 @@ module('validation', function() {
 
     await foo.validate();
 
-    assert.errorEqual(foo.thingErrors, [
-      { name: ['required value'] },
-      { name: [] },
-      { name: ['required value'] }
-    ], 'alias still works with square bracket syntax');
+    assert.errorEqual(
+      foo.thingErrors,
+      [{ name: ['required value'] }, { name: [] }, { name: ['required value'] }],
+      'alias still works with square bracket syntax'
+    );
   });
 
   test('#validate (custom error messages)', async function(assert) {
@@ -327,9 +311,13 @@ module('validation', function() {
     try {
       await validate(null, constraints);
     } catch (error) {
-      assert.errorEqual(error, new ValidationError(null, {
-        description: ['You must enter a description']
-      }), 'can override the default constraint message');
+      assert.errorEqual(
+        error,
+        new ValidationError(null, {
+          description: ['You must enter a description']
+        }),
+        'can override the default constraint message'
+      );
     }
   });
 
@@ -344,12 +332,17 @@ module('validation', function() {
       emailAddress: [
         email({
           message(value) {
-            assert.strictEqual(value, 'foo@bar',
-              'custom message function receives value being validated');
+            assert.strictEqual(
+              value,
+              'foo@bar',
+              'custom message function receives value being validated'
+            );
 
-            assert.deepEqual(this, object,
-              'custom message function is called in the context of the object ' +
-              'being validated');
+            assert.deepEqual(
+              this,
+              object,
+              'custom message function is called in the context of the object being validated'
+            );
 
             return `The email address ${value} is not valid`;
           }
@@ -360,9 +353,13 @@ module('validation', function() {
     try {
       await validate(object, constraints);
     } catch (error) {
-      assert.errorEqual(error, new ValidationError(null, {
-        emailAddress: ['The email address foo@bar is not valid']
-      }), 'can specify a function to build a custom error message');
+      assert.errorEqual(
+        error,
+        new ValidationError(null, {
+          emailAddress: ['The email address foo@bar is not valid']
+        }),
+        'can specify a function to build a custom error message'
+      );
     }
   });
 
@@ -387,9 +384,13 @@ module('validation', function() {
     try {
       await validate(object, constraints);
     } catch (error) {
-      assert.errorEqual(error, new ValidationError(null, {
-        name: ['Your name <script> is too short']
-      }), 'it is not the concern of the validator to be escaping messages');
+      assert.errorEqual(
+        error,
+        new ValidationError(null, {
+          name: ['Your name <script> is too short']
+        }),
+        'it is not the concern of the validator to be escaping messages'
+      );
     }
   });
 
@@ -400,47 +401,43 @@ module('validation', function() {
       name: '',
       organisation: {
         name: '',
-        tags: [{
-          name: 'client',
-          description: null
-        }]
+        tags: [
+          {
+            name: 'client',
+            description: null
+          }
+        ]
       }
     };
 
     const constraints = {
-      name: [
-        present()
-      ],
-      'organisation.name': [
-        present(),
-        minLength({ min: 1 })
-      ],
-      'organisation.tags': [
-        minLength({ min: 2 })
-      ],
+      name: [present()],
+      'organisation.name': [present(), minLength({ min: 1 })],
+      'organisation.tags': [minLength({ min: 2 })],
       'organisation.tags[]': {
-        name: [
-          present(),
-          minLength({ min: 1 })
-        ],
-        description: [
-          present()
-        ]
+        name: [present(), minLength({ min: 1 })],
+        description: [present()]
       }
     };
 
     try {
       await validate(person, constraints);
     } catch (error) {
-      assert.errorEqual(error, new ValidationError(null, {
-        name: ['required value'],
-        'organisation.name': ['required value', 'length must be at least 1'],
-        'organisation.tags': ['length must be at least 2'],
-        'organisation.tags[]': [{
-          name: [],
-          description: ['required value']
-        }]
-      }), 'validation works with key paths');
+      assert.errorEqual(
+        error,
+        new ValidationError(null, {
+          name: ['required value'],
+          'organisation.name': ['required value', 'length must be at least 1'],
+          'organisation.tags': ['length must be at least 2'],
+          'organisation.tags[]': [
+            {
+              name: [],
+              description: ['required value']
+            }
+          ]
+        }),
+        'validation works with key paths'
+      );
     }
   });
 
@@ -448,17 +445,19 @@ module('validation', function() {
     assert.expect(1);
 
     const constraints = {
-      fOoBaR: [
-        present()
-      ]
+      fOoBaR: [present()]
     };
 
     try {
       await validate(null, constraints);
     } catch (error) {
-      assert.errorEqual(error, new ValidationError(null, {
-        fOoBaR: ['required value']
-      }), 'case of keys in result errors object is retained');
+      assert.errorEqual(
+        error,
+        new ValidationError(null, {
+          fOoBaR: ['required value']
+        }),
+        'case of keys in result errors object is retained'
+      );
     }
   });
 
@@ -466,23 +465,24 @@ module('validation', function() {
     assert.expect(2);
 
     const constraints = {
-      length: [
-        lessThan({ value: 4 })
-      ]
+      length: [lessThan({ value: 4 })]
     };
 
     try {
       await validate('norf', constraints);
     } catch (error) {
-      assert.errorEqual(error, new ValidationError(null, {
-        length: ['must be less than 4']
-      }), 'returns errors as expected');
+      assert.errorEqual(
+        error,
+        new ValidationError(null, {
+          length: ['must be less than 4']
+        }),
+        'returns errors as expected'
+      );
     }
 
     const result = await validate('foo', constraints);
 
-    assert.strictEqual(result, null,
-      'validates the value as if it were an object');
+    assert.strictEqual(result, null, 'validates the value as if it were an object');
   });
 
   test('#validate (cumulative validity)', async function(assert) {
@@ -494,21 +494,21 @@ module('validation', function() {
     };
 
     const constraints = {
-      firstName: [
-        present()
-      ],
-      lastName: [
-        present()
-      ]
+      firstName: [present()],
+      lastName: [present()]
     };
 
     try {
       await validate(object, constraints);
     } catch (error) {
-      assert.errorEqual(error, new ValidationError(null, {
-        firstName: ['required value'],
-        lastName: []
-      }), 'regression: validity is not just of the last value processed');
+      assert.errorEqual(
+        error,
+        new ValidationError(null, {
+          firstName: ['required value'],
+          lastName: []
+        }),
+        'regression: validity is not just of the last value processed'
+      );
     }
   });
 
@@ -520,20 +520,21 @@ module('validation', function() {
     });
 
     const constraints = {
-      amount: [
-        greaterThan({ value: 10 })
-      ]
+      amount: [greaterThan({ value: 10 })]
     };
 
     try {
       await validate(object, constraints);
     } catch (error) {
-      assert.errorEqual(error, new ValidationError(null, {
-        amount: ['must be greater than 10'],
-      }), 'resolves the object and its values, and rejects with the errors');
+      assert.errorEqual(
+        error,
+        new ValidationError(null, {
+          amount: ['must be greater than 10']
+        }),
+        'resolves the object and its values, and rejects with the errors'
+      );
 
-      assert.equal(error.message, 'Validation failed',
-        'has a default error message');
+      assert.equal(error.message, 'Validation failed', 'has a default error message');
     }
 
     object = resolve({
@@ -542,25 +543,29 @@ module('validation', function() {
 
     const result = await validate(object, constraints);
 
-    assert.strictEqual(result, null,
-      'resolves with no errors');
+    assert.strictEqual(result, null, 'resolves with no errors');
   });
 
   test('#validate (array)', async function(assert) {
     assert.expect(2);
 
-    const array = [{
-      foo: 'Hello World',
-      bar: null
-    }, {
-      foo: null,
-      bar: 'hello@world.com'
-    }];
+    const array = [
+      {
+        foo: 'Hello World',
+        bar: null
+      },
+      {
+        foo: null,
+        bar: 'hello@world.com'
+      }
+    ];
 
     try {
       await validate(array);
     } catch (error) {
-      assert.equal(error.message, `
+      assert.equal(
+        error.message,
+        `
   Validation is for named errors, validate your array like so: {
     'myArray': [minLength({ min: 2 })],
     'myArray[]': {
@@ -568,7 +573,8 @@ module('validation', function() {
       bar: [email()]
     }
   }
-`);
+`
+      );
     }
 
     const object = {
@@ -585,13 +591,20 @@ module('validation', function() {
     try {
       await validate(object, constraints);
     } catch (error) {
-      assert.deepEqual(error.result['myArray[]'], [{
-        foo: [],
-        bar: ['invalid email']
-      }, {
-        foo: ['required value'],
-        bar: []
-      }], 'validates items in the array');
+      assert.deepEqual(
+        error.result['myArray[]'],
+        [
+          {
+            foo: [],
+            bar: ['invalid email']
+          },
+          {
+            foo: ['required value'],
+            bar: []
+          }
+        ],
+        'validates items in the array'
+      );
     }
   });
 });

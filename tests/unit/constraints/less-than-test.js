@@ -1,7 +1,5 @@
 import { module, test } from 'qunit';
-import lessThanConstraint, {
-  lessThan
-} from '@zestia/ember-validation/constraints/less-than';
+import lessThanConstraint, { lessThan } from '@zestia/ember-validation/constraints/less-than';
 
 module('less-than', function() {
   test('#lessThan', function(assert) {
@@ -24,23 +22,18 @@ module('less-than', function() {
 
     func = lessThanConstraint({ value: 10 });
 
-    assert.equal(func(9), null,
-      'returns nothing when valid');
+    assert.equal(func(9), null, 'returns nothing when valid');
 
-    assert.equal(func(10), 'must be less than 10',
-      'returns default message if invalid');
+    assert.equal(func(10), 'must be less than 10', 'returns default message if invalid');
 
     func = lessThanConstraint({ value: 2, message: 'not small enough' });
 
-    assert.equal(func(2), 'not small enough',
-      'returns custom message if invalid');
+    assert.equal(func(2), 'not small enough', 'returns custom message if invalid');
 
     func = lessThanConstraint({ value: 0, optional: true });
 
-    assert.equal(func(0), 'must be less than 0',
-      'zero must be less than zero');
+    assert.equal(func(0), 'must be less than 0', 'zero must be less than zero');
 
-    assert.equal(func(''), null,
-      'value is optional, validates ok');
+    assert.equal(func(''), null, 'value is optional, validates ok');
   });
 });

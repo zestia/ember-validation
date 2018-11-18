@@ -22,20 +22,16 @@ module('email', function() {
 
     func = emailConstraint();
 
-    assert.equal(func('foo@bar.com'), null,
-      'returns nothing when valid');
+    assert.equal(func('foo@bar.com'), null, 'returns nothing when valid');
 
-    assert.equal(func(''), 'invalid email',
-      'returns default message if invalid');
+    assert.equal(func(''), 'invalid email', 'returns default message if invalid');
 
     func = emailConstraint({ optional: true });
 
-    assert.equal(func(''), null,
-      'returns nothing if invalid, but optional');
+    assert.equal(func(''), null, 'returns nothing if invalid, but optional');
 
     func = emailConstraint({ message: 'bad email', optional: true });
 
-    assert.equal(func('foo@bar'), 'bad email',
-      'returns custom message if invalid');
+    assert.equal(func('foo@bar'), 'bad email', 'returns custom message if invalid');
   });
 });

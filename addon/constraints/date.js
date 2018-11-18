@@ -17,7 +17,9 @@ export function getLongDateFormat(format) {
     if (fmt) {
       return fmt;
     }
-  } catch (error) {}
+  } catch (error) {
+    // swallow
+  }
 
   return format;
 }

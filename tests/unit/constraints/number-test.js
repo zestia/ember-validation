@@ -20,20 +20,16 @@ module('number', function() {
 
     func = numberConstraint();
 
-    assert.equal(func('123'), null,
-      'returns nothing when valid');
+    assert.equal(func('123'), null, 'returns nothing when valid');
 
-    assert.equal(func('xyz'), 'invalid number',
-      'returns default message if invalid');
+    assert.equal(func('xyz'), 'invalid number', 'returns default message if invalid');
 
     func = numberConstraint({ optional: true });
 
-    assert.equal(func(''), null,
-      'returns nothing if invalid, but optional');
+    assert.equal(func(''), null, 'returns nothing if invalid, but optional');
 
     func = numberConstraint({ message: 'bad number', optional: true });
 
-    assert.equal(func('foo@bar'), 'bad number',
-      'returns custom message if invalid');
+    assert.equal(func('foo@bar'), 'bad number', 'returns custom message if invalid');
   });
 });

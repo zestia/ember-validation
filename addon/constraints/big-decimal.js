@@ -20,7 +20,7 @@ export default function bigDecimalConstraint(options = {}) {
 
     const integerPart = res[1];
 
-    if (integerPart.length  > options.maxIntegerDigits) {
+    if (integerPart.length > options.maxIntegerDigits) {
       return 'value too large';
     }
 
