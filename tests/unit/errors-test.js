@@ -1,10 +1,9 @@
 import { module, test } from 'qunit';
-import EmberError from '@ember/error';
 import { ValidationError } from '@zestia/ember-validation/errors';
 
 class FooValidationError extends ValidationError {
-  get defaultMessage() {
-    return 'My default message';
+  constructor() {
+    super('My default message');
   }
 }
 
@@ -12,62 +11,44 @@ module('errors', function() {
   test('ValidationError', function(assert) {
     assert.expect(1);
 
-    const error = new FooValidationError();
+    const error = new ValidationError();
 
-    assert.ok(error instanceof EmberError, 'Validation errors extend Ember errors');
-  });
-
-  test('ValidationError (default message)', function(assert) {
-    assert.expect(1);
-
-    const error = new FooValidationError();
-
-    assert.equal(
-      error.message,
-      'My default message',
-      'the main message property proxies the default message'
-    );
+    assert.ok(error instanceof Error, 'Validation errors extend Error');
   });
 
   test('ValidationError (constructor)', function(assert) {
+    assert.expect(1);
+
+    const error = new ValidationError('My custom message');
+
+    assert.equal(
+      error.message,
+      'My custom message',
+      'can set the message via the constructor'
+    );
+  });
+
+  test('ValidationError (default message)', function(assert) {
     assert.expect(2);
 
     const error = new FooValidationError('My custom message');
 
     assert.equal(
-      error.customMessage,
-      'My custom message',
-      'specifying a message via the constructor sets a custom message'
-    );
-
-    assert.equal(
       error.message,
-      'My custom message',
-      'the main message property proxies the custom message'
+      'My default message',
+      'can use a technique for default messages, constructor is ignored'
     );
-  });
-
-  test('ValidationError (setter)', function(assert) {
-    assert.expect(2);
-
-    const error = new FooValidationError();
 
     error.message = 'My custom message';
 
     assert.equal(
-      error.customMessage,
-      'My custom message',
-      "setting via the message setter, sets a 'private' custom message"
-    );
-
-    assert.equal(
       error.message,
       'My custom message',
-      'the main message property proxies the custom message'
+      'can still set the message property'
     );
   });
 
-  test('ValidationError', function(assert) {
+  test('ValidationError (result argument)', function(assert) {
     assert.expect(2);
 
     const result = {
