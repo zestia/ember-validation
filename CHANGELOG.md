@@ -1,5 +1,9 @@
 # Changelog
 
+1.0.10
+
+* Upgrade ember-cli
+
 1.0.9
 
 * Make greater and lesser than constraints be optional

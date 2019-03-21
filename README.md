@@ -1,6 +1,6 @@
 # @zestia/ember-validation
 
-<a href="http://emberobserver.com/addons/ember-validation"><img src="http://emberobserver.com/badges/ember-validation.svg"></a> &nbsp; <a href="https://david-dm.org/zestia/ember-validation#badge-embed"><img src="https://david-dm.org/zestia/ember-validation.svg"></a> &nbsp; <a href="https://david-dm.org/zestia/ember-validation#dev-badge-embed"><img src="https://david-dm.org/zestia/ember-validation/dev-status.svg"></a> &nbsp; <a href="http://travis-ci.org/zestia/ember-validation"><img src="https://travis-ci.org/zestia/ember-validation.svg?branch=master"></a>
+<a href="https://badge.fury.io/js/%40zestia%2Fember-validation"><img src="https://badge.fury.io/js/%40zestia%2Fember-validation.svg" alt="npm version" height="18"></a> &nbsp; <a href="http://travis-ci.org/zestia/ember-validation"><img src="https://travis-ci.org/zestia/ember-validation.svg?branch=master"></a> &nbsp; <a href="https://david-dm.org/zestia/ember-validation#badge-embed"><img src="https://david-dm.org/zestia/ember-validation.svg"></a> &nbsp; <a href="https://david-dm.org/zestia/ember-validation#dev-badge-embed"><img src="https://david-dm.org/zestia/ember-validation/dev-status.svg"></a> &nbsp; <a href="http://emberobserver.com/addons/ember-validation"><img src="http://emberobserver.com/badges/ember-validation.svg"></a> 
 
 ### Overview
 
