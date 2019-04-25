@@ -3,7 +3,7 @@ import minLengthConstraint, { minLength } from '@zestia/ember-validation/constra
 
 module('min-length', function() {
   test('#minLength', function(assert) {
-    assert.expect(13);
+    assert.expect(14);
 
     assert.strictEqual(minLength(undefined), false);
     assert.strictEqual(minLength(null), false);
@@ -15,9 +15,10 @@ module('min-length', function() {
     assert.strictEqual(minLength('ab', 1), true);
     assert.strictEqual(minLength('abc', 4), false);
     assert.strictEqual(minLength('abcd', 4), true);
-    assert.strictEqual(minLength(10, 2), false);
-    assert.strictEqual(minLength([], 2), false);
+    assert.strictEqual(minLength(10, 2), true);
+    assert.strictEqual(minLength(100, 2), true);
     assert.strictEqual(minLength(['a', 'b'], 2), true);
+    assert.strictEqual(minLength(['a'], 2), false);
   });
 
   test('#minLengthConstraint', function(assert) {

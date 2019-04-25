@@ -1,5 +1,15 @@
+const { isArray } = Array;
+
 export function minLength(a, b) {
-  return (a || '').length >= b;
+  let length;
+
+  if (isArray(a)) {
+    length = a.length;
+  } else {
+    length = `${a}`.length;
+  }
+
+  return length >= b;
 }
 
 export default function minLengthConstraint(options = {}) {

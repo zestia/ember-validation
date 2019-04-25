@@ -1,5 +1,9 @@
 # Changelog
 
+1.1.0
+
+* Fix min and max length with numbers
+
 1.0.11
 
 * Upgrade dependencies

@@ -15,10 +15,10 @@ module('max-length', function() {
     assert.strictEqual(maxLength('ab', 1), false);
     assert.strictEqual(maxLength('abc', 4), true);
     assert.strictEqual(maxLength('abcd', 4), true);
-    assert.strictEqual(maxLength(10, 2), false);
-    assert.strictEqual(maxLength([], 2), true);
+    assert.strictEqual(maxLength(10, 2), true);
+    assert.strictEqual(maxLength(100, 2), false);
     assert.strictEqual(maxLength(['a', 'b'], 2), true);
-    assert.strictEqual(maxLength(['a', 'b', 'c'], 2), false);
+    assert.strictEqual(maxLength(['a', 'b'], 1), false);
   });
 
   test('#maxLengthConstraint', function(assert) {
