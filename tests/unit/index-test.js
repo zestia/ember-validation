@@ -234,6 +234,58 @@ module('validation', function() {
     assert.strictEqual(result, null, 'validating an array of objects works OK');
   });
 
+  test('#validate (array of objects, individually)', async function(assert) {
+    assert.expect(2);
+
+    const starter = { name: '' };
+    const main = { name: '' };
+    const dessert = { name: '' };
+
+    const meal = {
+      courses: [
+        starter,
+        main,
+        dessert
+      ]
+    };
+
+    const constraints = {
+      'courses.0.name': [present()],
+      'courses.1.name': [present()],
+      'courses.2.name': [present()]
+    };
+
+    try {
+      await validate(meal, constraints);
+    } catch (error) {
+      assert.errorEqual(
+        error,
+        new ValidationError(null, {
+          'courses.0.name': ['required value'],
+          'courses.1.name': ['required value'],
+          'courses.2.name': ['required value']
+        }),
+        'error has correct keys and error messages'
+      );
+    }
+
+    main.name = 'Lamb';
+
+    try {
+      await validate(meal, constraints);
+    } catch (error) {
+      assert.errorEqual(
+        error,
+        new ValidationError(null, {
+          'courses.0.name': ['required value'],
+          'courses.1.name': [],
+          'courses.2.name': ['required value']
+        }),
+        'error has correct keys and error messages'
+      );
+    }
+  });
+
   test('#validate (expecting an array of objects)', async function(assert) {
     assert.expect(1);
 
