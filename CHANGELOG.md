@@ -1,42 +1,46 @@
 # Changelog
 
-1.1.0
+## 1.1.1
 
-* Fix min and max length with numbers
+- Upgrade dependencies
 
-1.0.11
+## 1.1.0
 
-* Upgrade dependencies
+- Fix min and max length with numbers
 
-1.0.10
+## 1.0.11
 
-* Upgrade ember-cli
+- Upgrade dependencies
 
-1.0.9
+## 1.0.10
 
-* Make greater and lesser than constraints be optional
+- Upgrade ember-cli
 
-1.0.6
+## 1.0.9
 
-* Upgrade ember-cli
+- Make greater and lesser than constraints be optional
 
-1.0.5
+## 1.0.6
 
-* Fix travis builds
-* Fix dependencies
+- Upgrade ember-cli
 
-1.0.4
+## 1.0.5
 
-* Lint everything
+- Fix travis builds
+- Fix dependencies
 
-1.0.3
+## 1.0.4
 
-* Use `rsvp`
+- Lint everything
 
-1.0.2
+## 1.0.3
 
-* Make sure arrays are resolved
+- Use `rsvp`
 
-1.0.1
+## 1.0.2
 
-* Coerce to an array when expecting an array of things to validate
+- Make sure arrays are resolved
+
+## 1.0.1
+
+- Coerce to an array when expecting an array of things to validate
