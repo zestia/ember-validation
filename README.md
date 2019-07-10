@@ -102,23 +102,23 @@ For example, imagine you have an array of items of a varying _types_.
 const items = [{
   id: 1,
   type: 'text',
-  value: 'Hello World'
+  value: ''
 }, {
   id: 2,
   type: 'number',
-  value: '123'
+  value: ''
 }, {
   id: 3,
   type: 'email',
-  value: 'joe@bloggs.com'
+  value: ''
 }, {
   id: 4,
   type: 'date',
-  value: '10/07/2019'
+  value: ''
 }, {
   id: 5,
   type: 'unknown',
-  value: 'foo'
+  value: ''
 }];
 
 const knownType = (type) => {
@@ -141,6 +141,8 @@ const constraints = (item) => {
           return [present(), email()];
         case: 'date':
           return [present(), date({ format: 'L' })];
+        default:
+          return [];
       }
     }
   };
