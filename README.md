@@ -93,27 +93,13 @@ Because constraints are functions, this allows for a very powerful approach for 
 For example, imagine you have an array of items of a varying _types_.
 
 ```javascript
-const items = [{
-  id: 1,
-  type: 'text',
-  value: ''
-}, {
-  id: 2,
-  type: 'number',
-  value: ''
-}, {
-  id: 3,
-  type: 'email',
-  value: ''
-}, {
-  id: 4,
-  type: 'date',
-  value: ''
-}, {
-  id: 5,
-  type: 'unknown',
-  value: ''
-}];
+const items = [
+  { id: 1, value: '', type: 'text' },
+  { id: 2, value: '', type: 'number' },
+  { id: 3, value: '', type: 'email' },
+  { id: 4, value: '', type: 'date' },
+  { id: 5, value: '', type: 'unknown' }
+];
 
 const knownType = (type) => {
   return ['text', 'number', 'email', 'date'].includes(type);
