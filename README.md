@@ -10,9 +10,11 @@ You can run validation and get the result as a one-off, or alternatively, you ca
 
 ###### Notes
 
-* Supports promises
-* Supports [adhoc constraints](tests/unit/index-test.js#L123)
-* Uses [ember-cli-moment-shim](https://github.com/jasonmit/ember-cli-moment-shim) for date validation.
+* Validates objects ✔︎
+* Validates arrays ✔︎
+* Supports promises ✔︎
+* Supports [adhoc constraints](#adhoc-constraints) ✔︎
+* Uses [ember-cli-moment-shim](https://github.com/jasonmit/ember-cli-moment-shim) for date validation. ✔︎
 
 ### Installation
 ```
@@ -41,24 +43,27 @@ const person = {
 };
 
 const constraints = {
-  name: [
-    present({ message: 'Please enter your name' }),
-    maxLength({ max: 255 })
-  ],
-  terms: [
-    truthy({ message: 'Please accept the terms' })
-  ],
-  emailAddress: [
-    present(),
-    email()
-  ],
-  dateOfBirth: [
-    present(),
-    date({ format: 'L' })
-  ],
-  'tags[]': {
-    name: [
-      present()
+  name() {
+    return [
+      present({ message: 'Please enter your name' }),
+      maxLength({ max: 255 })
+    ];
+  },
+  terms() {
+    return [
+      truthy({ message: 'Please accept the terms' })
+    ];
+  },
+  emailAddress() {
+    return [
+      present(),
+      email()
+    ];
+  }
+  dateOfBirth() {
+    return [
+      present(),
+      date({ format: 'L' })
     ]
   }
 };
@@ -82,15 +87,94 @@ try {
    *      "required value",
    *      "invalid date, expecting MM/DD/YYYY"
    *    ]
-   *    "tags[]": [{
-   *      "name": []
-   *    }, {
-   *      "name": ["required value"]
-   *    }]
    *  }
    */
 }
 ```
+
+### Adhoc Constraints
+
+Because constraints are functions, this allows for a very powerful approach for validating arrays of objects.
+For example, imagine you have an array of items of a varying _types_.
+
+```javascript
+const items = [{
+  id: 1,
+  type: 'text',
+  value: 'Hello World'
+}, {
+  id: 2,
+  type: 'number',
+  value: '123'
+}, {
+  id: 3,
+  type: 'email',
+  value: 'joe@bloggs.com'
+}, {
+  id: 4,
+  type: 'date',
+  value: '10/07/2019'
+}, {
+  id: 5,
+  type: 'unknown',
+  value: 'foo'
+}];
+
+const knownType = (type) => {
+  return ['text', 'number', 'email', 'date'].includes(type);
+}
+
+const constraints = (item) => {
+  return {
+    type() {
+      return [knownType];
+    },
+
+    value() {
+      switch (item.type) {
+        case 'text':
+          return [present()];
+        case 'number':
+          return [present(), number()];
+        case: 'email':
+          return [present(), email()];
+        case: 'date':
+          return [present(), date({ format: 'L' })];
+      }
+    }
+  };
+}
+
+try {
+  await validate(items, constraints);
+} catch(error) {
+  console.log(error.result);
+  /*
+   *  [
+   *    {
+   *      type: [],
+   *      value: ['required value']
+   *    },
+   *    {
+   *      type: [],
+   *      value: ['required value', 'invalid number']
+   *    },
+   *    {
+   *      type: [],
+   *      value: ['required value', 'invalid email']
+   *    },
+   *    {
+   *      type: [],
+   *      value: ['required value', 'invalid date, expecting MM/DD/YYYY']
+   *    },
+   *    {
+   *      type: ['unknown type'],
+   *      value: []
+   *    }
+   *  ]
+   */
+}
+````
 
 ### Utils
 

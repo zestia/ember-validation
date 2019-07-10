@@ -1,6 +1,13 @@
 import QUnit, { module, test } from 'qunit';
 import { ValidationError } from '@zestia/ember-validation/errors';
-import { date, email, greaterThan, minLength, present } from '@zestia/ember-validation/constraints';
+import {
+  date,
+  email,
+  number,
+  greaterThan,
+  minLength,
+  present
+} from '@zestia/ember-validation/constraints';
 import validate from '@zestia/ember-validation';
 import { resolve } from 'rsvp';
 const { assert } = QUnit;
@@ -547,5 +554,91 @@ module('validation', function() {
     const result = await validate(object, constraints);
 
     assert.deepEqual(result, null);
+  });
+
+  test('readme example', async function(assert) {
+    const items = [
+      {
+        id: 1,
+        type: 'text',
+        value: ''
+      },
+      {
+        id: 2,
+        type: 'number',
+        value: ''
+      },
+      {
+        id: 3,
+        type: 'email',
+        value: ''
+      },
+      {
+        id: 4,
+        type: 'date',
+        value: ''
+      },
+      {
+        id: 5,
+        type: 'unknown',
+        value: ''
+      }
+    ];
+
+    const knownType = type => {
+      if (!['text', 'number', 'email', 'date'].includes(type)) {
+        return 'unknown type';
+      }
+    };
+
+    const constraints = item => {
+      return {
+        type() {
+          return [knownType];
+        },
+
+        value() {
+          switch (item.type) {
+            case 'text':
+              return [present()];
+            case 'number':
+              return [present(), number()];
+            case 'email':
+              return [present(), email()];
+            case 'date':
+              return [present(), date({ format: 'L' })];
+            default:
+              return [];
+          }
+        }
+      };
+    };
+
+    try {
+      await validate(items, constraints);
+    } catch (error) {
+      assert.deepEqual(error.result, [
+        {
+          type: [],
+          value: ['required value']
+        },
+        {
+          type: [],
+          value: ['required value', 'invalid number']
+        },
+        {
+          type: [],
+          value: ['required value', 'invalid email']
+        },
+        {
+          type: [],
+          value: ['required value', 'invalid date, expecting MM/DD/YYYY']
+        },
+        {
+          type: ['unknown type'],
+          value: []
+        }
+      ]);
+    }
   });
 });
