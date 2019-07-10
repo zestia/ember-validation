@@ -7,7 +7,7 @@ module('utils', function() {
 
     const result = {
       'recipe.description': ['recipe must have a description', 'description is too short'],
-      'recipe.ingredients[]': [
+      'recipe.ingredients': [
         {
           name: ['ingredient name required'],
           quantity: ['quantity too small']
@@ -37,7 +37,7 @@ module('utils', function() {
     );
 
     assert.deepEqual(
-      flattenMessages(result['recipe.ingredients[]']),
+      flattenMessages(result['recipe.ingredients']),
       ['ingredient name required', 'quantity too small', 'quantity required', 'invalid unit'],
       'flattens the array of error results into just the messages'
     );
@@ -47,7 +47,7 @@ module('utils', function() {
     assert.expect(1);
 
     const result = {
-      'recipe.ingredients[]': [
+      'recipe.ingredients': [
         {
           name: [],
           quantity: ['quantity required', 'invalid unit']
@@ -64,7 +64,7 @@ module('utils', function() {
     };
 
     assert.deepEqual(
-      collateMessages(result['recipe.ingredients[]']),
+      collateMessages(result['recipe.ingredients']),
       [
         ['quantity required', 'invalid unit'],
         [],

@@ -23,12 +23,6 @@ module('validation', function() {
     const result = await validate();
 
     assert.deepEqual(result, null, 'no errors by default');
-
-    try {
-      await validate(null, { foo: [present()] });
-    } catch (error) {
-      assert.ok(error instanceof ValidationError);
-    }
   });
 
   test('#validate (type of error)', async function(assert) {
@@ -524,7 +518,7 @@ module('validation', function() {
   });
 
   test('#validate (promises)', async function(assert) {
-    assert.expect(3);
+    assert.expect(2);
 
     let object = resolve({
       amount: resolve(9)
