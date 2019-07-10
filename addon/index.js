@@ -15,7 +15,7 @@ export default async function validate(object, constraints = {}) {
       messages = await _validateArray(object, constraints);
       erred = messages.some(object => values(object).some(_hasError));
       break;
-    case 'object':
+    default:
       messages = await _validateObject(object, constraints);
       erred = values(messages).some(_hasError);
       break;
@@ -37,7 +37,7 @@ async function _validateObject(_object, _constraints) {
   for (const key of keys(_constraints)) {
     const constraints = _constraints[key];
     const value = await get(object, key);
-    messages[key] = await _applyConstraints(object, key, value, constraints(object));
+    messages[key] = _applyConstraints(object, key, value, constraints(object));
   }
 
   return messages;
@@ -65,7 +65,7 @@ function _applyConstraints(object, key, value, constraints) {
   for (const constraint of constraints) {
     let message = constraint(value, object);
 
-    if (typeof message === 'function') {
+    if (typeOf(message) === 'function') {
       message = message(value, object);
     }
 
