@@ -12,6 +12,7 @@ You can run validation and get the result as a one-off, or alternatively, you ca
 
 * Validates objects ✔︎
 * Validates arrays ✔︎
+* Ember Data Friendly ✔︎
 * Supports promises ✔︎
 * Supports [adhoc constraints](#adhoc-constraints) ✔︎
 * Uses [ember-cli-moment-shim](https://github.com/jasonmit/ember-cli-moment-shim) for date validation. ✔︎
