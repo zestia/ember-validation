@@ -1,5 +1,3 @@
-/* eslint-disable max-depth */
-
 import { get } from '@ember/object';
 import { ValidationError } from './errors';
 import { typeOf } from '@ember/utils';
