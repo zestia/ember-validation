@@ -54,7 +54,7 @@ const constraints = {
       present(),
       email()
     ];
-  }
+  },
   dateOfBirth() {
     return [
       present(),
