@@ -8,7 +8,7 @@ This addon lets you validate an object, or an array of objects. It will throw an
 
 You can run validation and get the result as a one-off, or alternatively, you can re-compute validation automatically using a computed property.
 
-###### Notes
+### Info
 
 * Validates objects ✔︎
 * Validates arrays ✔︎
