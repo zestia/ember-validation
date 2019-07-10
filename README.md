@@ -32,15 +32,8 @@ const person = {
   id: 1,
   name: '',
   terms: false,
-  emailAddress: 'fred@smith',
-  dateOfBirth: null,
-  tags: [{
-    id: 1,
-    name: 'VIP'
-  }, {
-    id: 2,
-    name: ''
-  }]
+  emailAddress: 'joe@bloggs',
+  dateOfBirth: null
 };
 
 const constraints = {
