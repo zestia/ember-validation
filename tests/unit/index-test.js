@@ -224,7 +224,7 @@ module('validation', function() {
   });
 
   test('#validate (array of objects)', async function(assert) {
-    assert.expect(2);
+    assert.expect(3);
 
     const args = [];
 
@@ -253,6 +253,12 @@ module('validation', function() {
 
       assert.deepEqual(args, [tag1, tag2]);
     }
+
+    tag2.name = 'bar';
+
+    const result = await validate(array, constraints);
+
+    assert.deepEqual(result, null);
   });
 
   test('#validate (array of objects, individually)', async function(assert) {
