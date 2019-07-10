@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.0
+
+- Breaking change: Constraints should now be a function that returns an object, rather than just an object.
+- Introduce ability to validate an array of objects
+
 ## 1.1.1
 
 - Upgrade dependencies
