@@ -146,20 +146,11 @@ const items = [
   { id: 1, value: '', type: 'text' },
   { id: 2, value: '', type: 'number' },
   { id: 3, value: '', type: 'email' },
-  { id: 4, value: '', type: 'date' },
-  { id: 5, value: '', type: 'unknown' }
+  { id: 4, value: '', type: 'date' }
 ];
-
-const knownType = (type) => {
-  return ['text', 'number', 'email', 'date'].includes(type);
-}
 
 const constraints = (item) => {
   return {
-    type() {
-      return [knownType];
-    },
-
     value() {
       switch (item.type) {
         case 'text':
@@ -184,24 +175,16 @@ try {
   /*
    *  [
    *    {
-   *      type: [],
    *      value: ['required value']
    *    },
    *    {
-   *      type: [],
    *      value: ['required value', 'invalid number']
    *    },
    *    {
-   *      type: [],
    *      value: ['required value', 'invalid email']
    *    },
    *    {
-   *      type: [],
    *      value: ['required value', 'invalid date, expecting MM/DD/YYYY']
-   *    },
-   *    {
-   *      type: ['unknown type'],
-   *      value: []
    *    }
    *  ]
    */
