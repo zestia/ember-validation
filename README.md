@@ -15,6 +15,7 @@ You can run validation and get the result as a one-off, or alternatively, you ca
 * Ember Data Friendly ✔︎
 * Supports promises ✔︎
 * Supports [adhoc constraints](#adhoc-constraints) ✔︎
+* Supports [dynamic constraints](#dynamic-constraints) ✔︎
 * Uses [ember-cli-moment-shim](https://github.com/jasonmit/ember-cli-moment-shim) for date validation. ✔︎
 * Simple [reformatting](#utils) of error messages
 
@@ -40,13 +41,13 @@ const person = {
 const constraints = {
   name() {
     return [
-      present({ message: 'Please enter your name' }),
+      present({ message: 'please enter your name' }),
       maxLength({ max: 255 })
     ];
   },
   terms() {
     return [
-      truthy({ message: 'Please accept the terms' })
+      truthy({ message: 'please accept the terms' })
     ];
   },
   emailAddress() {
@@ -69,18 +70,18 @@ try {
   console.log(error.result);
   /**
    *  {
-   *    "name": [
-   *      "Please enter your name"
+   *    name: [
+   *      'please enter your name'
    *    ],
-   *    "terms": [
-   *      "Please accept the terms"
+   *    terms: [
+   *      'please accept the terms'
    *    ],
-   *    "emailAddress": [
-   *      "invalid email"
+   *    emailAddress: [
+   *      'invalid email'
    *    ],
-   *    "dateOfBirth": [
-   *      "required value",
-   *      "invalid date, expecting MM/DD/YYYY"
+   *    dateOfBirth: [
+   *      'required value',
+   *      'invalid date, expecting MM/DD/YYYY'
    *    ]
    *  }
    */
@@ -88,6 +89,56 @@ try {
 ```
 
 ### Adhoc Constraints
+
+You can validate properties that aren't actually on the object being validated. Here is a contrived example...
+
+```javascript
+const names = ['Joe Bloggs'];
+
+function nameIsUnique(value, object) {
+  const name = `${object.firstName} ${object.lastName}`;
+
+  if (names.includes(name)) {
+    return;
+  }
+
+  return `there is already somebody called ${name}`;
+};
+
+const person = {
+  firstName: 'Joe',
+  lastName: 'Bloggs'
+};
+
+const constraints = {
+  firstName() {
+    return [present()];
+  },
+
+  lastName() {
+    return [present()];
+  },
+
+  name() {
+    return [nameIsUnique];
+  }
+};
+
+try {
+  await validate(person, constraints);
+} catch(error) {
+  console.log(error.result);
+  /**
+   *  {
+   *    firstName: [],
+   *    lastName: [],
+   *    name: ['must be unique']
+   *  }
+   */
+}
+```
+
+### Dynamic Constraints
 
 Because constraints are functions, this allows for a very powerful approach for validating arrays of objects.
 For example, imagine you have an array of items of a varying _types_.

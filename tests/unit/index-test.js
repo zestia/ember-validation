@@ -168,7 +168,7 @@ module('validation', function() {
     }
   });
 
-  test('#validate (made-up properties)', async function(assert) {
+  test('#validate (adhoc constraints)', async function(assert) {
     assert.expect(3);
 
     const message = 'First and last name are both required';
