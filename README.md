@@ -93,18 +93,6 @@ try {
 You can validate properties that aren't actually on the object being validated. Here is a contrived example...
 
 ```javascript
-const names = ['Joe Bloggs'];
-
-function nameIsUnique(value, object) {
-  const name = `${object.firstName} ${object.lastName}`;
-
-  if (names.includes(name)) {
-    return;
-  }
-
-  return `there is already somebody called ${name}`;
-};
-
 const person = {
   firstName: 'Joe',
   lastName: 'Bloggs'
@@ -136,6 +124,18 @@ try {
    *  }
    */
 }
+
+const names = ['Joe Bloggs'];
+
+function nameIsUnique(value, object) {
+  const name = `${object.firstName} ${object.lastName}`;
+
+  if (names.includes(name)) {
+    return;
+  }
+
+  return `there is already somebody called ${name}`;
+};
 ```
 
 ### Dynamic Constraints
