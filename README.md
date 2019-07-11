@@ -128,13 +128,11 @@ try {
 const names = ['Joe Bloggs'];
 
 function nameIsUnique(value, object) {
-  const name = `${object.firstName} ${object.lastName}`;
-
-  if (names.includes(name)) {
+  if (names.includes(`${object.firstName} ${object.lastName}`)) {
     return;
   }
 
-  return `there is already somebody called ${name}`;
+  return `must be unique`;
 };
 ```
 
