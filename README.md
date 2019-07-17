@@ -4,22 +4,23 @@
 
 ### Overview
 
-This addon lets you validate an object, or an array of objects. It will throw an error if anything failed a _constraint_, and if this happens the resulting error will provide you with a structured array of error messages as to why.
+This lightweight addon lets you validate an object, or an array of objects. It will throw an error if anything failed a _constraint_, and if this happens the resulting error will provide you with a structured array of error messages as to why.
 
 You can run validation and get the result as a one-off, or alternatively, you can re-compute validation automatically using a computed property.
 
 ### Features
 
-* Validates objects ✔︎
-* Validates arrays ✔︎
-* Ember Data Friendly ✔︎
-* Supports promises ✔︎
-* Supports [adhoc constraints](#adhoc-constraints) ✔︎
-* Supports [dynamic constraints](#dynamic-constraints) ✔︎
-* Uses [ember-cli-moment-shim](https://github.com/jasonmit/ember-cli-moment-shim) for date validation. ✔︎
-* Simple [reformatting](#utils) of error messages
+- Validates objects ✔︎
+- Validates arrays ✔︎
+- Ember Data Friendly ✔︎
+- Supports promises ✔︎
+- Supports [adhoc constraints](#adhoc-constraints) ✔︎
+- Supports [dynamic constraints](#dynamic-constraints) ✔︎
+- Uses [ember-cli-moment-shim](https://github.com/jasonmit/ember-cli-moment-shim) for date validation. ✔︎
+- Simple [reformatting](#utils) of error messages
 
 ### Installation
+
 ```
 ember install @zestia/ember-validation
 ```
@@ -40,33 +41,22 @@ const person = {
 
 const constraints = {
   name() {
-    return [
-      present({ message: 'please enter your name' }),
-      maxLength({ max: 255 })
-    ];
+    return [present({ message: 'please enter your name' }), maxLength({ max: 255 })];
   },
   terms() {
-    return [
-      truthy({ message: 'please accept the terms' })
-    ];
+    return [truthy({ message: 'please accept the terms' })];
   },
   emailAddress() {
-    return [
-      present(),
-      email()
-    ];
+    return [present(), email()];
   },
   dateOfBirth() {
-    return [
-      present(),
-      date({ format: 'L' })
-    ]
+    return [present(), date({ format: 'L' })];
   }
 };
 
 try {
   await validate(person, constraints);
-} catch(error) {
+} catch (error) {
   console.log(error.result);
   /**
    *  {
@@ -114,7 +104,7 @@ const constraints = {
 
 try {
   await validate(person, constraints);
-} catch(error) {
+} catch (error) {
   console.log(error.result);
   /**
    *  {
@@ -133,7 +123,7 @@ function nameIsUnique(value, object) {
   }
 
   return `must be unique`;
-};
+}
 ```
 
 ### Dynamic Constraints
@@ -189,48 +179,48 @@ try {
    *  ]
    */
 }
-````
+```
 
 ### Utils
 
-* [`flattenMessages`](tests/unit/utils-test.js#L5)
-* [`collateMessages`](tests/unit/utils-test.js#L42)
+- [`flattenMessages`](tests/unit/utils-test.js#L5)
+- [`collateMessages`](tests/unit/utils-test.js#L42)
 
 ### Constraints
 
-* bigDecimal
-  * `optional`
-  * `message`
-  * `maxIntegerDigits`
-  * `maxDecimalDigits`
-* date
-  * `optional`
-  * `format`
-  * `mesaage`
-* email
-  * `optional`
-  * `message`
-* greaterThan
-  * `optional`
-  * `value`
-  * `mesaage`
-* lessThan
-  * `optional`
-  * `value`
-  * `mesaage`
-* maxLength
-  * `max`
-  * `message`
-* minLength
-  * `min`
-  * `message`
-* number
-  * `optional`
-  * `message`
-* phoneNumber
-  * `optional`
-  * `message`
-* present
-  * `message`
-* truthy
-  * `message`
+- bigDecimal
+  - `optional`
+  - `message`
+  - `maxIntegerDigits`
+  - `maxDecimalDigits`
+- date
+  - `optional`
+  - `format`
+  - `mesaage`
+- email
+  - `optional`
+  - `message`
+- greaterThan
+  - `optional`
+  - `value`
+  - `mesaage`
+- lessThan
+  - `optional`
+  - `value`
+  - `mesaage`
+- maxLength
+  - `max`
+  - `message`
+- minLength
+  - `min`
+  - `message`
+- number
+  - `optional`
+  - `message`
+- phoneNumber
+  - `optional`
+  - `message`
+- present
+  - `message`
+- truthy
+  - `message`
