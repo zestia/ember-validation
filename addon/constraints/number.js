@@ -1,6 +1,6 @@
 import { isPresent } from '@ember/utils';
 
-const numberPattern = /^[0-9,.]+$/i;
+const numberPattern = /^-?[0-9,.]+$/i;
 
 export function validNumber(value) {
   return numberPattern.test(value);

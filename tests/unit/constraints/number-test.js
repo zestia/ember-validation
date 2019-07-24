@@ -3,11 +3,12 @@ import numberConstraint, { validNumber } from '@zestia/ember-validation/constrai
 
 module('number', function() {
   test('#validNumber', function(assert) {
-    assert.expect(6);
+    assert.expect(7);
 
     assert.strictEqual(validNumber(), false);
     assert.strictEqual(validNumber(''), false);
     assert.strictEqual(validNumber('12345'), true);
+    assert.strictEqual(validNumber('-12345'), true);
     assert.strictEqual(validNumber('123,456,789'), true);
     assert.strictEqual(validNumber('123.456'), true);
     assert.strictEqual(validNumber('abc'), false);

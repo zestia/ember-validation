@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.2
+
+- Allow negative numbers
+
 ## 2.0.1
 
 - Upgrade dependencies
