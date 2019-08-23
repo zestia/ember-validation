@@ -29,7 +29,13 @@ ember install @zestia/ember-validation
 
 ```javascript
 import validate from '@zestia/ember-validation';
-import { present, maxLength, truthy, email, date } from '@zestia/ember-validation/constraints';
+import {
+  present,
+  maxLength,
+  truthy,
+  email,
+  date
+} from '@zestia/ember-validation/constraints';
 
 const person = {
   id: 1,
@@ -41,7 +47,10 @@ const person = {
 
 const constraints = {
   name() {
-    return [present({ message: 'please enter your name' }), maxLength({ max: 255 })];
+    return [
+      present({ message: 'please enter your name' }),
+      maxLength({ max: 255 })
+    ];
   },
   terms() {
     return [truthy({ message: 'please accept the terms' })];

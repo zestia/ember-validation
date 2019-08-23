@@ -1,5 +1,7 @@
 import { module, test } from 'qunit';
-import numberConstraint, { validNumber } from '@zestia/ember-validation/constraints/number';
+import numberConstraint, {
+  validNumber
+} from '@zestia/ember-validation/constraints/number';
 
 module('number', function() {
   test('#validNumber', function(assert) {
@@ -23,7 +25,11 @@ module('number', function() {
 
     assert.equal(func('123'), null, 'returns nothing when valid');
 
-    assert.equal(func('xyz'), 'invalid number', 'returns default message if invalid');
+    assert.equal(
+      func('xyz'),
+      'invalid number',
+      'returns default message if invalid'
+    );
 
     func = numberConstraint({ optional: true });
 
@@ -31,6 +37,10 @@ module('number', function() {
 
     func = numberConstraint({ message: 'bad number', optional: true });
 
-    assert.equal(func('foo@bar'), 'bad number', 'returns custom message if invalid');
+    assert.equal(
+      func('foo@bar'),
+      'bad number',
+      'returns custom message if invalid'
+    );
   });
 });

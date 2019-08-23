@@ -11,7 +11,11 @@ module('present', function() {
 
     assert.equal(func('hi'), null, 'returns nothing when valid');
 
-    assert.equal(func(''), 'required value', 'returns default message if invalid');
+    assert.equal(
+      func(''),
+      'required value',
+      'returns default message if invalid'
+    );
 
     func = presentConstraint({ message: 'nothing there' });
 

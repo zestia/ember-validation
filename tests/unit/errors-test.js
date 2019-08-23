@@ -59,6 +59,10 @@ module('errors', function() {
 
     assert.equal(error.message, 'Validation failed', 'has a default message');
 
-    assert.deepEqual(error.result, result, 'constructor can set the related validation result');
+    assert.deepEqual(
+      error.result,
+      result,
+      'constructor can set the related validation result'
+    );
   });
 });

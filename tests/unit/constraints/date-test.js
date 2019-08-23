@@ -49,7 +49,11 @@ module('date', function(hooks) {
   test('#getLongDateFormat', function(assert) {
     assert.expect(4);
 
-    assert.equal(getLongDateFormat('L'), 'DD/MM/YYYY', 'converts shorthand to longhand');
+    assert.equal(
+      getLongDateFormat('L'),
+      'DD/MM/YYYY',
+      'converts shorthand to longhand'
+    );
 
     moment.locale('en-us');
 
@@ -59,7 +63,11 @@ module('date', function(hooks) {
       'converts shorthand to longhand, responds to change of locale'
     );
 
-    assert.equal(getLongDateFormat('XYZ'), 'XYZ', 'lets incorrect formats pass through');
+    assert.equal(
+      getLongDateFormat('XYZ'),
+      'XYZ',
+      'lets incorrect formats pass through'
+    );
 
     assert.equal(getLongDateFormat(), null, 'does not blow up');
   });

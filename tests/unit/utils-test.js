@@ -1,12 +1,18 @@
 import { module, test } from 'qunit';
-import { flattenMessages, collateMessages } from '@zestia/ember-validation/utils';
+import {
+  flattenMessages,
+  collateMessages
+} from '@zestia/ember-validation/utils';
 
 module('utils', function() {
   test('#flattenMessages', function(assert) {
     assert.expect(2);
 
     const result = {
-      'recipe.description': ['recipe must have a description', 'description is too short'],
+      'recipe.description': [
+        'recipe must have a description',
+        'description is too short'
+      ],
       'recipe.ingredients': [
         {
           name: ['ingredient name required'],
@@ -38,7 +44,12 @@ module('utils', function() {
 
     assert.deepEqual(
       flattenMessages(result['recipe.ingredients']),
-      ['ingredient name required', 'quantity too small', 'quantity required', 'invalid unit'],
+      [
+        'ingredient name required',
+        'quantity too small',
+        'quantity required',
+        'invalid unit'
+      ],
       'flattens the array of error results into just the messages'
     );
   });

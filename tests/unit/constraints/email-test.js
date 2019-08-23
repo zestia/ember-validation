@@ -1,5 +1,7 @@
 import { module, test } from 'qunit';
-import emailConstraint, { validEmail } from '@zestia/ember-validation/constraints/email';
+import emailConstraint, {
+  validEmail
+} from '@zestia/ember-validation/constraints/email';
 
 module('email', function() {
   test('#validEmail', function(assert) {
@@ -24,7 +26,11 @@ module('email', function() {
 
     assert.equal(func('foo@bar.com'), null, 'returns nothing when valid');
 
-    assert.equal(func(''), 'invalid email', 'returns default message if invalid');
+    assert.equal(
+      func(''),
+      'invalid email',
+      'returns default message if invalid'
+    );
 
     func = emailConstraint({ optional: true });
 
@@ -32,6 +38,10 @@ module('email', function() {
 
     func = emailConstraint({ message: 'bad email', optional: true });
 
-    assert.equal(func('foo@bar'), 'bad email', 'returns custom message if invalid');
+    assert.equal(
+      func('foo@bar'),
+      'bad email',
+      'returns custom message if invalid'
+    );
   });
 });

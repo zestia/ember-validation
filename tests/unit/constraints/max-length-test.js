@@ -1,5 +1,7 @@
 import { module, test } from 'qunit';
-import maxLengthConstraint, { maxLength } from '@zestia/ember-validation/constraints/max-length';
+import maxLengthConstraint, {
+  maxLength
+} from '@zestia/ember-validation/constraints/max-length';
 
 module('max-length', function() {
   test('#maxLength', function(assert) {
@@ -30,10 +32,18 @@ module('max-length', function() {
 
     assert.equal(func('hi'), null, 'returns nothing when valid');
 
-    assert.equal(func('hiya'), 'length is too long (max 2)', 'returns default message if invalid');
+    assert.equal(
+      func('hiya'),
+      'length is too long (max 2)',
+      'returns default message if invalid'
+    );
 
     func = maxLengthConstraint({ max: 4, message: 'exceeds max' });
 
-    assert.equal(func('hello'), 'exceeds max', 'returns custom message if invalid');
+    assert.equal(
+      func('hello'),
+      'exceeds max',
+      'returns custom message if invalid'
+    );
   });
 });

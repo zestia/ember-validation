@@ -59,7 +59,10 @@ module('validation', function() {
     try {
       await validate(object, constraints);
     } catch (error) {
-      assert.equal(error.message, 'Assertion Failed: Constraints must be an object');
+      assert.equal(
+        error.message,
+        'Assertion Failed: Constraints must be an object'
+      );
     }
   });
 
@@ -77,7 +80,10 @@ module('validation', function() {
     try {
       await validate(array, constraints);
     } catch (error) {
-      assert.equal(error.message, 'Assertion Failed: Constraints must be a function');
+      assert.equal(
+        error.message,
+        'Assertion Failed: Constraints must be a function'
+      );
     }
   });
 

@@ -11,10 +11,18 @@ module('truthy', function() {
 
     assert.equal(func(true), null, 'returns nothing when valid');
 
-    assert.equal(func(false), 'must be truthy', 'returns default message if invalid');
+    assert.equal(
+      func(false),
+      'must be truthy',
+      'returns default message if invalid'
+    );
 
     func = truthyConstraint({ message: 'please accept the terms' });
 
-    assert.equal(func(), 'please accept the terms', 'returns custom message if invalid');
+    assert.equal(
+      func(),
+      'please accept the terms',
+      'returns custom message if invalid'
+    );
   });
 });
