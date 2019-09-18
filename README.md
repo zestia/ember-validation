@@ -131,7 +131,7 @@ function nameIsUnique(value, object) {
     return;
   }
 
-  return `must be unique`;
+  return 'must be unique';
 }
 ```
 
