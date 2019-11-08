@@ -2,13 +2,17 @@
 
 <a href="https://badge.fury.io/js/%40zestia%2Fember-validation"><img src="https://badge.fury.io/js/%40zestia%2Fember-validation.svg" alt="npm version" height="18"></a> &nbsp; <a href="http://travis-ci.org/zestia/ember-validation"><img src="https://travis-ci.org/zestia/ember-validation.svg?branch=master"></a> &nbsp; <a href="https://david-dm.org/zestia/ember-validation#badge-embed"><img src="https://david-dm.org/zestia/ember-validation.svg"></a> &nbsp; <a href="https://david-dm.org/zestia/ember-validation#dev-badge-embed"><img src="https://david-dm.org/zestia/ember-validation/dev-status.svg"></a> &nbsp; <a href="https://emberobserver.com/addons/@zestia/ember-validation"><img src="https://emberobserver.com/badges/-zestia-ember-validation.svg"></a>
 
-### Overview
-
 This lightweight addon lets you validate an object, or an array of objects. It will throw an error if anything failed a _constraint_, and if this happens the resulting error will provide you with a structured array of error messages as to why.
 
 You can run validation and get the result as a one-off, or alternatively, you can re-compute validation automatically using a computed property.
 
-### Features
+### Installation
+
+```
+ember install @zestia/ember-validation
+```
+
+## Features
 
 - Validates objects ✔︎
 - Validates arrays ✔︎
@@ -19,13 +23,7 @@ You can run validation and get the result as a one-off, or alternatively, you ca
 - Uses [ember-cli-moment-shim](https://github.com/jasonmit/ember-cli-moment-shim) for date validation. ✔︎
 - Simple [reformatting](#utils) of error messages
 
-### Installation
-
-```
-ember install @zestia/ember-validation
-```
-
-### Example
+## Example
 
 ```javascript
 import validate from '@zestia/ember-validation';
@@ -87,7 +85,7 @@ try {
 }
 ```
 
-### Adhoc Constraints
+## Adhoc Constraints
 
 You can validate properties that aren't actually on the object being validated. Here is a contrived example...
 
@@ -135,7 +133,7 @@ function nameIsUnique(value, object) {
 }
 ```
 
-### Dynamic Constraints
+## Dynamic Constraints
 
 Because constraints are functions, this allows for a very powerful approach for validating arrays of objects.
 For example, imagine you have an array of items of a varying _types_.
@@ -190,12 +188,12 @@ try {
 }
 ```
 
-### Utils
+## Utils
 
 - [`flattenMessages`](tests/unit/utils-test.js#L5)
 - [`collateMessages`](tests/unit/utils-test.js#L42)
 
-### Constraints
+## Constraints
 
 - bigDecimal
   - `optional`
