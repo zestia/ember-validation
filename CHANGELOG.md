@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.7
+
+- Upgrade dependencies
+
 ## 2.0.6
 
 - Upgrade dependencies
