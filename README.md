@@ -1,6 +1,24 @@
 # @zestia/ember-validation
 
-<a href="https://badge.fury.io/js/%40zestia%2Fember-validation"><img src="https://badge.fury.io/js/%40zestia%2Fember-validation.svg" alt="npm version" height="18"></a> &nbsp; <a href="http://travis-ci.org/zestia/ember-validation"><img src="https://travis-ci.org/zestia/ember-validation.svg?branch=master"></a> &nbsp; <a href="https://david-dm.org/zestia/ember-validation#badge-embed"><img src="https://david-dm.org/zestia/ember-validation.svg"></a> &nbsp; <a href="https://david-dm.org/zestia/ember-validation#dev-badge-embed"><img src="https://david-dm.org/zestia/ember-validation/dev-status.svg"></a> &nbsp; <a href="https://emberobserver.com/addons/@zestia/ember-validation"><img src="https://emberobserver.com/badges/-zestia-ember-validation.svg"></a>
+<p>
+  <a href="http://travis-ci.org/zestia/ember-validation">
+    <img src="https://travis-ci.org/zestia/ember-validation.svg?branch=master">
+  </a>
+
+  <a href="https://david-dm.org/zestia/ember-validation#badge-embed">
+    <img src="https://david-dm.org/zestia/ember-validation.svg">
+  </a>
+
+  <a href="https://david-dm.org/zestia/ember-validation#dev-badge-embed">
+    <img src="https://david-dm.org/zestia/ember-validation/dev-status.svg">
+  </a>
+
+  <a href="https://emberobserver.com/addons/@zestia/ember-validation">
+    <img src="https://emberobserver.com/badges/-zestia-ember-validation.svg">
+  </a>
+
+  <img src="https://img.shields.io/badge/Ember-%3E%3D%203.4-brightgreen">
+</p>
 
 This lightweight addon lets you validate an object, or an array of objects. It will throw an error if anything failed a _constraint_, and if this happens the resulting error will provide you with a structured array of error messages as to why.
 
