@@ -5,10 +5,14 @@ import maxLengthConstraint, {
 
 module('max-length', function() {
   test('#maxLength', function(assert) {
-    assert.expect(14);
+    assert.expect(18);
 
     assert.strictEqual(maxLength(undefined), false);
     assert.strictEqual(maxLength(null), false);
+    assert.strictEqual(maxLength(undefined, 9), true);
+    assert.strictEqual(maxLength(null, 4), true);
+    assert.strictEqual(maxLength(undefined, 0), true);
+    assert.strictEqual(maxLength(null, 0), true);
     assert.strictEqual(maxLength(''), false);
     assert.strictEqual(maxLength('', 1), true);
     assert.strictEqual(maxLength('', 0), true);

@@ -1,11 +1,11 @@
 const { isArray } = Array;
 
 export function minLength(a, b) {
-  let length;
+  let length = 0;
 
   if (isArray(a)) {
     length = a.length;
-  } else {
+  } else if (typeof a === 'string' || typeof a === 'number') {
     length = `${a}`.length;
   }
 

@@ -5,10 +5,14 @@ import minLengthConstraint, {
 
 module('min-length', function() {
   test('#minLength', function(assert) {
-    assert.expect(14);
+    assert.expect(18);
 
     assert.strictEqual(minLength(undefined), false);
     assert.strictEqual(minLength(null), false);
+    assert.strictEqual(minLength(undefined, 1), false);
+    assert.strictEqual(minLength(null, 1), false);
+    assert.strictEqual(minLength(undefined, 0), true);
+    assert.strictEqual(minLength(null, 0), true);
     assert.strictEqual(minLength(''), false);
     assert.strictEqual(minLength('', 1), false);
     assert.strictEqual(minLength('', 0), true);
