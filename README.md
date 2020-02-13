@@ -17,7 +17,7 @@
     <img src="https://emberobserver.com/badges/-zestia-ember-validation.svg">
   </a>
 
-  <img src="https://img.shields.io/badge/Ember-%3E%3D%203.4-brightgreen">
+  <img src="https://img.shields.io/badge/Ember-%3E%3D%203.12-brightgreen">
 </p>
 
 This lightweight addon lets you validate an object, or an array of objects. It will throw an error if anything failed a _constraint_, and if this happens the resulting error will provide you with a structured array of error messages as to why.
