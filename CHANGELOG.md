@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.10
+
+- Upgrade dependencies
+
 ## 2.0.9
 
 - Fix min/max length constraints converting `null` and `undefined` into strings.
