@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.11
+
+- Upgrade dependencies
+
 ## 2.0.10
 
 - Upgrade dependencies
