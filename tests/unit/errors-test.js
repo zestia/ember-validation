@@ -7,8 +7,8 @@ class FooValidationError extends ValidationError {
   }
 }
 
-module('errors', function() {
-  test('ValidationError', function(assert) {
+module('errors', function () {
+  test('ValidationError', function (assert) {
     assert.expect(1);
 
     const error = new ValidationError();
@@ -16,7 +16,7 @@ module('errors', function() {
     assert.ok(error instanceof Error, 'Validation errors extend Error');
   });
 
-  test('ValidationError (constructor)', function(assert) {
+  test('ValidationError (constructor)', function (assert) {
     assert.expect(1);
 
     const error = new ValidationError('My custom message');
@@ -28,7 +28,7 @@ module('errors', function() {
     );
   });
 
-  test('ValidationError (default message)', function(assert) {
+  test('ValidationError (default message)', function (assert) {
     assert.expect(2);
 
     const error = new FooValidationError('My custom message');
@@ -48,11 +48,11 @@ module('errors', function() {
     );
   });
 
-  test('ValidationError (result argument)', function(assert) {
+  test('ValidationError (result argument)', function (assert) {
     assert.expect(2);
 
     const result = {
-      myField: ['Not present', 'Must be longer than 10']
+      myField: ['Not present', 'Must be longer than 10'],
     };
 
     const error = new ValidationError(null, result);

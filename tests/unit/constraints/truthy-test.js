@@ -1,8 +1,8 @@
 import { module, test } from 'qunit';
 import truthyConstraint from '@zestia/ember-validation/constraints/truthy';
 
-module('truthy', function() {
-  test('#truthyConstraint', function(assert) {
+module('truthy', function () {
+  test('#truthyConstraint', function (assert) {
     assert.expect(3);
 
     let func;

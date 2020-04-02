@@ -13,7 +13,7 @@ export function maxLength(a, b) {
 }
 
 export default function maxLengthConstraint(options = {}) {
-  return function(value) {
+  return function (value) {
     if (maxLength(value, options.max)) {
       return;
     }

@@ -1,5 +1,5 @@
 export default function truthyConstraint(options = {}) {
-  return function(value) {
+  return function (value) {
     if (value) {
       return;
     }

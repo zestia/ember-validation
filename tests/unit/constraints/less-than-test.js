@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
 import lessThanConstraint, {
-  lessThan
+  lessThan,
 } from '@zestia/ember-validation/constraints/less-than';
 
-module('less-than', function() {
-  test('#lessThan', function(assert) {
+module('less-than', function () {
+  test('#lessThan', function (assert) {
     assert.expect(8);
 
     assert.strictEqual(lessThan(undefined), false);
@@ -17,7 +17,7 @@ module('less-than', function() {
     assert.strictEqual(lessThan('aa', 'a'), false);
   });
 
-  test('#lessThanConstraint', function(assert) {
+  test('#lessThanConstraint', function (assert) {
     assert.expect(5);
 
     let func;

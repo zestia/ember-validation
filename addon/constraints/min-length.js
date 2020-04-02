@@ -13,7 +13,7 @@ export function minLength(a, b) {
 }
 
 export default function minLengthConstraint(options = {}) {
-  return function(value) {
+  return function (value) {
     if (minLength(value, options.min)) {
       return;
     }

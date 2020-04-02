@@ -2,18 +2,18 @@ import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import dateConstraint, {
   validDate,
-  getLongDateFormat
+  getLongDateFormat,
 } from '@zestia/ember-validation/constraints/date';
 import moment from 'moment';
 
-module('date', function(hooks) {
+module('date', function (hooks) {
   setupTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     moment.locale('en-gb');
   });
 
-  test('#validDate', function(assert) {
+  test('#validDate', function (assert) {
     assert.expect(16);
 
     assert.strictEqual(validDate(), false);
@@ -46,7 +46,7 @@ module('date', function(hooks) {
     assert.strictEqual(validDate('01/22/1985', 'L'), true);
   });
 
-  test('#getLongDateFormat', function(assert) {
+  test('#getLongDateFormat', function (assert) {
     assert.expect(4);
 
     assert.equal(
@@ -72,7 +72,7 @@ module('date', function(hooks) {
     assert.equal(getLongDateFormat(), null, 'does not blow up');
   });
 
-  test('#dateConstraint', function(assert) {
+  test('#dateConstraint', function (assert) {
     assert.expect(6);
 
     let func;

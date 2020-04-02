@@ -7,7 +7,7 @@ export function validNumber(value) {
 }
 
 export default function numberConstraint(options = {}) {
-  return function(value) {
+  return function (value) {
     if (!isPresent(value) && options.optional) {
       return;
     }

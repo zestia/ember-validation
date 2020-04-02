@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
 import numberConstraint, {
-  validNumber
+  validNumber,
 } from '@zestia/ember-validation/constraints/number';
 
-module('number', function() {
-  test('#validNumber', function(assert) {
+module('number', function () {
+  test('#validNumber', function (assert) {
     assert.expect(7);
 
     assert.strictEqual(validNumber(), false);
@@ -16,7 +16,7 @@ module('number', function() {
     assert.strictEqual(validNumber('abc'), false);
   });
 
-  test('#numberConstraint', function(assert) {
+  test('#numberConstraint', function (assert) {
     assert.expect(4);
 
     let func;

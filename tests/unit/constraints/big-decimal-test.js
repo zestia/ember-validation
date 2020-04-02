@@ -1,8 +1,8 @@
 import { module, test } from 'qunit';
 import bigDecimaConstraint from '@zestia/ember-validation/constraints/big-decimal';
 
-module('big-decimal', function() {
-  test('#bigDecimaConstraint', function(assert) {
+module('big-decimal', function () {
+  test('#bigDecimaConstraint', function (assert) {
     assert.expect(12);
 
     let func;

@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
 import maxLengthConstraint, {
-  maxLength
+  maxLength,
 } from '@zestia/ember-validation/constraints/max-length';
 
-module('max-length', function() {
-  test('#maxLength', function(assert) {
+module('max-length', function () {
+  test('#maxLength', function (assert) {
     assert.expect(18);
 
     assert.strictEqual(maxLength(undefined), false);
@@ -27,7 +27,7 @@ module('max-length', function() {
     assert.strictEqual(maxLength(['a', 'b'], 1), false);
   });
 
-  test('#maxLengthConstraint', function(assert) {
+  test('#maxLengthConstraint', function (assert) {
     assert.expect(3);
 
     let func;

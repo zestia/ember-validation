@@ -11,7 +11,7 @@ export default async function validate(object, constraints = {}) {
   switch (typeOf(object)) {
     case 'array':
       messages = await _validateArray(object, constraints);
-      erred = messages.some(object => values(object).some(_hasError));
+      erred = messages.some((object) => values(object).some(_hasError));
       break;
     default:
       messages = await _validateObject(object, constraints);

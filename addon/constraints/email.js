@@ -9,7 +9,7 @@ export function validEmail(value) {
 }
 
 export default function emailConstraint(options = {}) {
-  return function(value) {
+  return function (value) {
     if (!isPresent(value) && options.optional) {
       return;
     }

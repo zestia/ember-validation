@@ -1,32 +1,32 @@
 import { module, test } from 'qunit';
 import {
   flattenMessages,
-  collateMessages
+  collateMessages,
 } from '@zestia/ember-validation/utils';
 
-module('utils', function() {
-  test('#flattenMessages', function(assert) {
+module('utils', function () {
+  test('#flattenMessages', function (assert) {
     assert.expect(2);
 
     const result = {
       'recipe.description': [
         'recipe must have a description',
-        'description is too short'
+        'description is too short',
       ],
       'recipe.ingredients': [
         {
           name: ['ingredient name required'],
-          quantity: ['quantity too small']
+          quantity: ['quantity too small'],
         },
         {
           name: [],
-          quantity: []
+          quantity: [],
         },
         {
           name: [],
-          quantity: ['quantity required', 'invalid unit']
-        }
-      ]
+          quantity: ['quantity required', 'invalid unit'],
+        },
+      ],
     };
 
     assert.deepEqual(
@@ -37,7 +37,7 @@ module('utils', function() {
         'ingredient name required',
         'quantity too small',
         'quantity required',
-        'invalid unit'
+        'invalid unit',
       ],
       'flattens the entire error result into just the messages'
     );
@@ -48,30 +48,30 @@ module('utils', function() {
         'ingredient name required',
         'quantity too small',
         'quantity required',
-        'invalid unit'
+        'invalid unit',
       ],
       'flattens the array of error results into just the messages'
     );
   });
 
-  test('#collateMessages', function(assert) {
+  test('#collateMessages', function (assert) {
     assert.expect(1);
 
     const result = {
       'recipe.ingredients': [
         {
           name: [],
-          quantity: ['quantity required', 'invalid unit']
+          quantity: ['quantity required', 'invalid unit'],
         },
         {
           name: [],
-          quantity: []
+          quantity: [],
         },
         {
           name: ['ingredient name required'],
-          quantity: ['quantity too small']
-        }
-      ]
+          quantity: ['quantity too small'],
+        },
+      ],
     };
 
     assert.deepEqual(
@@ -79,7 +79,7 @@ module('utils', function() {
       [
         ['quantity required', 'invalid unit'],
         [],
-        ['ingredient name required', 'quantity too small']
+        ['ingredient name required', 'quantity too small'],
       ],
       'collates the array of error results into just the messages ' +
         'whilst retaining the array structure'

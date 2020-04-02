@@ -5,7 +5,7 @@ export function greaterThan(a, b) {
 }
 
 export default function greaterThanConstraint(options = {}) {
-  return function(value) {
+  return function (value) {
     if (!isPresent(value) && options.optional) {
       return;
     }

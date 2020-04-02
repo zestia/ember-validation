@@ -6,18 +6,18 @@ import {
   number,
   greaterThan,
   minLength,
-  present
+  present,
 } from '@zestia/ember-validation/constraints';
 import validate from '@zestia/ember-validation';
 import { resolve } from 'rsvp';
 const { assert } = QUnit;
 
-module('validation', function() {
-  assert.errorEqual = function(a, b, message) {
+module('validation', function () {
+  assert.errorEqual = function (a, b, message) {
     assert.deepEqual(a.result, b.result, message);
   };
 
-  test('#validate (defaults)', async function(assert) {
+  test('#validate (defaults)', async function (assert) {
     assert.expect(1);
 
     const result = await validate();
@@ -25,7 +25,7 @@ module('validation', function() {
     assert.deepEqual(result, null, 'no errors by default');
   });
 
-  test('#validate (type of error)', async function(assert) {
+  test('#validate (type of error)', async function (assert) {
     assert.expect(1);
 
     const object = {};
@@ -33,7 +33,7 @@ module('validation', function() {
     const constraints = {
       foo() {
         return [present()];
-      }
+      },
     };
 
     try {
@@ -43,16 +43,16 @@ module('validation', function() {
     }
   });
 
-  test('#validate (object constraints)', async function(assert) {
+  test('#validate (object constraints)', async function (assert) {
     assert.expect(1);
 
     const object = {};
 
-    const constraints = object => {
+    const constraints = (object) => {
       return {
         foo() {
           return [present()];
-        }
+        },
       };
     };
 
@@ -66,7 +66,7 @@ module('validation', function() {
     }
   });
 
-  test('#validate (array constraints)', async function(assert) {
+  test('#validate (array constraints)', async function (assert) {
     assert.expect(1);
 
     const array = [];
@@ -74,7 +74,7 @@ module('validation', function() {
     const constraints = {
       foo() {
         return [present()];
-      }
+      },
     };
 
     try {
@@ -87,7 +87,7 @@ module('validation', function() {
     }
   });
 
-  test('#validate (basics)', async function(assert) {
+  test('#validate (basics)', async function (assert) {
     assert.expect(2);
 
     const object = {};
@@ -95,7 +95,7 @@ module('validation', function() {
     const constraints = {
       name() {
         return [present()];
-      }
+      },
     };
 
     try {
@@ -104,7 +104,7 @@ module('validation', function() {
       assert.errorEqual(
         error,
         new ValidationError(null, {
-          name: ['required value']
+          name: ['required value'],
         })
       );
     }
@@ -116,7 +116,7 @@ module('validation', function() {
     assert.deepEqual(result, null);
   });
 
-  test('#validate (multiple constraints)', async function(assert) {
+  test('#validate (multiple constraints)', async function (assert) {
     assert.expect(1);
 
     const object = {};
@@ -124,7 +124,7 @@ module('validation', function() {
     const constraints = {
       emailAddress() {
         return [present(), email()];
-      }
+      },
     };
 
     try {
@@ -133,19 +133,19 @@ module('validation', function() {
       assert.errorEqual(
         error,
         new ValidationError(null, {
-          emailAddress: ['required value', 'invalid email']
+          emailAddress: ['required value', 'invalid email'],
         })
       );
     }
   });
 
-  test('#validate (multiple properties)', async function(assert) {
+  test('#validate (multiple properties)', async function (assert) {
     assert.expect(1);
 
     const object = {
       firstName: '',
       emailAddress: '',
-      dob: '22-1-85'
+      dob: '22-1-85',
     };
 
     const constraints = {
@@ -157,7 +157,7 @@ module('validation', function() {
       },
       dob() {
         return [date({ format: 'D-M-YY' })];
-      }
+      },
     };
 
     try {
@@ -168,18 +168,18 @@ module('validation', function() {
         new ValidationError(null, {
           firstName: ['required value'],
           emailAddress: ['invalid email'],
-          dob: []
+          dob: [],
         })
       );
     }
   });
 
-  test('#validate (adhoc constraints)', async function(assert) {
+  test('#validate (adhoc constraints)', async function (assert) {
     assert.expect(3);
 
     const message = 'First and last name are both required';
 
-    const hasFirstAndLastName = function(value, object) {
+    const hasFirstAndLastName = function (value, object) {
       if (object.firstName && object.lastName) {
         return;
       }
@@ -189,13 +189,13 @@ module('validation', function() {
 
     const object = {
       firstName: '',
-      lastName: ''
+      lastName: '',
     };
 
     const constraints = {
       firstAndLastName() {
         return [hasFirstAndLastName];
-      }
+      },
     };
 
     try {
@@ -204,7 +204,7 @@ module('validation', function() {
       assert.errorEqual(
         error,
         new ValidationError(null, {
-          firstAndLastName: [message]
+          firstAndLastName: [message],
         })
       );
     }
@@ -217,7 +217,7 @@ module('validation', function() {
       assert.errorEqual(
         error,
         new ValidationError(null, {
-          firstAndLastName: [message]
+          firstAndLastName: [message],
         })
       );
     }
@@ -229,7 +229,7 @@ module('validation', function() {
     assert.deepEqual(result, null);
   });
 
-  test('#validate (array of objects)', async function(assert) {
+  test('#validate (array of objects)', async function (assert) {
     assert.expect(3);
 
     const args = [];
@@ -239,13 +239,13 @@ module('validation', function() {
 
     const array = [tag1, tag2];
 
-    const constraints = tag => {
+    const constraints = (tag) => {
       args.push(tag);
 
       return {
         name() {
           return [present()];
-        }
+        },
       };
     };
 
@@ -267,7 +267,7 @@ module('validation', function() {
     assert.deepEqual(result, null);
   });
 
-  test('#validate (array of objects, individually)', async function(assert) {
+  test('#validate (array of objects, individually)', async function (assert) {
     assert.expect(2);
 
     const starter = { name: '' };
@@ -275,7 +275,7 @@ module('validation', function() {
     const dessert = { name: '' };
 
     const meal = {
-      courses: [starter, main, dessert]
+      courses: [starter, main, dessert],
     };
 
     const constraints = {
@@ -287,7 +287,7 @@ module('validation', function() {
       },
       'courses.2.name'() {
         return [present()];
-      }
+      },
     };
 
     try {
@@ -298,7 +298,7 @@ module('validation', function() {
         new ValidationError(null, {
           'courses.0.name': ['required value'],
           'courses.1.name': ['required value'],
-          'courses.2.name': ['required value']
+          'courses.2.name': ['required value'],
         })
       );
     }
@@ -313,13 +313,13 @@ module('validation', function() {
         new ValidationError(null, {
           'courses.0.name': ['required value'],
           'courses.1.name': [],
-          'courses.2.name': ['required value']
+          'courses.2.name': ['required value'],
         })
       );
     }
   });
 
-  test('#validate (expecting an array of objects)', async function(assert) {
+  test('#validate (expecting an array of objects)', async function (assert) {
     assert.expect(1);
 
     const array = [{ id: 1 }, {}, null, undefined];
@@ -328,7 +328,7 @@ module('validation', function() {
       return {
         id() {
           return [present()];
-        }
+        },
       };
     };
 
@@ -341,13 +341,13 @@ module('validation', function() {
           { id: [] },
           { id: ['required value'] },
           { id: ['required value'] },
-          { id: ['required value'] }
+          { id: ['required value'] },
         ])
       );
     }
   });
 
-  test('#validate (custom error messages)', async function(assert) {
+  test('#validate (custom error messages)', async function (assert) {
     assert.expect(1);
 
     const object = {};
@@ -356,10 +356,10 @@ module('validation', function() {
       description() {
         return [
           present({
-            message: 'You must enter a description'
-          })
+            message: 'You must enter a description',
+          }),
         ];
-      }
+      },
     };
 
     try {
@@ -368,19 +368,19 @@ module('validation', function() {
       assert.errorEqual(
         error,
         new ValidationError(null, {
-          description: ['You must enter a description']
+          description: ['You must enter a description'],
         })
       );
     }
   });
 
-  test('#validate (custom error message functions)', async function(assert) {
+  test('#validate (custom error message functions)', async function (assert) {
     assert.expect(2);
 
     let args;
 
     const object = {
-      emailAddress: 'foo@bar'
+      emailAddress: 'foo@bar',
     };
 
     const constraints = {
@@ -391,10 +391,10 @@ module('validation', function() {
               args = [value, object];
 
               return `The email address ${value} is not valid`;
-            }
-          })
+            },
+          }),
         ];
-      }
+      },
     };
 
     try {
@@ -403,7 +403,7 @@ module('validation', function() {
       assert.errorEqual(
         error,
         new ValidationError(null, {
-          emailAddress: ['The email address foo@bar is not valid']
+          emailAddress: ['The email address foo@bar is not valid'],
         })
       );
 
@@ -411,11 +411,11 @@ module('validation', function() {
     }
   });
 
-  test('#validate (custom error message functions - no escaping)', async function(assert) {
+  test('#validate (custom error message functions - no escaping)', async function (assert) {
     assert.expect(1);
 
     const object = {
-      name: '<script>'
+      name: '<script>',
     };
 
     const constraints = {
@@ -425,10 +425,10 @@ module('validation', function() {
             min: 9,
             message(value) {
               return `Your name ${value} is too short`;
-            }
-          })
+            },
+          }),
         ];
-      }
+      },
     };
 
     try {
@@ -437,20 +437,20 @@ module('validation', function() {
       assert.errorEqual(
         error,
         new ValidationError(null, {
-          name: ['Your name <script> is too short']
+          name: ['Your name <script> is too short'],
         })
       );
     }
   });
 
-  test('#validate (path properties)', async function(assert) {
+  test('#validate (path properties)', async function (assert) {
     assert.expect(1);
 
     const person = {
       name: '',
       organisation: {
-        name: ''
-      }
+        name: '',
+      },
     };
 
     const constraints = {
@@ -460,7 +460,7 @@ module('validation', function() {
 
       'organisation.name'() {
         return [present(), minLength({ min: 1 })];
-      }
+      },
     };
 
     try {
@@ -470,13 +470,13 @@ module('validation', function() {
         error,
         new ValidationError(null, {
           name: ['required value'],
-          'organisation.name': ['required value', 'length must be at least 1']
+          'organisation.name': ['required value', 'length must be at least 1'],
         })
       );
     }
   });
 
-  test('#validate (case of properties)', async function(assert) {
+  test('#validate (case of properties)', async function (assert) {
     assert.expect(1);
 
     const object = {};
@@ -484,7 +484,7 @@ module('validation', function() {
     const constraints = {
       fOoBaR() {
         return [present()];
-      }
+      },
     };
 
     try {
@@ -493,18 +493,18 @@ module('validation', function() {
       assert.errorEqual(
         error,
         new ValidationError(null, {
-          fOoBaR: ['required value']
+          fOoBaR: ['required value'],
         })
       );
     }
   });
 
-  test('#validate (cumulative validity)', async function(assert) {
+  test('#validate (cumulative validity)', async function (assert) {
     assert.expect(1);
 
     const object = {
       firstName: '',
-      lastName: 'Smith'
+      lastName: 'Smith',
     };
 
     const constraints = {
@@ -513,7 +513,7 @@ module('validation', function() {
       },
       lastName() {
         return [present()];
-      }
+      },
     };
 
     try {
@@ -523,23 +523,23 @@ module('validation', function() {
         error,
         new ValidationError(null, {
           firstName: ['required value'],
-          lastName: []
+          lastName: [],
         })
       );
     }
   });
 
-  test('#validate (promises)', async function(assert) {
+  test('#validate (promises)', async function (assert) {
     assert.expect(2);
 
     let object = resolve({
-      amount: resolve(9)
+      amount: resolve(9),
     });
 
     const constraints = {
       amount() {
         return [greaterThan({ value: 10 })];
-      }
+      },
     };
 
     try {
@@ -548,13 +548,13 @@ module('validation', function() {
       assert.errorEqual(
         error,
         new ValidationError(null, {
-          amount: ['must be greater than 10']
+          amount: ['must be greater than 10'],
         })
       );
     }
 
     object = resolve({
-      amount: resolve(11)
+      amount: resolve(11),
     });
 
     const result = await validate(object, constraints);
@@ -562,42 +562,42 @@ module('validation', function() {
     assert.deepEqual(result, null);
   });
 
-  test('readme example', async function(assert) {
+  test('readme example', async function (assert) {
     const items = [
       {
         id: 1,
         type: 'text',
-        value: ''
+        value: '',
       },
       {
         id: 2,
         type: 'number',
-        value: ''
+        value: '',
       },
       {
         id: 3,
         type: 'email',
-        value: ''
+        value: '',
       },
       {
         id: 4,
         type: 'date',
-        value: ''
+        value: '',
       },
       {
         id: 5,
         type: 'unknown',
-        value: ''
-      }
+        value: '',
+      },
     ];
 
-    const knownType = type => {
+    const knownType = (type) => {
       if (!['text', 'number', 'email', 'date'].includes(type)) {
         return 'unknown type';
       }
     };
 
-    const constraints = item => {
+    const constraints = (item) => {
       return {
         type() {
           return [knownType];
@@ -616,7 +616,7 @@ module('validation', function() {
             default:
               return [];
           }
-        }
+        },
       };
     };
 
@@ -626,24 +626,24 @@ module('validation', function() {
       assert.deepEqual(error.result, [
         {
           type: [],
-          value: ['required value']
+          value: ['required value'],
         },
         {
           type: [],
-          value: ['required value', 'invalid number']
+          value: ['required value', 'invalid number'],
         },
         {
           type: [],
-          value: ['required value', 'invalid email']
+          value: ['required value', 'invalid email'],
         },
         {
           type: [],
-          value: ['required value', 'invalid date, expecting MM/DD/YYYY']
+          value: ['required value', 'invalid date, expecting MM/DD/YYYY'],
         },
         {
           type: ['unknown type'],
-          value: []
-        }
+          value: [],
+        },
       ]);
     }
   });

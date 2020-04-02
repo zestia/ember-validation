@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
 import greaterThanConstraint, {
-  greaterThan
+  greaterThan,
 } from '@zestia/ember-validation/constraints/greater-than';
 
-module('greater-than', function() {
-  test('#greaterThan', function(assert) {
+module('greater-than', function () {
+  test('#greaterThan', function (assert) {
     assert.expect(8);
 
     assert.strictEqual(greaterThan(undefined), false);
@@ -17,7 +17,7 @@ module('greater-than', function() {
     assert.strictEqual(greaterThan('aa', 'a'), true);
   });
 
-  test('#greaterThanConstraint', function(assert) {
+  test('#greaterThanConstraint', function (assert) {
     assert.expect(5);
 
     let func;

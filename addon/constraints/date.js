@@ -25,7 +25,7 @@ export function getLongDateFormat(format) {
 }
 
 export default function dateConstraint(options) {
-  return function(value) {
+  return function (value) {
     options = assign({ format: moment.ISO_8601 }, options);
 
     if (!isPresent(value) && options.optional) {

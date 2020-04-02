@@ -21,5 +21,5 @@ export {
   phoneNumber,
   number,
   bigDecimal,
-  truthy
+  truthy,
 };

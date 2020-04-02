@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
 import minLengthConstraint, {
-  minLength
+  minLength,
 } from '@zestia/ember-validation/constraints/min-length';
 
-module('min-length', function() {
-  test('#minLength', function(assert) {
+module('min-length', function () {
+  test('#minLength', function (assert) {
     assert.expect(18);
 
     assert.strictEqual(minLength(undefined), false);
@@ -27,7 +27,7 @@ module('min-length', function() {
     assert.strictEqual(minLength(['a'], 2), false);
   });
 
-  test('#minLengthConstraint', function(assert) {
+  test('#minLengthConstraint', function (assert) {
     assert.expect(3);
 
     let func;

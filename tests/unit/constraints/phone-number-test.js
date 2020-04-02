@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
 import phoneNumberConstraint, {
-  validPhoneNumber
+  validPhoneNumber,
 } from '@zestia/ember-validation/constraints/phone-number';
 
-module('phone-number', function() {
-  test('#validPhoneNumber', function(assert) {
+module('phone-number', function () {
+  test('#validPhoneNumber', function (assert) {
     assert.expect(7);
 
     assert.strictEqual(validPhoneNumber(), false);
@@ -16,7 +16,7 @@ module('phone-number', function() {
     assert.strictEqual(validPhoneNumber('123.456.789'), true);
   });
 
-  test('#phoneNumberConstraint', function(assert) {
+  test('#phoneNumberConstraint', function (assert) {
     assert.expect(4);
 
     let func;

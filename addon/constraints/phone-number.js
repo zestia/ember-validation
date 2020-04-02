@@ -7,7 +7,7 @@ export function validPhoneNumber(value) {
 }
 
 export default function phoneNumberConstraint(options = {}) {
-  return function(value) {
+  return function (value) {
     if (!isPresent(value) && options.optional) {
       return;
     }

@@ -5,7 +5,7 @@ export function lessThan(a, b) {
 }
 
 export default function lessThanConstraint(options = {}) {
-  return function(value) {
+  return function (value) {
     if (!isPresent(value) && options.optional) {
       return;
     }

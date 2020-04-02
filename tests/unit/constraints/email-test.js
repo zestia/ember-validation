@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
 import emailConstraint, {
-  validEmail
+  validEmail,
 } from '@zestia/ember-validation/constraints/email';
 
-module('email', function() {
-  test('#validEmail', function(assert) {
+module('email', function () {
+  test('#validEmail', function (assert) {
     assert.expect(8);
 
     assert.strictEqual(validEmail(), false);
@@ -17,7 +17,7 @@ module('email', function() {
     assert.strictEqual(validEmail('john.jones+test@example.com'), true);
   });
 
-  test('#emailConstraint', function(assert) {
+  test('#emailConstraint', function (assert) {
     assert.expect(4);
 
     let func;
