@@ -38,7 +38,7 @@ ember install @zestia/ember-validation
 - Supports promises ✔︎
 - Supports [adhoc constraints](#adhoc-constraints) ✔︎
 - Supports [dynamic constraints](#dynamic-constraints) ✔︎
-- Uses [ember-cli-moment-shim](https://github.com/jasonmit/ember-cli-moment-shim) for date validation. ✔︎
+- Uses [date-fns](https://date-fns.org) for date validation. ✔︎
 - Simple [reformatting](#utils) of error messages
 
 ## Example
@@ -75,7 +75,7 @@ const constraints = {
     return [present(), email()];
   },
   dateOfBirth() {
-    return [present(), date({ format: 'L' })];
+    return [present(), date({ format: 'dd/MM/yyyy' })];
   },
 };
 
@@ -175,7 +175,7 @@ const constraints = (item) => {
         case: 'email':
           return [present(), email()];
         case: 'date':
-          return [present(), date({ format: 'L' })];
+          return [present(), date({ format: 'dd/MM/yyyy' })];
         default:
           return [];
       }

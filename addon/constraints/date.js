@@ -1,43 +1,28 @@
-import { assign } from '@ember/polyfills';
 import { isPresent } from '@ember/utils';
-import moment from 'moment';
+import { isValid, parse } from 'date-fns/esm';
 
-export function validDate(value, format = moment.ISO_8601) {
-  if (isPresent(value)) {
-    return moment(value, format, true).isValid();
-  } else {
+export function validDate(value, format, referenceDate, options) {
+  if (!isPresent(value)) {
     return false;
   }
-}
 
-export function getLongDateFormat(format) {
-  try {
-    const fmt = moment.localeData().longDateFormat(format);
-
-    if (fmt) {
-      return fmt;
-    }
-  } catch (error) {
-    // swallow
+  if (!referenceDate) {
+    referenceDate = new Date();
   }
 
-  return format;
+  return isValid(parse(value, format, referenceDate, options));
 }
 
 export default function dateConstraint(options) {
   return function (value) {
-    options = assign({ format: moment.ISO_8601 }, options);
-
     if (!isPresent(value) && options.optional) {
       return;
     }
 
-    if (validDate(value, options.format)) {
+    if (validDate(value, options.format, options.referenceDate, options)) {
       return;
     }
 
-    const displayFormat = getLongDateFormat(options.format);
-
-    return options.message || `invalid date, expecting ${displayFormat}`;
+    return options.message || `invalid date, expecting ${options.format}`;
   };
 }
