@@ -3,6 +3,7 @@
 ## 3.0.0
 
 - Migrate away from moment.js for date validation to date-fns
+- Private functions that backed the constraints are no longer exposed
 
 ## 2.0.11
 
