@@ -1,25 +1,28 @@
 import { isPresent } from '@ember/utils';
 import { isValid, parse } from 'date-fns/esm';
 
-export function validDate(value, format, referenceDate, options) {
+export function validDate(value) {
   if (!isPresent(value)) {
     return false;
   }
 
-  if (!referenceDate) {
-    referenceDate = new Date();
-  }
-
-  return isValid(parse(value, format, referenceDate, options));
+  return isValid(parse(...arguments));
 }
 
 export default function dateConstraint(options) {
   return function (value) {
+    const format = options.format;
+    const referenceDate = options.referenceDate || new Date();
+    const dateFnsOptions = { ...options };
+
+    delete dateFnsOptions.format;
+    delete dateFnsOptions.referenceDate;
+
     if (!isPresent(value) && options.optional) {
       return;
     }
 
-    if (validDate(value, options.format, options.referenceDate, options)) {
+    if (validDate(value, format, referenceDate, options)) {
       return;
     }
 

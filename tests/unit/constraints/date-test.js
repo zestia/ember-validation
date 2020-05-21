@@ -3,18 +3,34 @@ import { setupTest } from 'ember-qunit';
 import dateConstraint, {
   validDate,
 } from '@zestia/ember-validation/constraints/date';
+import { enGB, enUS } from 'date-fns/esm/locale';
 
 module('date', function (hooks) {
   setupTest(hooks);
 
   test('#validDate', function (assert) {
-    assert.expect(5);
+    assert.expect(9);
 
-    assert.strictEqual(validDate('2020-12-25', 'yyyy-MM-dd'), true);
-    assert.strictEqual(validDate('2020-13-25', 'yyyy-MM-dd'), false);
-    assert.strictEqual(validDate('25/12/2020', 'dd/MM/yyyy'), true);
-    assert.strictEqual(validDate('12/25/2020', 'dd/MM/yyyy'), false);
-    assert.strictEqual(validDate('12/25/2020', 'MM/dd/yyyy'), true);
+    const ref = new Date();
+
+    assert.strictEqual(validDate('', 'yyyy-MM-dd', ref), false);
+    assert.strictEqual(validDate('2020-12-25', 'yyyy-MM-dd', ref), true);
+    assert.strictEqual(validDate('2020-13-25', 'yyyy-MM-dd', ref), false);
+    assert.strictEqual(validDate('25/12/2020', 'dd/MM/yyyy', ref), true);
+    assert.strictEqual(validDate('12/25/2020', 'dd/MM/yyyy', ref), false);
+    assert.strictEqual(validDate('12/25/2020', 'MM/dd/yyyy', ref), true);
+    assert.strictEqual(
+      validDate('25/12/2020', 'P', ref, { locale: enGB }),
+      true
+    );
+    assert.strictEqual(
+      validDate('25/12/2020', 'P', ref, { locale: enUS }),
+      false
+    );
+    assert.strictEqual(
+      validDate('12/25/2020', 'P', ref, { locale: enUS }),
+      true
+    );
   });
 
   test('#dateConstraint', function (assert) {

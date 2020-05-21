@@ -638,7 +638,7 @@ module('validation', function () {
         },
         {
           type: [],
-          value: ['required value', 'invalid date, expecting MM/DD/YYYY'],
+          value: ['required value', 'invalid date, expecting dd/MM/yyyy'],
         },
         {
           type: ['unknown type'],

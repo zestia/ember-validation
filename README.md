@@ -96,7 +96,7 @@ try {
    *    ],
    *    dateOfBirth: [
    *      'required value',
-   *      'invalid date, expecting MM/DD/YYYY'
+   *      'invalid date, expecting dd/MM/yyyy'
    *    ]
    *  }
    */
@@ -199,7 +199,7 @@ try {
    *      value: ['required value', 'invalid email']
    *    },
    *    {
-   *      value: ['required value', 'invalid date, expecting MM/DD/YYYY']
+   *      value: ['required value', 'invalid date, expecting dd/MM/yyyy']
    *    }
    *  ]
    */
