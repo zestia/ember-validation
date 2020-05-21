@@ -1,6 +1,6 @@
 {
   "name": "@zestia/ember-validation",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Simple validation utilities for Ember apps",
   "directories": {
     "doc": "doc",
