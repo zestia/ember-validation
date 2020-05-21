@@ -39,7 +39,7 @@ ember install @zestia/ember-validation
 - Supports [adhoc constraints](#adhoc-constraints) ✔︎
 - Supports [dynamic constraints](#dynamic-constraints) ✔︎
 - Uses [date-fns](https://date-fns.org) for date validation. ✔︎
-- Simple [reformatting](#utils) of error messages
+- Simple [reformatting](#utils) of error messages ✔︎
 
 ## Example
 
@@ -50,7 +50,7 @@ import {
   maxLength,
   truthy,
   email,
-  date
+  date,
 } from '@zestia/ember-validation/constraints';
 
 const person = {
@@ -58,14 +58,14 @@ const person = {
   name: '',
   terms: false,
   emailAddress: 'joe@bloggs',
-  dateOfBirth: null
+  dateOfBirth: null,
 };
 
 const constraints = {
   name() {
     return [
       present({ message: 'please enter your name' }),
-      maxLength({ max: 255 })
+      maxLength({ max: 255 }),
     ];
   },
   terms() {
@@ -76,7 +76,7 @@ const constraints = {
   },
   dateOfBirth() {
     return [present(), date({ format: 'dd/MM/yyyy' })];
-  }
+  },
 };
 
 try {
@@ -110,7 +110,7 @@ You can validate properties that aren't actually on the object being validated. 
 ```javascript
 const person = {
   firstName: 'Joe',
-  lastName: 'Bloggs'
+  lastName: 'Bloggs',
 };
 
 const constraints = {
@@ -124,7 +124,7 @@ const constraints = {
 
   name() {
     return [nameIsUnique];
-  }
+  },
 };
 
 try {
