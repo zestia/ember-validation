@@ -1,114 +1,81 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import dateConstraint, {
-  validDate,
-  getLongDateFormat,
-} from '@zestia/ember-validation/constraints/date';
-import moment from 'moment';
+import date from '@zestia/ember-validation/constraints/date';
+import { enGB, enUS } from 'date-fns/esm/locale';
 
 module('date', function (hooks) {
   setupTest(hooks);
 
-  hooks.beforeEach(function () {
-    moment.locale('en-gb');
+  test('it returns nothing when valid', function (assert) {
+    assert.expect(1);
+
+    assert.strictEqual(date({ format: 'dd/MM/yyyy' })('25/12/2020'), undefined);
   });
 
-  test('#validDate', function (assert) {
-    assert.expect(16);
+  test('it returns default message if invalid', function (assert) {
+    assert.expect(1);
 
-    assert.strictEqual(validDate(), false);
-    assert.strictEqual(validDate('xyz'), false);
-    assert.strictEqual(validDate('2015-12-25'), true);
-    assert.strictEqual(validDate('14 July 2015 00:00', 'LLL'), true);
-
-    // Specific format
-
-    assert.strictEqual(validDate('', 'D-M/YY'), false);
-    assert.strictEqual(validDate('1-22/85', 'D-M/YY'), false);
-    assert.strictEqual(validDate('22-1/85', 'D-M/YY'), true);
-
-    // Multiple specific formats
-
-    assert.strictEqual(validDate('1/85', ['M.YY', 'M-YY']), false);
-    assert.strictEqual(validDate('1.85', ['M.YY', 'M-YY']), true);
-    assert.strictEqual(validDate('1-85', ['M.YY', 'M-YY']), true);
-
-    // Specific local format
-
-    assert.strictEqual(validDate('', 'L'), false);
-    assert.strictEqual(validDate('01/22/1985', 'L'), false);
-    assert.strictEqual(validDate('22/01/1985', 'L'), true);
-
-    moment.locale('en-us');
-
-    assert.strictEqual(validDate('', 'L'), false);
-    assert.strictEqual(validDate('22/01/1985', 'L'), false);
-    assert.strictEqual(validDate('01/22/1985', 'L'), true);
+    assert.equal(
+      date({ format: 'dd/MM/yyyy' })('12/25/2020'),
+      'invalid date, expecting dd/MM/yyyy'
+    );
   });
 
-  test('#getLongDateFormat', function (assert) {
-    assert.expect(4);
+  test('it returns nothing if invalid, but optional', function (assert) {
+    assert.expect(1);
 
-    assert.equal(
-      getLongDateFormat('L'),
-      'DD/MM/YYYY',
-      'converts shorthand to longhand'
+    assert.strictEqual(
+      date({ optional: true, format: 'dd/MM/yyyy' })(''),
+      undefined
     );
-
-    moment.locale('en-us');
-
-    assert.equal(
-      getLongDateFormat('L'),
-      'MM/DD/YYYY',
-      'converts shorthand to longhand, responds to change of locale'
-    );
-
-    assert.equal(
-      getLongDateFormat('XYZ'),
-      'XYZ',
-      'lets incorrect formats pass through'
-    );
-
-    assert.equal(getLongDateFormat(), null, 'does not blow up');
   });
 
-  test('#dateConstraint', function (assert) {
-    assert.expect(6);
-
-    let func;
-
-    func = dateConstraint({ format: 'D-M/YY' });
-
-    assert.equal(func('1-12/98'), null, 'returns nothing when valid');
+  test('it returns custom message if invalid', function (assert) {
+    assert.expect(1);
 
     assert.equal(
-      func('foo'),
-      'invalid date, expecting D-M/YY',
-      'returns default message if invalid including specified format'
+      date({ message: 'bad date', format: 'dd/MM/yyyy' })('xyz'),
+      'bad date'
     );
+  });
 
-    func = dateConstraint({ format: 'L' });
+  test('inputs', function (assert) {
+    assert.expect(9);
 
     assert.equal(
-      func('foo'),
-      'invalid date, expecting DD/MM/YYYY',
-      'returns default message if invalid including parsed format'
+      date({ format: 'yyyy-MM-dd' })(''),
+      'invalid date, expecting yyyy-MM-dd'
     );
 
-    moment.locale('en-us');
+    assert.strictEqual(date({ format: 'yyyy-MM-dd' })('2020-12-25'), undefined);
+
+    assert.strictEqual(
+      date({ format: 'yyyy-MM-dd' })('2020-13-25'),
+      'invalid date, expecting yyyy-MM-dd'
+    );
+
+    assert.strictEqual(date({ format: 'dd/MM/yyyy' })('25/12/2020'), undefined);
+
+    assert.strictEqual(
+      date({ format: 'dd/MM/yyyy' })('12/25/2020'),
+      'invalid date, expecting dd/MM/yyyy'
+    );
+
+    assert.strictEqual(date({ format: 'MM/dd/yyyy' })('12/25/2020'), undefined);
+
+    assert.strictEqual(
+      date({ format: 'P', locale: enGB })('25/12/2020'),
+      undefined
+    );
 
     assert.equal(
-      func('foo'),
-      'invalid date, expecting MM/DD/YYYY',
-      'returns default message if invalid, including localised format'
+      date({ format: 'P', locale: enUS })('25/12/2020'),
+      'invalid date, expecting P'
     );
 
-    func = dateConstraint({ optional: true });
-
-    assert.equal(func(''), null, 'returns nothing if invalid, but optional');
-
-    func = dateConstraint({ message: 'bad date', optional: true });
-
-    assert.equal(func('xyz'), 'bad date', 'returns custom message if invalid');
+    assert.strictEqual(
+      date({ format: 'P', locale: enUS })('12/25/2020'),
+      undefined
+    );
   });
 });

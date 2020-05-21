@@ -1,24 +1,22 @@
 import { module, test } from 'qunit';
-import presentConstraint from '@zestia/ember-validation/constraints/present';
+import present from '@zestia/ember-validation/constraints/present';
 
 module('present', function () {
-  test('#presentConstraint', function (assert) {
-    assert.expect(3);
+  test('it returns nothing when valid', function (assert) {
+    assert.expect(1);
 
-    let func;
+    assert.strictEqual(present()('hi'), undefined);
+  });
 
-    func = presentConstraint();
+  test('it returns default message if invalid', function (assert) {
+    assert.expect(1);
 
-    assert.equal(func('hi'), null, 'returns nothing when valid');
+    assert.equal(present()(''), 'required value');
+  });
 
-    assert.equal(
-      func(''),
-      'required value',
-      'returns default message if invalid'
-    );
+  test('it returns custom message if invalid', function (assert) {
+    assert.expect(1);
 
-    func = presentConstraint({ message: 'nothing there' });
-
-    assert.equal(func(), 'nothing there', 'returns custom message if invalid');
+    assert.equal(present({ message: 'nothing there' })(), 'nothing there');
   });
 });

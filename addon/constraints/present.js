@@ -1,6 +1,6 @@
 import { isPresent } from '@ember/utils';
 
-export default function presentConstraint(options = {}) {
+export default function present(options = {}) {
   return function (value) {
     if (isPresent(value)) {
       return;

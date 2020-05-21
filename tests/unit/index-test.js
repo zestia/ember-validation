@@ -145,7 +145,7 @@ module('validation', function () {
     const object = {
       firstName: '',
       emailAddress: '',
-      dob: '22-1-85',
+      dob: '22/01/1985',
     };
 
     const constraints = {
@@ -156,7 +156,7 @@ module('validation', function () {
         return [email()];
       },
       dob() {
-        return [date({ format: 'D-M-YY' })];
+        return [date({ format: 'dd/MM/yyyy' })];
       },
     };
 
@@ -612,7 +612,7 @@ module('validation', function () {
             case 'email':
               return [present(), email()];
             case 'date':
-              return [present(), date({ format: 'L' })];
+              return [present(), date({ format: 'dd/MM/yyyy' })];
             default:
               return [];
           }
@@ -638,7 +638,7 @@ module('validation', function () {
         },
         {
           type: [],
-          value: ['required value', 'invalid date, expecting MM/DD/YYYY'],
+          value: ['required value', 'invalid date, expecting dd/MM/yyyy'],
         },
         {
           type: ['unknown type'],

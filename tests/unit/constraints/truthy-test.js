@@ -1,28 +1,25 @@
 import { module, test } from 'qunit';
-import truthyConstraint from '@zestia/ember-validation/constraints/truthy';
+import truthy from '@zestia/ember-validation/constraints/truthy';
 
 module('truthy', function () {
-  test('#truthyConstraint', function (assert) {
-    assert.expect(3);
+  test('it returns nothing when valid', function (assert) {
+    assert.expect(1);
 
-    let func;
+    assert.strictEqual(truthy()(true), undefined);
+  });
 
-    func = truthyConstraint();
+  test('it returns the default message if invalid', function (assert) {
+    assert.expect(1);
 
-    assert.equal(func(true), null, 'returns nothing when valid');
+    assert.equal(truthy()(false), 'must be truthy');
+  });
 
-    assert.equal(
-      func(false),
-      'must be truthy',
-      'returns default message if invalid'
-    );
-
-    func = truthyConstraint({ message: 'please accept the terms' });
+  test('it returns a custom message if invalid', function (assert) {
+    assert.expect(1);
 
     assert.equal(
-      func(),
-      'please accept the terms',
-      'returns custom message if invalid'
+      truthy({ message: 'please accept the terms' })(),
+      'please accept the terms'
     );
   });
 });

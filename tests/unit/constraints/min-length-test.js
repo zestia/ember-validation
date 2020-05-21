@@ -1,53 +1,45 @@
 import { module, test } from 'qunit';
-import minLengthConstraint, {
-  minLength,
-} from '@zestia/ember-validation/constraints/min-length';
+import minLength from '@zestia/ember-validation/constraints/min-length';
 
-module('min-length', function () {
-  test('#minLength', function (assert) {
-    assert.expect(18);
+module('minLength', function () {
+  test('it returns nothing when valid', function (assert) {
+    assert.expect(1);
 
-    assert.strictEqual(minLength(undefined), false);
-    assert.strictEqual(minLength(null), false);
-    assert.strictEqual(minLength(undefined, 1), false);
-    assert.strictEqual(minLength(null, 1), false);
-    assert.strictEqual(minLength(undefined, 0), true);
-    assert.strictEqual(minLength(null, 0), true);
-    assert.strictEqual(minLength(''), false);
-    assert.strictEqual(minLength('', 1), false);
-    assert.strictEqual(minLength('', 0), true);
-    assert.strictEqual(minLength('a', 0), true);
-    assert.strictEqual(minLength('a', 1), true);
-    assert.strictEqual(minLength('ab', 1), true);
-    assert.strictEqual(minLength('abc', 4), false);
-    assert.strictEqual(minLength('abcd', 4), true);
-    assert.strictEqual(minLength(10, 2), true);
-    assert.strictEqual(minLength(100, 2), true);
-    assert.strictEqual(minLength(['a', 'b'], 2), true);
-    assert.strictEqual(minLength(['a'], 2), false);
+    assert.strictEqual(minLength({ min: 4 })('hiya'), undefined);
   });
 
-  test('#minLengthConstraint', function (assert) {
-    assert.expect(3);
+  test('it returns default message if invalid', function (assert) {
+    assert.expect(1);
 
-    let func;
+    assert.equal(minLength({ min: 3 })('hi'), 'length must be at least 3');
+  });
 
-    func = minLengthConstraint({ min: 4 });
-
-    assert.equal(func('hiya'), null, 'returns nothing when valid');
-
-    assert.equal(
-      func('hi'),
-      'length must be at least 4',
-      'returns default message if invalid'
-    );
-
-    func = minLengthConstraint({ min: 6, message: 'too short' });
+  test('it returns custom message if invalid', function (assert) {
+    assert.expect(1);
 
     assert.equal(
-      func('hello'),
+      minLength({ min: 6, message: 'too short' })('hello'),
       'too short',
       'returns custom message if invalid'
     );
+  });
+
+  test('inputs', function (assert) {
+    assert.expect(14);
+
+    assert.equal(minLength({ min: 1 })(''), 'length must be at least 1');
+    assert.equal(minLength({ min: 1 })(), 'length must be at least 1');
+    assert.equal(minLength({ min: 2 })(['a']), 'length must be at least 2');
+    assert.equal(minLength({ min: 4 })('abc'), 'length must be at least 4');
+    assert.strictEqual(minLength({ min: 0 })(''), undefined);
+    assert.strictEqual(minLength({ min: 0 })('a'), undefined);
+    assert.strictEqual(minLength({ min: 0 })(), undefined);
+    assert.strictEqual(minLength({ min: 0 })(null), undefined);
+    assert.strictEqual(minLength({ min: 1 })('a'), undefined);
+    assert.strictEqual(minLength({ min: 1 })('ab'), undefined);
+    assert.strictEqual(minLength({ min: 1 })('abcd'), undefined);
+    assert.strictEqual(minLength({ min: 2 })(['a', 'b']), undefined);
+    assert.strictEqual(minLength({ min: 2 })(10), undefined);
+    assert.strictEqual(minLength({ min: 2 })(100), undefined);
   });
 });

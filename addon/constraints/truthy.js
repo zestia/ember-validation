@@ -1,4 +1,4 @@
-export default function truthyConstraint(options = {}) {
+export default function truthy(options = {}) {
   return function (value) {
     if (value) {
       return;
