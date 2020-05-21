@@ -1,7 +1,7 @@
 import { isPresent } from '@ember/utils';
 import { isValid, parse } from 'date-fns/esm';
 
-export default function dateConstraint(options) {
+export default function date(options) {
   return function (value) {
     const format = options.format;
     const referenceDate = options.referenceDate || new Date();

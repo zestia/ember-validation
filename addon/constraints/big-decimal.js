@@ -3,7 +3,7 @@ import { isPresent } from '@ember/utils';
 const fullPattern = /^-?(\d+)(?:\.(\d+))?$/;
 const decimalPattern = /^(\d*?)0*$/;
 
-export default function bigDecimalConstraint(_options = {}) {
+export default function bigDecimal(_options = {}) {
   const options = {
     maxIntegerDigits: 12,
     maxDecimalDigits: 3,
