@@ -1,84 +1,101 @@
 import { module, test } from 'qunit';
-import bigDecimaConstraint from '@zestia/ember-validation/constraints/big-decimal';
+import bigDecimal from '@zestia/ember-validation/constraints/big-decimal';
 
-module('big-decimal', function () {
-  test('#bigDecimaConstraint', function (assert) {
-    assert.expect(12);
+module('bigDecimal', function () {
+  test('it allows blank values if marked as optional', function (assert) {
+    assert.expect(1);
 
-    let func;
+    assert.strictEqual(bigDecimal({ optional: true })(''), undefined);
+  });
 
-    func = bigDecimaConstraint({ optional: true });
-
-    assert.equal(func(''), null, 'allows blank values if marked as optional');
-
-    func = bigDecimaConstraint({ maxIntegerDigits: 5, maxDecimalDigits: 0 });
+  test('it returns message if value is blank', function (assert) {
+    assert.expect(1);
 
     assert.equal(
-      func(),
-      'value must be a number',
-      'returns validation message if value is blank'
+      bigDecimal({ maxIntegerDigits: 5, maxDecimalDigits: 0 })(),
+      'value must be a number'
     );
+  });
 
-    assert.equal(
-      func('12345'),
-      null,
-      'honours the maxIntegerDigits setting (pass)'
-    );
-
-    assert.equal(
-      func('123456'),
-      'value too large',
-      'honours the maxIntegerDigits setting (fail)'
-    );
-
-    assert.equal(
-      func('123.00'),
-      null,
-      'ignores trailing zeroes when applying maxDecimalDigits check of 0'
-    );
-
-    assert.equal(
-      func('-12345'),
-      null,
-      'does not count "-" as part of the integer part check'
-    );
-
-    func = bigDecimaConstraint({ maxIntegerDigits: 5, maxDecimalDigits: 2 });
-
-    assert.equal(
-      func('12345.67'),
-      null,
-      'decimal digits are not counted as part of the maxIntegerDigits check'
-    );
-
-    assert.equal(
-      func('1.23'),
-      null,
-      'honours the maxDecimalDigits setting (pass)'
-    );
-
-    assert.equal(
-      func('1.234'),
-      'value must have a maximum of 2 decimal places',
-      'honours the maxDecimalDigits setting (fail)'
-    );
-
-    assert.equal(
-      func('1.230'),
-      null,
-      'ignores trailing zeroes when applying maxDecimalDigits check'
-    );
-
-    assert.equal(
-      func('bad'),
-      'value must be a number',
-      'should fail for alpha characters'
-    );
+  test('honours the maxIntegerDigits option', function (assert) {
+    assert.expect(2);
 
     assert.strictEqual(
-      func('123.'),
-      'value must be a number',
-      'should fail for incomplete numbers'
+      bigDecimal({ maxIntegerDigits: 5, maxDecimalDigits: 0 })('12345'),
+      undefined
+    );
+
+    assert.equal(
+      bigDecimal({ maxIntegerDigits: 5, maxDecimalDigits: 0 })('123456'),
+      'value too large'
+    );
+  });
+
+  test('it ignores trailing zeros when checking maxDecimalDigits of 0', function (assert) {
+    assert.expect(1);
+
+    assert.strictEqual(
+      bigDecimal({ maxIntegerDigits: 5, maxDecimalDigits: 0 })('123.00'),
+      undefined
+    );
+  });
+
+  test('it does not count dash as part of the integer check', function (assert) {
+    assert.expect(1);
+
+    assert.strictEqual(
+      bigDecimal({ maxIntegerDigits: 5, maxDecimalDigits: 0 })('-12345'),
+      undefined
+    );
+  });
+
+  test('decimal digits are not counted as part of maxIntegerDigits check', function (assert) {
+    assert.expect(1);
+
+    assert.equal(
+      bigDecimal({ maxIntegerDigits: 5, maxDecimalDigits: 2 })('12345.67'),
+      undefined
+    );
+  });
+
+  test('it honours the maxDecimalDigits option', function (assert) {
+    assert.expect(2);
+
+    assert.strictEqual(
+      bigDecimal({ maxIntegerDigits: 5, maxDecimalDigits: 2 })('1.23'),
+      undefined
+    );
+
+    assert.equal(
+      bigDecimal({ maxIntegerDigits: 5, maxDecimalDigits: 2 })('1.234'),
+      'value must have a maximum of 2 decimal places'
+    );
+  });
+
+  test('it ignores trailing zeros when checking maxDecimalDigits', function (assert) {
+    assert.expect(1);
+
+    assert.strictEqual(
+      bigDecimal({ maxIntegerDigits: 5, maxDecimalDigits: 2 })('1.230'),
+      undefined
+    );
+  });
+
+  test('it fails for alpha characters', function (assert) {
+    assert.expect(1);
+
+    assert.equal(
+      bigDecimal({ maxIntegerDigits: 5, maxDecimalDigits: 2 })('bad'),
+      'value must be a number'
+    );
+  });
+
+  test('it should fail for incomplete numbers', function (assert) {
+    assert.expect(1);
+
+    assert.equal(
+      bigDecimal({ maxIntegerDigits: 5, maxDecimalDigits: 2 })('123.'),
+      'value must be a number'
     );
   });
 });

@@ -1,46 +1,40 @@
 import { module, test } from 'qunit';
-import phoneNumberConstraint, {
-  validPhoneNumber,
-} from '@zestia/ember-validation/constraints/phone-number';
+import phoneNumber from '@zestia/ember-validation/constraints/phone-number';
 
 module('phone-number', function () {
-  test('#validPhoneNumber', function (assert) {
-    assert.expect(7);
+  test('it returns nothing when valid', function (assert) {
+    assert.expect(1);
 
-    assert.strictEqual(validPhoneNumber(), false);
-    assert.strictEqual(validPhoneNumber(''), false);
-    assert.strictEqual(validPhoneNumber('a'), false);
-    assert.strictEqual(validPhoneNumber('abc123'), false);
-    assert.strictEqual(validPhoneNumber('012345'), true);
-    assert.strictEqual(validPhoneNumber('(123) 456-789'), true);
-    assert.strictEqual(validPhoneNumber('123.456.789'), true);
+    assert.strictEqual(phoneNumber()('079123456789'), undefined);
   });
 
-  test('#phoneNumberConstraint', function (assert) {
-    assert.expect(4);
+  test('it returns default message if invalid', function (assert) {
+    assert.expect(1);
 
-    let func;
+    assert.equal(phoneNumber()('xyz'), 'invalid phone number');
+  });
 
-    func = phoneNumberConstraint();
+  test('it returns nothing if invalid, but is optional', function (assert) {
+    assert.expect(1);
 
-    assert.equal(func('079123456789'), null, 'returns nothing when valid');
+    assert.strictEqual(phoneNumber({ optional: true })(''), undefined);
+  });
 
-    assert.equal(
-      func('xyz'),
-      'invalid phone number',
-      'returns default message if invalid'
-    );
+  test('it returns custom message if invalid', function (assert) {
+    assert.expect(1);
 
-    func = phoneNumberConstraint({ optional: true });
+    assert.equal(phoneNumber({ message: 'bad phone' })('foo@bar'), 'bad phone');
+  });
 
-    assert.equal(func(''), null, 'returns nothing if invalid, but optional');
+  test('inputs', function (assert) {
+    assert.expect(7);
 
-    func = phoneNumberConstraint({ message: 'bad phone', optional: true });
-
-    assert.equal(
-      func('foo@bar'),
-      'bad phone',
-      'returns custom message if invalid'
-    );
+    assert.equal(phoneNumber()(), 'invalid phone number');
+    assert.equal(phoneNumber()(''), 'invalid phone number');
+    assert.equal(phoneNumber()('a'), 'invalid phone number');
+    assert.equal(phoneNumber()('abc123'), 'invalid phone number');
+    assert.strictEqual(phoneNumber()('012345'), undefined);
+    assert.strictEqual(phoneNumber()('(123) 456-789'), undefined);
+    assert.strictEqual(phoneNumber()('123.456.789'), undefined);
   });
 });

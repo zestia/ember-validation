@@ -1,14 +1,6 @@
 import { isPresent } from '@ember/utils';
 import { isValid, parse } from 'date-fns/esm';
 
-export function validDate(value) {
-  if (!isPresent(value)) {
-    return false;
-  }
-
-  return isValid(parse(...arguments));
-}
-
 export default function dateConstraint(options) {
   return function (value) {
     const format = options.format;
@@ -22,7 +14,7 @@ export default function dateConstraint(options) {
       return;
     }
 
-    if (validDate(value, format, referenceDate, options)) {
+    if (isValid(parse(value, format, referenceDate, options))) {
       return;
     }
 

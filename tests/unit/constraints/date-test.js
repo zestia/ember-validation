@@ -1,59 +1,81 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import dateConstraint, {
-  validDate,
-} from '@zestia/ember-validation/constraints/date';
+import date from '@zestia/ember-validation/constraints/date';
 import { enGB, enUS } from 'date-fns/esm/locale';
 
 module('date', function (hooks) {
   setupTest(hooks);
 
-  test('#validDate', function (assert) {
-    assert.expect(9);
+  test('it returns nothing when valid', function (assert) {
+    assert.expect(1);
 
-    const ref = new Date();
+    assert.strictEqual(date({ format: 'dd/MM/yyyy' })('25/12/2020'), undefined);
+  });
 
-    assert.strictEqual(validDate('', 'yyyy-MM-dd', ref), false);
-    assert.strictEqual(validDate('2020-12-25', 'yyyy-MM-dd', ref), true);
-    assert.strictEqual(validDate('2020-13-25', 'yyyy-MM-dd', ref), false);
-    assert.strictEqual(validDate('25/12/2020', 'dd/MM/yyyy', ref), true);
-    assert.strictEqual(validDate('12/25/2020', 'dd/MM/yyyy', ref), false);
-    assert.strictEqual(validDate('12/25/2020', 'MM/dd/yyyy', ref), true);
-    assert.strictEqual(
-      validDate('25/12/2020', 'P', ref, { locale: enGB }),
-      true
-    );
-    assert.strictEqual(
-      validDate('25/12/2020', 'P', ref, { locale: enUS }),
-      false
-    );
-    assert.strictEqual(
-      validDate('12/25/2020', 'P', ref, { locale: enUS }),
-      true
+  test('it returns default message if invalid', function (assert) {
+    assert.expect(1);
+
+    assert.equal(
+      date({ format: 'dd/MM/yyyy' })('12/25/2020'),
+      'invalid date, expecting dd/MM/yyyy'
     );
   });
 
-  test('#dateConstraint', function (assert) {
-    assert.expect(4);
+  test('it returns nothing if invalid, but optional', function (assert) {
+    assert.expect(1);
 
-    let func;
+    assert.strictEqual(
+      date({ optional: true, format: 'dd/MM/yyyy' })(''),
+      undefined
+    );
+  });
 
-    func = dateConstraint({ format: 'dd/MM/yyyy' });
-
-    assert.equal(func('25/12/2020'), null, 'returns nothing when valid');
+  test('it returns custom message if invalid', function (assert) {
+    assert.expect(1);
 
     assert.equal(
-      func('12/25/2020'),
-      'invalid date, expecting dd/MM/yyyy',
-      'returns default message if invalid including specified format'
+      date({ message: 'bad date', format: 'dd/MM/yyyy' })('xyz'),
+      'bad date'
+    );
+  });
+
+  test('inputs', function (assert) {
+    assert.expect(9);
+
+    assert.equal(
+      date({ format: 'yyyy-MM-dd' })(''),
+      'invalid date, expecting yyyy-MM-dd'
     );
 
-    func = dateConstraint({ optional: true });
+    assert.strictEqual(date({ format: 'yyyy-MM-dd' })('2020-12-25'), undefined);
 
-    assert.equal(func(''), null, 'returns nothing if invalid, but optional');
+    assert.strictEqual(
+      date({ format: 'yyyy-MM-dd' })('2020-13-25'),
+      'invalid date, expecting yyyy-MM-dd'
+    );
 
-    func = dateConstraint({ message: 'bad date', optional: true });
+    assert.strictEqual(date({ format: 'dd/MM/yyyy' })('25/12/2020'), undefined);
 
-    assert.equal(func('xyz'), 'bad date', 'returns custom message if invalid');
+    assert.strictEqual(
+      date({ format: 'dd/MM/yyyy' })('12/25/2020'),
+      'invalid date, expecting dd/MM/yyyy'
+    );
+
+    assert.strictEqual(date({ format: 'MM/dd/yyyy' })('12/25/2020'), undefined);
+
+    assert.strictEqual(
+      date({ format: 'P', locale: enGB })('25/12/2020'),
+      undefined
+    );
+
+    assert.equal(
+      date({ format: 'P', locale: enUS })('25/12/2020'),
+      'invalid date, expecting P'
+    );
+
+    assert.strictEqual(
+      date({ format: 'P', locale: enUS })('12/25/2020'),
+      undefined
+    );
   });
 });

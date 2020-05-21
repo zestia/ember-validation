@@ -1,53 +1,48 @@
 import { module, test } from 'qunit';
-import maxLengthConstraint, {
-  maxLength,
-} from '@zestia/ember-validation/constraints/max-length';
+import maxLength from '@zestia/ember-validation/constraints/max-length';
 
-module('max-length', function () {
-  test('#maxLength', function (assert) {
-    assert.expect(18);
+module('maxLength', function () {
+  test('it returns nothing when valid', function (assert) {
+    assert.expect(1);
 
-    assert.strictEqual(maxLength(undefined), false);
-    assert.strictEqual(maxLength(null), false);
-    assert.strictEqual(maxLength(undefined, 9), true);
-    assert.strictEqual(maxLength(null, 4), true);
-    assert.strictEqual(maxLength(undefined, 0), true);
-    assert.strictEqual(maxLength(null, 0), true);
-    assert.strictEqual(maxLength(''), false);
-    assert.strictEqual(maxLength('', 1), true);
-    assert.strictEqual(maxLength('', 0), true);
-    assert.strictEqual(maxLength('a', 0), false);
-    assert.strictEqual(maxLength('a', 1), true);
-    assert.strictEqual(maxLength('ab', 1), false);
-    assert.strictEqual(maxLength('abc', 4), true);
-    assert.strictEqual(maxLength('abcd', 4), true);
-    assert.strictEqual(maxLength(10, 2), true);
-    assert.strictEqual(maxLength(100, 2), false);
-    assert.strictEqual(maxLength(['a', 'b'], 2), true);
-    assert.strictEqual(maxLength(['a', 'b'], 1), false);
+    assert.strictEqual(maxLength({ max: 2 })('hi'), undefined);
   });
 
-  test('#maxLengthConstraint', function (assert) {
-    assert.expect(3);
+  test('it returns default message if invalid', function (assert) {
+    assert.expect(1);
 
-    let func;
+    assert.equal(maxLength({ max: 3 })('hiya'), 'length is too long (max 3)');
+  });
 
-    func = maxLengthConstraint({ max: 2 });
-
-    assert.equal(func('hi'), null, 'returns nothing when valid');
-
-    assert.equal(
-      func('hiya'),
-      'length is too long (max 2)',
-      'returns default message if invalid'
-    );
-
-    func = maxLengthConstraint({ max: 4, message: 'exceeds max' });
+  test('it returns custom message if invalid', function (assert) {
+    assert.expect(1);
 
     assert.equal(
-      func('hello'),
-      'exceeds max',
-      'returns custom message if invalid'
+      maxLength({ max: 4, message: 'exceeds max' })('hello'),
+      'exceeds max'
     );
+  });
+
+  test('inputs', function (assert) {
+    assert.expect(15);
+
+    assert.equal(maxLength({ max: 0 })('a'), 'length is too long (max 0)');
+    assert.equal(maxLength({ max: 1 })('ab', 1), 'length is too long (max 1)');
+    assert.equal(
+      maxLength({ max: 1 })(['a', 'b'], 1),
+      'length is too long (max 1)'
+    );
+    assert.equal(maxLength({ max: 2 })(100), 'length is too long (max 2)');
+    assert.strictEqual(maxLength({ max: 0 })(''), undefined);
+    assert.strictEqual(maxLength({ max: 1 })(''), undefined);
+    assert.strictEqual(maxLength({ max: 1 })('a'), undefined);
+    assert.strictEqual(maxLength({ max: 4 })('abc'), undefined);
+    assert.strictEqual(maxLength({ max: 4 })('abcd'), undefined);
+    assert.strictEqual(maxLength({ max: 2 })(['a', 'b']), undefined);
+    assert.strictEqual(maxLength({ max: 2 })(10), undefined);
+    assert.strictEqual(maxLength({ max: 0 })(null), undefined);
+    assert.strictEqual(maxLength({ max: 4 })(null), undefined);
+    assert.strictEqual(maxLength({ max: 0 })(), undefined);
+    assert.strictEqual(maxLength({ max: 9 })(), undefined);
   });
 });

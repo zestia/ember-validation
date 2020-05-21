@@ -1,20 +1,16 @@
 const { isArray } = Array;
 
-export function maxLength(a, b) {
-  let length = 0;
-
-  if (isArray(a)) {
-    length = a.length;
-  } else if (typeof a === 'string' || typeof a === 'number') {
-    length = `${a}`.length;
-  }
-
-  return length <= b;
-}
-
-export default function maxLengthConstraint(options = {}) {
+export default function maxLength(options = {}) {
   return function (value) {
-    if (maxLength(value, options.max)) {
+    let length = 0;
+
+    if (isArray(value)) {
+      length = value.length;
+    } else if (typeof value === 'string' || typeof value === 'number') {
+      length = `${value}`.length;
+    }
+
+    if (length <= options.max) {
       return;
     }
 

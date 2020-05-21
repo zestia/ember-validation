@@ -1,49 +1,47 @@
 import { module, test } from 'qunit';
-import lessThanConstraint, {
-  lessThan,
-} from '@zestia/ember-validation/constraints/less-than';
+import lessThan from '@zestia/ember-validation/constraints/less-than';
 
-module('less-than', function () {
-  test('#lessThan', function (assert) {
-    assert.expect(8);
+module('lessThan', function () {
+  test('it returns nothing when valid', function (assert) {
+    assert.expect(1);
 
-    assert.strictEqual(lessThan(undefined), false);
-    assert.strictEqual(lessThan(null), false);
-    assert.strictEqual(lessThan(1, 2), true);
-    assert.strictEqual(lessThan(2, 1), false);
-    assert.strictEqual(lessThan(3, 3), false);
-    assert.strictEqual(lessThan(-10, -5), true);
-    assert.strictEqual(lessThan('a', 'aa'), true);
-    assert.strictEqual(lessThan('aa', 'a'), false);
+    assert.strictEqual(lessThan({ value: 10 })(9), undefined);
   });
 
-  test('#lessThanConstraint', function (assert) {
-    assert.expect(5);
+  test('it returns default message if invalid', function (assert) {
+    assert.expect(1);
 
-    let func;
+    assert.equal(lessThan({ value: 10 })(10), 'must be less than 10');
+  });
 
-    func = lessThanConstraint({ value: 10 });
-
-    assert.equal(func(9), null, 'returns nothing when valid');
-
-    assert.equal(
-      func(10),
-      'must be less than 10',
-      'returns default message if invalid'
-    );
-
-    func = lessThanConstraint({ value: 2, message: 'not small enough' });
+  test('it returns custom message if invalid', function (assert) {
+    assert.expect(1);
 
     assert.equal(
-      func(2),
-      'not small enough',
-      'returns custom message if invalid'
+      lessThan({ value: 2, message: 'not small enough' })(2),
+      'not small enough'
+    );
+  });
+
+  test('optional', function (assert) {
+    assert.expect(2);
+
+    assert.equal(
+      lessThan({ value: 0, optional: true })(0),
+      'must be less than 0'
     );
 
-    func = lessThanConstraint({ value: 0, optional: true });
+    assert.equal(lessThan({ value: 0, optional: true })(''), undefined);
+  });
 
-    assert.equal(func(0), 'must be less than 0', 'zero must be less than zero');
+  test('inputs', function (assert) {
+    assert.expect(6);
 
-    assert.equal(func(''), null, 'value is optional, validates ok');
+    assert.equal(lessThan({ value: 'a' })('aa'), 'must be less than a');
+    assert.equal(lessThan({ value: 1 })(2), 'must be less than 1');
+    assert.equal(lessThan({ value: 3 })(3), 'must be less than 3');
+    assert.strictEqual(lessThan({ value: -5 })(-10), undefined);
+    assert.strictEqual(lessThan({ value: 'aa' })('a'), undefined);
+    assert.strictEqual(lessThan({ value: 2 })(1), undefined);
   });
 });

@@ -1,20 +1,16 @@
 const { isArray } = Array;
 
-export function minLength(a, b) {
-  let length = 0;
-
-  if (isArray(a)) {
-    length = a.length;
-  } else if (typeof a === 'string' || typeof a === 'number') {
-    length = `${a}`.length;
-  }
-
-  return length >= b;
-}
-
-export default function minLengthConstraint(options = {}) {
+export default function minLength(options = {}) {
   return function (value) {
-    if (minLength(value, options.min)) {
+    let length = 0;
+
+    if (isArray(value)) {
+      length = value.length;
+    } else if (typeof value === 'string' || typeof value === 'number') {
+      length = `${value}`.length;
+    }
+
+    if (length >= options.min) {
       return;
     }
 

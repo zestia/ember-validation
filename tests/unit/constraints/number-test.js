@@ -1,46 +1,46 @@
 import { module, test } from 'qunit';
-import numberConstraint, {
-  validNumber,
-} from '@zestia/ember-validation/constraints/number';
+import number from '@zestia/ember-validation/constraints/number';
 
 module('number', function () {
-  test('#validNumber', function (assert) {
-    assert.expect(7);
+  test('is returns nothing when valid', function (assert) {
+    assert.expect(1);
 
-    assert.strictEqual(validNumber(), false);
-    assert.strictEqual(validNumber(''), false);
-    assert.strictEqual(validNumber('12345'), true);
-    assert.strictEqual(validNumber('-12345'), true);
-    assert.strictEqual(validNumber('123,456,789'), true);
-    assert.strictEqual(validNumber('123.456'), true);
-    assert.strictEqual(validNumber('abc'), false);
+    assert.strictEqual(number()('123'), undefined);
   });
 
-  test('#numberConstraint', function (assert) {
-    assert.expect(4);
+  test('it returns default message if invalid', function (assert) {
+    assert.expect(1);
 
-    let func;
+    assert.equal(number()('xyz'), 'invalid number');
+  });
 
-    func = numberConstraint();
+  test('it returns nothing if invalid, but options', function (assert) {
+    assert.expect(1);
 
-    assert.equal(func('123'), null, 'returns nothing when valid');
-
-    assert.equal(
-      func('xyz'),
-      'invalid number',
-      'returns default message if invalid'
+    assert.strictEqual(
+      number({ optional: true })(''),
+      undefined,
+      'returns nothing if invalid, but optional'
     );
+  });
 
-    func = numberConstraint({ optional: true });
+  test('it returns custom message if invalid', function (assert) {
+    assert.expect(1);
 
-    assert.equal(func(''), null, 'returns nothing if invalid, but optional');
+    const func = number({ message: 'bad number' });
 
-    func = numberConstraint({ message: 'bad number', optional: true });
+    assert.equal(func('foo@bar'), 'bad number');
+  });
 
-    assert.equal(
-      func('foo@bar'),
-      'bad number',
-      'returns custom message if invalid'
-    );
+  test('inputs', function (assert) {
+    assert.expect(7);
+
+    assert.equal(number()(), 'invalid number');
+    assert.equal(number()(''), 'invalid number');
+    assert.equal(number()('abc'), 'invalid number');
+    assert.strictEqual(number()('12345'), undefined);
+    assert.strictEqual(number()('-12345'), undefined);
+    assert.strictEqual(number()('123,456,789'), undefined);
+    assert.strictEqual(number()('123.456'), undefined);
   });
 });
