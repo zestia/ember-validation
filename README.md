@@ -208,8 +208,8 @@ try {
 
 ## Utils
 
-- [`flattenMessages`](tests/unit/utils-test.js#L5)
-- [`collateMessages`](tests/unit/utils-test.js#L42)
+- [`flattenMessages`](tests/unit/utils-test.js#L7)
+- [`collateMessages`](tests/unit/utils-test.js#L57)
 
 ## Constraints
 
