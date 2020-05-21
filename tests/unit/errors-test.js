@@ -52,7 +52,7 @@ module('errors', function () {
     assert.expect(2);
 
     const result = {
-      myField: ['Not present', 'Must be longer than 10'],
+      myField: ['Not present', 'Must be longer than 10']
     };
 
     const error = new ValidationError(null, result);

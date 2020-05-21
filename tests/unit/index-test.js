@@ -6,7 +6,7 @@ import {
   number,
   greaterThan,
   minLength,
-  present,
+  present
 } from '@zestia/ember-validation/constraints';
 import validate from '@zestia/ember-validation';
 import { resolve } from 'rsvp';
@@ -33,7 +33,7 @@ module('validation', function () {
     const constraints = {
       foo() {
         return [present()];
-      },
+      }
     };
 
     try {
@@ -52,7 +52,7 @@ module('validation', function () {
       return {
         foo() {
           return [present()];
-        },
+        }
       };
     };
 
@@ -74,7 +74,7 @@ module('validation', function () {
     const constraints = {
       foo() {
         return [present()];
-      },
+      }
     };
 
     try {
@@ -95,7 +95,7 @@ module('validation', function () {
     const constraints = {
       name() {
         return [present()];
-      },
+      }
     };
 
     try {
@@ -104,7 +104,7 @@ module('validation', function () {
       assert.errorEqual(
         error,
         new ValidationError(null, {
-          name: ['required value'],
+          name: ['required value']
         })
       );
     }
@@ -124,7 +124,7 @@ module('validation', function () {
     const constraints = {
       emailAddress() {
         return [present(), email()];
-      },
+      }
     };
 
     try {
@@ -133,7 +133,7 @@ module('validation', function () {
       assert.errorEqual(
         error,
         new ValidationError(null, {
-          emailAddress: ['required value', 'invalid email'],
+          emailAddress: ['required value', 'invalid email']
         })
       );
     }
@@ -145,7 +145,7 @@ module('validation', function () {
     const object = {
       firstName: '',
       emailAddress: '',
-      dob: '22/01/1985',
+      dob: '22/01/1985'
     };
 
     const constraints = {
@@ -157,7 +157,7 @@ module('validation', function () {
       },
       dob() {
         return [date({ format: 'dd/MM/yyyy' })];
-      },
+      }
     };
 
     try {
@@ -168,7 +168,7 @@ module('validation', function () {
         new ValidationError(null, {
           firstName: ['required value'],
           emailAddress: ['invalid email'],
-          dob: [],
+          dob: []
         })
       );
     }
@@ -189,13 +189,13 @@ module('validation', function () {
 
     const object = {
       firstName: '',
-      lastName: '',
+      lastName: ''
     };
 
     const constraints = {
       firstAndLastName() {
         return [hasFirstAndLastName];
-      },
+      }
     };
 
     try {
@@ -204,7 +204,7 @@ module('validation', function () {
       assert.errorEqual(
         error,
         new ValidationError(null, {
-          firstAndLastName: [message],
+          firstAndLastName: [message]
         })
       );
     }
@@ -217,7 +217,7 @@ module('validation', function () {
       assert.errorEqual(
         error,
         new ValidationError(null, {
-          firstAndLastName: [message],
+          firstAndLastName: [message]
         })
       );
     }
@@ -245,7 +245,7 @@ module('validation', function () {
       return {
         name() {
           return [present()];
-        },
+        }
       };
     };
 
@@ -275,7 +275,7 @@ module('validation', function () {
     const dessert = { name: '' };
 
     const meal = {
-      courses: [starter, main, dessert],
+      courses: [starter, main, dessert]
     };
 
     const constraints = {
@@ -287,7 +287,7 @@ module('validation', function () {
       },
       'courses.2.name'() {
         return [present()];
-      },
+      }
     };
 
     try {
@@ -298,7 +298,7 @@ module('validation', function () {
         new ValidationError(null, {
           'courses.0.name': ['required value'],
           'courses.1.name': ['required value'],
-          'courses.2.name': ['required value'],
+          'courses.2.name': ['required value']
         })
       );
     }
@@ -313,7 +313,7 @@ module('validation', function () {
         new ValidationError(null, {
           'courses.0.name': ['required value'],
           'courses.1.name': [],
-          'courses.2.name': ['required value'],
+          'courses.2.name': ['required value']
         })
       );
     }
@@ -328,7 +328,7 @@ module('validation', function () {
       return {
         id() {
           return [present()];
-        },
+        }
       };
     };
 
@@ -341,7 +341,7 @@ module('validation', function () {
           { id: [] },
           { id: ['required value'] },
           { id: ['required value'] },
-          { id: ['required value'] },
+          { id: ['required value'] }
         ])
       );
     }
@@ -356,10 +356,10 @@ module('validation', function () {
       description() {
         return [
           present({
-            message: 'You must enter a description',
-          }),
+            message: 'You must enter a description'
+          })
         ];
-      },
+      }
     };
 
     try {
@@ -368,7 +368,7 @@ module('validation', function () {
       assert.errorEqual(
         error,
         new ValidationError(null, {
-          description: ['You must enter a description'],
+          description: ['You must enter a description']
         })
       );
     }
@@ -380,7 +380,7 @@ module('validation', function () {
     let args;
 
     const object = {
-      emailAddress: 'foo@bar',
+      emailAddress: 'foo@bar'
     };
 
     const constraints = {
@@ -391,10 +391,10 @@ module('validation', function () {
               args = [value, object];
 
               return `The email address ${value} is not valid`;
-            },
-          }),
+            }
+          })
         ];
-      },
+      }
     };
 
     try {
@@ -403,7 +403,7 @@ module('validation', function () {
       assert.errorEqual(
         error,
         new ValidationError(null, {
-          emailAddress: ['The email address foo@bar is not valid'],
+          emailAddress: ['The email address foo@bar is not valid']
         })
       );
 
@@ -415,7 +415,7 @@ module('validation', function () {
     assert.expect(1);
 
     const object = {
-      name: '<script>',
+      name: '<script>'
     };
 
     const constraints = {
@@ -425,10 +425,10 @@ module('validation', function () {
             min: 9,
             message(value) {
               return `Your name ${value} is too short`;
-            },
-          }),
+            }
+          })
         ];
-      },
+      }
     };
 
     try {
@@ -437,7 +437,7 @@ module('validation', function () {
       assert.errorEqual(
         error,
         new ValidationError(null, {
-          name: ['Your name <script> is too short'],
+          name: ['Your name <script> is too short']
         })
       );
     }
@@ -449,8 +449,8 @@ module('validation', function () {
     const person = {
       name: '',
       organisation: {
-        name: '',
-      },
+        name: ''
+      }
     };
 
     const constraints = {
@@ -460,7 +460,7 @@ module('validation', function () {
 
       'organisation.name'() {
         return [present(), minLength({ min: 1 })];
-      },
+      }
     };
 
     try {
@@ -470,7 +470,7 @@ module('validation', function () {
         error,
         new ValidationError(null, {
           name: ['required value'],
-          'organisation.name': ['required value', 'length must be at least 1'],
+          'organisation.name': ['required value', 'length must be at least 1']
         })
       );
     }
@@ -484,7 +484,7 @@ module('validation', function () {
     const constraints = {
       fOoBaR() {
         return [present()];
-      },
+      }
     };
 
     try {
@@ -493,7 +493,7 @@ module('validation', function () {
       assert.errorEqual(
         error,
         new ValidationError(null, {
-          fOoBaR: ['required value'],
+          fOoBaR: ['required value']
         })
       );
     }
@@ -504,7 +504,7 @@ module('validation', function () {
 
     const object = {
       firstName: '',
-      lastName: 'Smith',
+      lastName: 'Smith'
     };
 
     const constraints = {
@@ -513,7 +513,7 @@ module('validation', function () {
       },
       lastName() {
         return [present()];
-      },
+      }
     };
 
     try {
@@ -523,7 +523,7 @@ module('validation', function () {
         error,
         new ValidationError(null, {
           firstName: ['required value'],
-          lastName: [],
+          lastName: []
         })
       );
     }
@@ -533,13 +533,13 @@ module('validation', function () {
     assert.expect(2);
 
     let object = resolve({
-      amount: resolve(9),
+      amount: resolve(9)
     });
 
     const constraints = {
       amount() {
         return [greaterThan({ value: 10 })];
-      },
+      }
     };
 
     try {
@@ -548,13 +548,13 @@ module('validation', function () {
       assert.errorEqual(
         error,
         new ValidationError(null, {
-          amount: ['must be greater than 10'],
+          amount: ['must be greater than 10']
         })
       );
     }
 
     object = resolve({
-      amount: resolve(11),
+      amount: resolve(11)
     });
 
     const result = await validate(object, constraints);
@@ -567,28 +567,28 @@ module('validation', function () {
       {
         id: 1,
         type: 'text',
-        value: '',
+        value: ''
       },
       {
         id: 2,
         type: 'number',
-        value: '',
+        value: ''
       },
       {
         id: 3,
         type: 'email',
-        value: '',
+        value: ''
       },
       {
         id: 4,
         type: 'date',
-        value: '',
+        value: ''
       },
       {
         id: 5,
         type: 'unknown',
-        value: '',
-      },
+        value: ''
+      }
     ];
 
     const knownType = (type) => {
@@ -616,7 +616,7 @@ module('validation', function () {
             default:
               return [];
           }
-        },
+        }
       };
     };
 
@@ -626,24 +626,24 @@ module('validation', function () {
       assert.deepEqual(error.result, [
         {
           type: [],
-          value: ['required value'],
+          value: ['required value']
         },
         {
           type: [],
-          value: ['required value', 'invalid number'],
+          value: ['required value', 'invalid number']
         },
         {
           type: [],
-          value: ['required value', 'invalid email'],
+          value: ['required value', 'invalid email']
         },
         {
           type: [],
-          value: ['required value', 'invalid date, expecting dd/MM/yyyy'],
+          value: ['required value', 'invalid date, expecting dd/MM/yyyy']
         },
         {
           type: ['unknown type'],
-          value: [],
-        },
+          value: []
+        }
       ]);
     }
   });

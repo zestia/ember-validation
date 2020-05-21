@@ -7,7 +7,7 @@ export default function bigDecimalConstraint(_options = {}) {
   const options = {
     maxIntegerDigits: 12,
     maxDecimalDigits: 3,
-    ..._options,
+    ..._options
   };
 
   return function (value) {

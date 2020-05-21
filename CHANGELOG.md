@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.1
+
+- Upgrade dependencies
+
 ## 3.0.0
 
 - Migrate away from moment.js for date validation to date-fns
