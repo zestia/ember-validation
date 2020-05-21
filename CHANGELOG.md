@@ -8,7 +8,7 @@
 
 - Migrate away from moment.js for date validation to date-fns
 - Private functions that backed the constraints are no longer exposed
-- Drops support for reverse parsing in custom validation messages. Previously, with moment `L` would be converted to the corresponding localised structure for example 'DD/MM/YYYY'. Whereas with date-fns `P` (`L`'s equivalent) will not be converted.
+- Drops support for reverse parsing in custom validation messages. Previously, with moment `L` would be converted to the corresponding localised structure for example `DD/MM/YYYY`. Whereas with date-fns `P` (`L`'s equivalent) will not be converted.
 
 ## 2.0.11
 
