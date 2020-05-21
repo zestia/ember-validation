@@ -28,7 +28,6 @@ export default function bigDecimalConstraint(options = {}) {
       const decimalPart = decimalPattern.exec(res[2])[1];
 
       if (decimalPart.length > options.maxDecimalDigits) {
-        // eslint-disable-next-line max-len
         return `value must have a maximum of ${options.maxDecimalDigits} decimal places`;
       }
     }

@@ -26,6 +26,6 @@ export default function dateConstraint(options) {
       return;
     }
 
-    return options.message || `invalid date, expecting ${options.format}`;
+    return options.message || `invalid date, expecting ${format}`;
   };
 }

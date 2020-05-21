@@ -1,4 +1,4 @@
-/* eslint-disable max-len, no-control-regex, no-useless-escape */
+/* eslint-disable no-control-regex, no-useless-escape */
 
 import { isPresent } from '@ember/utils';
 
