@@ -154,7 +154,7 @@ function nameIsUnique(value, object) {
 ## Dynamic Constraints
 
 Because constraints are functions, this allows for a very powerful approach for validating arrays of objects.
-For example, imagine you have an array of items of a varying _types_.
+For example, imagine you have an array of items of a _varying types_.
 
 ```javascript
 const items = [
