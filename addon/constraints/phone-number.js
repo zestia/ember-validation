@@ -10,6 +10,6 @@ export default function phoneNumber(options = {}) {
       return;
     }
 
-    return options.message || 'invalid phone number';
+    return options.message || 'Invalid phone number';
   };
 }

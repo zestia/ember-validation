@@ -50,7 +50,7 @@ import {
   maxLength,
   truthy,
   email,
-  date,
+  date
 } from '@zestia/ember-validation/constraints';
 
 const person = {
@@ -58,25 +58,25 @@ const person = {
   name: '',
   terms: false,
   emailAddress: 'joe@bloggs',
-  dateOfBirth: null,
+  dateOfBirth: null
 };
 
 const constraints = {
   name() {
     return [
-      present({ message: 'please enter your name' }),
-      maxLength({ max: 255 }),
+      present({ message: 'Please enter your name' }),
+      maxLength({ max: 255 })
     ];
   },
   terms() {
-    return [truthy({ message: 'please accept the terms' })];
+    return [truthy({ message: 'Please accept the terms' })];
   },
   emailAddress() {
     return [present(), email()];
   },
   dateOfBirth() {
     return [present(), date({ format: 'dd/MM/yyyy' })];
-  },
+  }
 };
 
 try {
@@ -86,17 +86,17 @@ try {
   /**
    *  {
    *    name: [
-   *      'please enter your name'
+   *      'Please enter your name'
    *    ],
    *    terms: [
-   *      'please accept the terms'
+   *      'Please accept the terms'
    *    ],
    *    emailAddress: [
-   *      'invalid email'
+   *      'Invalid email'
    *    ],
    *    dateOfBirth: [
-   *      'required value',
-   *      'invalid date, expecting dd/MM/yyyy'
+   *      'Required value',
+   *      'Invalid date, expecting dd/MM/yyyy'
    *    ]
    *  }
    */
@@ -110,7 +110,7 @@ You can validate properties that aren't actually on the object being validated. 
 ```javascript
 const person = {
   firstName: 'Joe',
-  lastName: 'Bloggs',
+  lastName: 'Bloggs'
 };
 
 const constraints = {
@@ -124,7 +124,7 @@ const constraints = {
 
   name() {
     return [nameIsUnique];
-  },
+  }
 };
 
 try {
@@ -135,7 +135,7 @@ try {
    *  {
    *    firstName: [],
    *    lastName: [],
-   *    name: ['must be unique']
+   *    name: ['Must be unique']
    *  }
    */
 }
@@ -147,7 +147,7 @@ function nameIsUnique(value, object) {
     return;
   }
 
-  return 'must be unique';
+  return 'Must be unique';
 }
 ```
 
@@ -190,16 +190,16 @@ try {
   /*
    *  [
    *    {
-   *      value: ['required value']
+   *      value: ['Required value']
    *    },
    *    {
-   *      value: ['required value', 'invalid number']
+   *      value: ['Required value', 'Invalid number']
    *    },
    *    {
-   *      value: ['required value', 'invalid email']
+   *      value: ['Required value', 'Invalid email']
    *    },
    *    {
-   *      value: ['required value', 'invalid date, expecting dd/MM/yyyy']
+   *      value: ['Required value', 'Invalid date, expecting dd/MM/yyyy']
    *    }
    *  ]
    */

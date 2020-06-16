@@ -17,7 +17,7 @@ module('date', function (hooks) {
 
     assert.equal(
       date({ format: 'dd/MM/yyyy' })('12/25/2020'),
-      'invalid date, expecting dd/MM/yyyy'
+      'Invalid date, expecting dd/MM/yyyy'
     );
   });
 
@@ -44,21 +44,21 @@ module('date', function (hooks) {
 
     assert.equal(
       date({ format: 'yyyy-MM-dd' })(''),
-      'invalid date, expecting yyyy-MM-dd'
+      'Invalid date, expecting yyyy-MM-dd'
     );
 
     assert.strictEqual(date({ format: 'yyyy-MM-dd' })('2020-12-25'), undefined);
 
     assert.strictEqual(
       date({ format: 'yyyy-MM-dd' })('2020-13-25'),
-      'invalid date, expecting yyyy-MM-dd'
+      'Invalid date, expecting yyyy-MM-dd'
     );
 
     assert.strictEqual(date({ format: 'dd/MM/yyyy' })('25/12/2020'), undefined);
 
     assert.strictEqual(
       date({ format: 'dd/MM/yyyy' })('12/25/2020'),
-      'invalid date, expecting dd/MM/yyyy'
+      'Invalid date, expecting dd/MM/yyyy'
     );
 
     assert.strictEqual(date({ format: 'MM/dd/yyyy' })('12/25/2020'), undefined);
@@ -70,7 +70,7 @@ module('date', function (hooks) {
 
     assert.equal(
       date({ format: 'P', locale: enUS })('25/12/2020'),
-      'invalid date, expecting P'
+      'Invalid date, expecting P'
     );
 
     assert.strictEqual(

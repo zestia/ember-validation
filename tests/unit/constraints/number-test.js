@@ -11,7 +11,7 @@ module('number', function () {
   test('it returns default message if invalid', function (assert) {
     assert.expect(1);
 
-    assert.equal(number()('xyz'), 'invalid number');
+    assert.equal(number()('xyz'), 'Invalid number');
   });
 
   test('it returns nothing if invalid, but options', function (assert) {
@@ -35,9 +35,9 @@ module('number', function () {
   test('inputs', function (assert) {
     assert.expect(7);
 
-    assert.equal(number()(), 'invalid number');
-    assert.equal(number()(''), 'invalid number');
-    assert.equal(number()('abc'), 'invalid number');
+    assert.equal(number()(), 'Invalid number');
+    assert.equal(number()(''), 'Invalid number');
+    assert.equal(number()('abc'), 'Invalid number');
     assert.strictEqual(number()('12345'), undefined);
     assert.strictEqual(number()('-12345'), undefined);
     assert.strictEqual(number()('123,456,789'), undefined);

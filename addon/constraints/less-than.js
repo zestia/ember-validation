@@ -10,6 +10,6 @@ export default function lessThan(options = {}) {
       return;
     }
 
-    return options.message || `must be less than ${options.value}`;
+    return options.message || `Must be less than ${options.value}`;
   };
 }

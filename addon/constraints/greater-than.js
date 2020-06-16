@@ -10,6 +10,6 @@ export default function greaterThan(options = {}) {
       return;
     }
 
-    return options.message || `must be greater than ${options.value}`;
+    return options.message || `Must be greater than ${options.value}`;
   };
 }

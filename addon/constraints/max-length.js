@@ -14,6 +14,6 @@ export default function maxLength(options = {}) {
       return;
     }
 
-    return options.message || `length is too long (max ${options.max})`;
+    return options.message || `Length is too long (max ${options.max})`;
   };
 }

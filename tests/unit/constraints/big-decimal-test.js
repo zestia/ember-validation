@@ -13,7 +13,7 @@ module('bigDecimal', function () {
 
     assert.equal(
       bigDecimal({ maxIntegerDigits: 5, maxDecimalDigits: 0 })(),
-      'value must be a number'
+      'Value must be a number'
     );
   });
 
@@ -27,7 +27,7 @@ module('bigDecimal', function () {
 
     assert.equal(
       bigDecimal({ maxIntegerDigits: 5, maxDecimalDigits: 0 })('123456'),
-      'value too large'
+      'Value too large'
     );
   });
 
@@ -68,7 +68,7 @@ module('bigDecimal', function () {
 
     assert.equal(
       bigDecimal({ maxIntegerDigits: 5, maxDecimalDigits: 2 })('1.234'),
-      'value must have a maximum of 2 decimal places'
+      'Value must have a maximum of 2 decimal places'
     );
   });
 
@@ -86,7 +86,7 @@ module('bigDecimal', function () {
 
     assert.equal(
       bigDecimal({ maxIntegerDigits: 5, maxDecimalDigits: 2 })('bad'),
-      'value must be a number'
+      'Value must be a number'
     );
   });
 
@@ -95,7 +95,7 @@ module('bigDecimal', function () {
 
     assert.equal(
       bigDecimal({ maxIntegerDigits: 5, maxDecimalDigits: 2 })('123.'),
-      'value must be a number'
+      'Value must be a number'
     );
   });
 });

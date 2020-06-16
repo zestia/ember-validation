@@ -10,6 +10,6 @@ export default function number(options = {}) {
       return;
     }
 
-    return options.message || 'invalid number';
+    return options.message || 'Invalid number';
   };
 }

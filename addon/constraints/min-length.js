@@ -14,6 +14,6 @@ export default function minLength(options = {}) {
       return;
     }
 
-    return options.message || `length must be at least ${options.min}`;
+    return options.message || `Length must be at least ${options.min}`;
   };
 }

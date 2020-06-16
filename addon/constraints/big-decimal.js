@@ -18,20 +18,20 @@ export default function bigDecimal(_options = {}) {
     const result = fullPattern.exec(value);
 
     if (!result) {
-      return 'value must be a number';
+      return 'Value must be a number';
     }
 
     const integerPart = result[1];
 
     if (integerPart.length > options.maxIntegerDigits) {
-      return 'value too large';
+      return 'Value too large';
     }
 
     if (result[2]) {
       const decimalPart = decimalPattern.exec(result[2])[1];
 
       if (decimalPart.length > options.maxDecimalDigits) {
-        return `value must have a maximum of ${options.maxDecimalDigits} decimal places`;
+        return `Value must have a maximum of ${options.maxDecimalDigits} decimal places`;
       }
     }
   };

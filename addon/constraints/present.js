@@ -6,6 +6,6 @@ export default function present(options = {}) {
       return;
     }
 
-    return options.message || 'required value';
+    return options.message || 'Required value';
   };
 }

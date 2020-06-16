@@ -11,7 +11,7 @@ module('truthy', function () {
   test('it returns the default message if invalid', function (assert) {
     assert.expect(1);
 
-    assert.equal(truthy()(false), 'must be truthy');
+    assert.equal(truthy()(false), 'Must be truthy');
   });
 
   test('it returns a custom message if invalid', function (assert) {

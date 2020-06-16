@@ -104,7 +104,7 @@ module('validation', function () {
       assert.errorEqual(
         error,
         new ValidationError(null, {
-          name: ['required value']
+          name: ['Required value']
         })
       );
     }
@@ -133,7 +133,7 @@ module('validation', function () {
       assert.errorEqual(
         error,
         new ValidationError(null, {
-          emailAddress: ['required value', 'invalid email']
+          emailAddress: ['Required value', 'Invalid email']
         })
       );
     }
@@ -166,8 +166,8 @@ module('validation', function () {
       assert.errorEqual(
         error,
         new ValidationError(null, {
-          firstName: ['required value'],
-          emailAddress: ['invalid email'],
+          firstName: ['Required value'],
+          emailAddress: ['Invalid email'],
           dob: []
         })
       );
@@ -254,7 +254,7 @@ module('validation', function () {
     } catch (error) {
       assert.errorEqual(
         error,
-        new ValidationError(null, [{ name: [] }, { name: ['required value'] }])
+        new ValidationError(null, [{ name: [] }, { name: ['Required value'] }])
       );
 
       assert.deepEqual(args, [tag1, tag2]);
@@ -296,9 +296,9 @@ module('validation', function () {
       assert.errorEqual(
         error,
         new ValidationError(null, {
-          'courses.0.name': ['required value'],
-          'courses.1.name': ['required value'],
-          'courses.2.name': ['required value']
+          'courses.0.name': ['Required value'],
+          'courses.1.name': ['Required value'],
+          'courses.2.name': ['Required value']
         })
       );
     }
@@ -311,9 +311,9 @@ module('validation', function () {
       assert.errorEqual(
         error,
         new ValidationError(null, {
-          'courses.0.name': ['required value'],
+          'courses.0.name': ['Required value'],
           'courses.1.name': [],
-          'courses.2.name': ['required value']
+          'courses.2.name': ['Required value']
         })
       );
     }
@@ -339,9 +339,9 @@ module('validation', function () {
         error,
         new ValidationError(null, [
           { id: [] },
-          { id: ['required value'] },
-          { id: ['required value'] },
-          { id: ['required value'] }
+          { id: ['Required value'] },
+          { id: ['Required value'] },
+          { id: ['Required value'] }
         ])
       );
     }
@@ -469,8 +469,8 @@ module('validation', function () {
       assert.errorEqual(
         error,
         new ValidationError(null, {
-          name: ['required value'],
-          'organisation.name': ['required value', 'length must be at least 1']
+          name: ['Required value'],
+          'organisation.name': ['Required value', 'Length must be at least 1']
         })
       );
     }
@@ -493,7 +493,7 @@ module('validation', function () {
       assert.errorEqual(
         error,
         new ValidationError(null, {
-          fOoBaR: ['required value']
+          fOoBaR: ['Required value']
         })
       );
     }
@@ -522,7 +522,7 @@ module('validation', function () {
       assert.errorEqual(
         error,
         new ValidationError(null, {
-          firstName: ['required value'],
+          firstName: ['Required value'],
           lastName: []
         })
       );
@@ -548,7 +548,7 @@ module('validation', function () {
       assert.errorEqual(
         error,
         new ValidationError(null, {
-          amount: ['must be greater than 10']
+          amount: ['Must be greater than 10']
         })
       );
     }
@@ -593,7 +593,7 @@ module('validation', function () {
 
     const knownType = (type) => {
       if (!['text', 'number', 'email', 'date'].includes(type)) {
-        return 'unknown type';
+        return 'Unknown type';
       }
     };
 
@@ -626,22 +626,22 @@ module('validation', function () {
       assert.deepEqual(error.result, [
         {
           type: [],
-          value: ['required value']
+          value: ['Required value']
         },
         {
           type: [],
-          value: ['required value', 'invalid number']
+          value: ['Required value', 'Invalid number']
         },
         {
           type: [],
-          value: ['required value', 'invalid email']
+          value: ['Required value', 'Invalid email']
         },
         {
           type: [],
-          value: ['required value', 'invalid date, expecting dd/MM/yyyy']
+          value: ['Required value', 'Invalid date, expecting dd/MM/yyyy']
         },
         {
-          type: ['unknown type'],
+          type: ['Unknown type'],
           value: []
         }
       ]);

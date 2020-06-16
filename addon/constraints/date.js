@@ -18,6 +18,6 @@ export default function date(options) {
       return;
     }
 
-    return options.message || `invalid date, expecting ${format}`;
+    return options.message || `Invalid date, expecting ${format}`;
   };
 }

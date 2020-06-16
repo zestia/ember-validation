@@ -11,7 +11,7 @@ module('email', function () {
   test('it returns default message if invalid', function (assert) {
     assert.expect(1);
 
-    assert.equal(email()(''), 'invalid email');
+    assert.equal(email()(''), 'Invalid email');
   });
 
   test('it returns nothing if invalid, but optional', function (assert) {
@@ -29,11 +29,11 @@ module('email', function () {
   test('inputs', function (assert) {
     assert.expect(8);
 
-    assert.equal(email()(), 'invalid email');
-    assert.equal(email()(''), 'invalid email');
-    assert.equal(email()('a'), 'invalid email');
-    assert.equal(email()('@'), 'invalid email');
-    assert.equal(email()('a@b'), 'invalid email');
+    assert.equal(email()(), 'Invalid email');
+    assert.equal(email()(''), 'Invalid email');
+    assert.equal(email()('a'), 'Invalid email');
+    assert.equal(email()('@'), 'Invalid email');
+    assert.equal(email()('a@b'), 'Invalid email');
     assert.strictEqual(email()('a@b.com'), undefined);
     assert.strictEqual(email()('fred.smith@some-uni.ac.uk'), undefined);
     assert.strictEqual(email()('john.jones+test@example.com'), undefined);

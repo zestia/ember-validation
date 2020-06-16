@@ -4,6 +4,6 @@ export default function truthy(options = {}) {
       return;
     }
 
-    return options.message || 'must be truthy';
+    return options.message || 'Must be truthy';
   };
 }

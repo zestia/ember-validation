@@ -14,6 +14,6 @@ export default function email(options = {}) {
       return;
     }
 
-    return options.message || 'invalid email';
+    return options.message || 'Invalid email';
   };
 }

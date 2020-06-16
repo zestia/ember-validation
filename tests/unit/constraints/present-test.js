@@ -11,7 +11,7 @@ module('present', function () {
   test('it returns default message if invalid', function (assert) {
     assert.expect(1);
 
-    assert.equal(present()(''), 'required value');
+    assert.equal(present()(''), 'Required value');
   });
 
   test('it returns custom message if invalid', function (assert) {
