@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.3
+
+- Upgrade dependencies
+
 ## 3.0.2
 
 - Capitalise first letter of validation error messages

@@ -57,7 +57,7 @@
     "qunit-dom": "^1.2.0",
     "release-it": "^13.6.3",
     "sass": "^1.26.8",
-    "stylelint": "^13.6.0"
+    "stylelint": "^13.6.1"
   },
   "dependencies": {
     "@glimmer/component": "^1.0.0",
