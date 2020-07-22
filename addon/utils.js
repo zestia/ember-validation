@@ -1,21 +1,27 @@
-const { isArray } = Array;
+import { typeOf } from '@ember/utils';
 const { keys } = Object;
 
-export function flattenMessages(result) {
-  if (isArray(result)) {
-    return result.reduce((messages, object) => {
+export function flattenMessages(errors) {
+  if (typeOf(errors) === 'array') {
+    return errors.reduce((messages, object) => {
       return messages.concat(_gatherMessages(object));
     }, []);
+  } else if (typeOf(errors) === 'object') {
+    return _gatherMessages(errors);
   } else {
-    return _gatherMessages(result);
+    return null;
   }
 }
 
-export function collateMessages(array) {
-  return array.reduce((messages, object) => {
-    messages.push(_gatherMessages(object));
-    return messages;
-  }, []);
+export function collateMessages(errors) {
+  if (typeOf(errors) === 'array') {
+    return errors.reduce((messages, object) => {
+      messages.push(_gatherMessages(object));
+      return messages;
+    }, []);
+  } else {
+    return null;
+  }
 }
 
 function _gatherMessages(object) {

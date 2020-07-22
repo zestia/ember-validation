@@ -6,7 +6,7 @@ import {
 
 module('utils', function () {
   test('#flattenMessages', function (assert) {
-    assert.expect(2);
+    assert.expect(3);
 
     const result = {
       'recipe.description': [
@@ -52,10 +52,16 @@ module('utils', function () {
       ],
       'flattens the array of error results into just the messages'
     );
+
+    assert.deepEqual(
+      flattenMessages(null),
+      null,
+      'does not blow up if there were no messages'
+    );
   });
 
   test('#collateMessages', function (assert) {
-    assert.expect(1);
+    assert.expect(2);
 
     const result = {
       'recipe.ingredients': [
@@ -83,6 +89,12 @@ module('utils', function () {
       ],
       'collates the array of error results into just the messages ' +
         'whilst retaining the array structure'
+    );
+
+    assert.deepEqual(
+      collateMessages(null),
+      null,
+      'does not blow up if there were no messages'
     );
   });
 });
