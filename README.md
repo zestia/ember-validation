@@ -79,28 +79,25 @@ const constraints = {
   }
 };
 
-try {
-  await validate(person, constraints);
-} catch (error) {
-  console.log(error.result);
-  /**
-   *  {
-   *    name: [
-   *      'Please enter your name'
-   *    ],
-   *    terms: [
-   *      'Please accept the terms'
-   *    ],
-   *    emailAddress: [
-   *      'Invalid email'
-   *    ],
-   *    dateOfBirth: [
-   *      'Required value',
-   *      'Invalid date, expecting dd/MM/yyyy'
-   *    ]
-   *  }
-   */
-}
+const errors = await validate(person, constraints);
+
+/**
+ *  {
+ *    name: [
+ *      'Please enter your name'
+ *    ],
+ *    terms: [
+ *      'Please accept the terms'
+ *    ],
+ *    emailAddress: [
+ *      'Invalid email'
+ *    ],
+ *    dateOfBirth: [
+ *      'Required value',
+ *      'Invalid date, expecting dd/MM/yyyy'
+ *    ]
+ *  }
+ */
 ```
 
 ## Adhoc Constraints
@@ -127,18 +124,15 @@ const constraints = {
   }
 };
 
-try {
-  await validate(person, constraints);
-} catch (error) {
-  console.log(error.result);
-  /**
-   *  {
-   *    firstName: [],
-   *    lastName: [],
-   *    name: ['Must be unique']
-   *  }
-   */
-}
+const errors = await validate(person, constraints);
+
+/**
+ *  {
+ *    firstName: [],
+ *    lastName: [],
+ *    name: ['Must be unique']
+ *  }
+ */
 
 const names = ['Joe Bloggs'];
 
@@ -183,27 +177,24 @@ const constraints = (item) => {
   };
 }
 
-try {
-  await validate(items, constraints);
-} catch(error) {
-  console.log(error.result);
-  /*
-   *  [
-   *    {
-   *      value: ['Required value']
-   *    },
-   *    {
-   *      value: ['Required value', 'Invalid number']
-   *    },
-   *    {
-   *      value: ['Required value', 'Invalid email']
-   *    },
-   *    {
-   *      value: ['Required value', 'Invalid date, expecting dd/MM/yyyy']
-   *    }
-   *  ]
-   */
-}
+const errors = await validate(items, constraints);
+
+/*
+ *  [
+ *    {
+ *      value: ['Required value']
+ *    },
+ *    {
+ *      value: ['Required value', 'Invalid number']
+ *    },
+ *    {
+ *      value: ['Required value', 'Invalid email']
+ *    },
+ *    {
+ *      value: ['Required value', 'Invalid date, expecting dd/MM/yyyy']
+ *    }
+ *  ]
+ */
 ```
 
 ## Utils

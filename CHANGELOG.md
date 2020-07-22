@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.0.0
+
+- Does not throw if validation fails.<br>
+  This is to avoid using the error for flow control, and will make testing in Ember apps easier. Background information available [here](https://github.com/emberjs/ember-qunit/issues/592).
+
 ## 3.0.4
 
 - Upgrade dependencies

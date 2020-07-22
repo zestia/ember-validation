@@ -1,5 +1,4 @@
-import QUnit, { module, test } from 'qunit';
-import { ValidationError } from '@zestia/ember-validation/errors';
+import { module, test } from 'qunit';
 import {
   date,
   email,
@@ -10,37 +9,14 @@ import {
 } from '@zestia/ember-validation/constraints';
 import validate from '@zestia/ember-validation';
 import { resolve } from 'rsvp';
-const { assert } = QUnit;
 
 module('validation', function () {
-  assert.errorEqual = function (a, b, message) {
-    assert.deepEqual(a.result, b.result, message);
-  };
-
   test('#validate (defaults)', async function (assert) {
     assert.expect(1);
 
-    const result = await validate();
+    const errors = await validate();
 
-    assert.deepEqual(result, null, 'no errors by default');
-  });
-
-  test('#validate (type of error)', async function (assert) {
-    assert.expect(1);
-
-    const object = {};
-
-    const constraints = {
-      foo() {
-        return [present()];
-      }
-    };
-
-    try {
-      await validate(object, constraints);
-    } catch (error) {
-      assert.ok(error instanceof ValidationError);
-    }
+    assert.deepEqual(errors, null, 'no errors by default');
   });
 
   test('#validate (object constraints)', async function (assert) {
@@ -98,22 +74,17 @@ module('validation', function () {
       }
     };
 
-    try {
-      await validate(object, constraints);
-    } catch (error) {
-      assert.errorEqual(
-        error,
-        new ValidationError(null, {
-          name: ['Required value']
-        })
-      );
-    }
+    let errors = await validate(object, constraints);
+
+    assert.deepEqual(errors, {
+      name: ['Required value']
+    });
 
     object.name = 'Fred';
 
-    const result = await validate(object, constraints);
+    errors = await validate(object, constraints);
 
-    assert.deepEqual(result, null);
+    assert.deepEqual(errors, null);
   });
 
   test('#validate (multiple constraints)', async function (assert) {
@@ -127,16 +98,11 @@ module('validation', function () {
       }
     };
 
-    try {
-      await validate(object, constraints);
-    } catch (error) {
-      assert.errorEqual(
-        error,
-        new ValidationError(null, {
-          emailAddress: ['Required value', 'Invalid email']
-        })
-      );
-    }
+    const errors = await validate(object, constraints);
+
+    assert.deepEqual(errors, {
+      emailAddress: ['Required value', 'Invalid email']
+    });
   });
 
   test('#validate (multiple properties)', async function (assert) {
@@ -160,18 +126,13 @@ module('validation', function () {
       }
     };
 
-    try {
-      await validate(object, constraints);
-    } catch (error) {
-      assert.errorEqual(
-        error,
-        new ValidationError(null, {
-          firstName: ['Required value'],
-          emailAddress: ['Invalid email'],
-          dob: []
-        })
-      );
-    }
+    const errors = await validate(object, constraints);
+
+    assert.deepEqual(errors, {
+      firstName: ['Required value'],
+      emailAddress: ['Invalid email'],
+      dob: []
+    });
   });
 
   test('#validate (adhoc constraints)', async function (assert) {
@@ -179,7 +140,7 @@ module('validation', function () {
 
     const message = 'First and last name are both required';
 
-    const hasFirstAndLastName = function (value, object) {
+    const hasFirstAndLastName = (value, object) => {
       if (object.firstName && object.lastName) {
         return;
       }
@@ -198,45 +159,33 @@ module('validation', function () {
       }
     };
 
-    try {
-      await validate(object, constraints);
-    } catch (error) {
-      assert.errorEqual(
-        error,
-        new ValidationError(null, {
-          firstAndLastName: [message]
-        })
-      );
-    }
+    let errors = await validate(object, constraints);
+
+    assert.deepEqual(errors, {
+      firstAndLastName: [message]
+    });
 
     object.firstName = 'Fred';
 
-    try {
-      await validate(object, constraints);
-    } catch (error) {
-      assert.errorEqual(
-        error,
-        new ValidationError(null, {
-          firstAndLastName: [message]
-        })
-      );
-    }
+    errors = await validate(object, constraints);
+
+    assert.deepEqual(errors, {
+      firstAndLastName: [message]
+    });
 
     object.lastName = 'Smith';
 
-    const result = await validate(object, constraints);
+    errors = await validate(object, constraints);
 
-    assert.deepEqual(result, null);
+    assert.deepEqual(errors, null);
   });
 
   test('#validate (array of objects)', async function (assert) {
     assert.expect(3);
 
     const args = [];
-
     const tag1 = { name: 'foo' };
     const tag2 = { name: '' };
-
     const array = [tag1, tag2];
 
     const constraints = (tag) => {
@@ -249,22 +198,17 @@ module('validation', function () {
       };
     };
 
-    try {
-      await validate(array, constraints);
-    } catch (error) {
-      assert.errorEqual(
-        error,
-        new ValidationError(null, [{ name: [] }, { name: ['Required value'] }])
-      );
+    let errors = await validate(array, constraints);
 
-      assert.deepEqual(args, [tag1, tag2]);
-    }
+    assert.deepEqual(errors, [{ name: [] }, { name: ['Required value'] }]);
+
+    assert.deepEqual(args, [tag1, tag2]);
 
     tag2.name = 'bar';
 
-    const result = await validate(array, constraints);
+    errors = await validate(array, constraints);
 
-    assert.deepEqual(result, null);
+    assert.deepEqual(errors, null);
   });
 
   test('#validate (array of objects, individually)', async function (assert) {
@@ -273,10 +217,7 @@ module('validation', function () {
     const starter = { name: '' };
     const main = { name: '' };
     const dessert = { name: '' };
-
-    const meal = {
-      courses: [starter, main, dessert]
-    };
+    const meal = { courses: [starter, main, dessert] };
 
     const constraints = {
       'courses.0.name'() {
@@ -290,33 +231,23 @@ module('validation', function () {
       }
     };
 
-    try {
-      await validate(meal, constraints);
-    } catch (error) {
-      assert.errorEqual(
-        error,
-        new ValidationError(null, {
-          'courses.0.name': ['Required value'],
-          'courses.1.name': ['Required value'],
-          'courses.2.name': ['Required value']
-        })
-      );
-    }
+    let errors = await validate(meal, constraints);
+
+    assert.deepEqual(errors, {
+      'courses.0.name': ['Required value'],
+      'courses.1.name': ['Required value'],
+      'courses.2.name': ['Required value']
+    });
 
     main.name = 'Lamb';
 
-    try {
-      await validate(meal, constraints);
-    } catch (error) {
-      assert.errorEqual(
-        error,
-        new ValidationError(null, {
-          'courses.0.name': ['Required value'],
-          'courses.1.name': [],
-          'courses.2.name': ['Required value']
-        })
-      );
-    }
+    errors = await validate(meal, constraints);
+
+    assert.deepEqual(errors, {
+      'courses.0.name': ['Required value'],
+      'courses.1.name': [],
+      'courses.2.name': ['Required value']
+    });
   });
 
   test('#validate (expecting an array of objects)', async function (assert) {
@@ -332,19 +263,14 @@ module('validation', function () {
       };
     };
 
-    try {
-      await validate(array, constraints);
-    } catch (error) {
-      assert.errorEqual(
-        error,
-        new ValidationError(null, [
-          { id: [] },
-          { id: ['Required value'] },
-          { id: ['Required value'] },
-          { id: ['Required value'] }
-        ])
-      );
-    }
+    const errors = await validate(array, constraints);
+
+    assert.deepEqual(errors, [
+      { id: [] },
+      { id: ['Required value'] },
+      { id: ['Required value'] },
+      { id: ['Required value'] }
+    ]);
   });
 
   test('#validate (custom error messages)', async function (assert) {
@@ -362,16 +288,11 @@ module('validation', function () {
       }
     };
 
-    try {
-      await validate(object, constraints);
-    } catch (error) {
-      assert.errorEqual(
-        error,
-        new ValidationError(null, {
-          description: ['You must enter a description']
-        })
-      );
-    }
+    const errors = await validate(object, constraints);
+
+    assert.deepEqual(errors, {
+      description: ['You must enter a description']
+    });
   });
 
   test('#validate (custom error message functions)', async function (assert) {
@@ -397,18 +318,13 @@ module('validation', function () {
       }
     };
 
-    try {
-      await validate(object, constraints);
-    } catch (error) {
-      assert.errorEqual(
-        error,
-        new ValidationError(null, {
-          emailAddress: ['The email address foo@bar is not valid']
-        })
-      );
+    const errors = await validate(object, constraints);
 
-      assert.deepEqual(args, ['foo@bar', object]);
-    }
+    assert.deepEqual(errors, {
+      emailAddress: ['The email address foo@bar is not valid']
+    });
+
+    assert.deepEqual(args, ['foo@bar', object]);
   });
 
   test('#validate (custom error message functions - no escaping)', async function (assert) {
@@ -431,16 +347,11 @@ module('validation', function () {
       }
     };
 
-    try {
-      await validate(object, constraints);
-    } catch (error) {
-      assert.errorEqual(
-        error,
-        new ValidationError(null, {
-          name: ['Your name <script> is too short']
-        })
-      );
-    }
+    const errors = await validate(object, constraints);
+
+    assert.deepEqual(errors, {
+      name: ['Your name <script> is too short']
+    });
   });
 
   test('#validate (path properties)', async function (assert) {
@@ -463,17 +374,12 @@ module('validation', function () {
       }
     };
 
-    try {
-      await validate(person, constraints);
-    } catch (error) {
-      assert.errorEqual(
-        error,
-        new ValidationError(null, {
-          name: ['Required value'],
-          'organisation.name': ['Required value', 'Length must be at least 1']
-        })
-      );
-    }
+    const errors = await validate(person, constraints);
+
+    assert.deepEqual(errors, {
+      name: ['Required value'],
+      'organisation.name': ['Required value', 'Length must be at least 1']
+    });
   });
 
   test('#validate (case of properties)', async function (assert) {
@@ -487,16 +393,11 @@ module('validation', function () {
       }
     };
 
-    try {
-      await validate(object, constraints);
-    } catch (error) {
-      assert.errorEqual(
-        error,
-        new ValidationError(null, {
-          fOoBaR: ['Required value']
-        })
-      );
-    }
+    const errors = await validate(object, constraints);
+
+    assert.deepEqual(errors, {
+      fOoBaR: ['Required value']
+    });
   });
 
   test('#validate (cumulative validity)', async function (assert) {
@@ -516,17 +417,12 @@ module('validation', function () {
       }
     };
 
-    try {
-      await validate(object, constraints);
-    } catch (error) {
-      assert.errorEqual(
-        error,
-        new ValidationError(null, {
-          firstName: ['Required value'],
-          lastName: []
-        })
-      );
-    }
+    const errors = await validate(object, constraints);
+
+    assert.deepEqual(errors, {
+      firstName: ['Required value'],
+      lastName: []
+    });
   });
 
   test('#validate (promises)', async function (assert) {
@@ -542,24 +438,19 @@ module('validation', function () {
       }
     };
 
-    try {
-      await validate(object, constraints);
-    } catch (error) {
-      assert.errorEqual(
-        error,
-        new ValidationError(null, {
-          amount: ['Must be greater than 10']
-        })
-      );
-    }
+    let errors = await validate(object, constraints);
+
+    assert.deepEqual(errors, {
+      amount: ['Must be greater than 10']
+    });
 
     object = resolve({
       amount: resolve(11)
     });
 
-    const result = await validate(object, constraints);
+    errors = await validate(object, constraints);
 
-    assert.deepEqual(result, null);
+    assert.deepEqual(errors, null);
   });
 
   test('readme example', async function (assert) {
@@ -620,31 +511,29 @@ module('validation', function () {
       };
     };
 
-    try {
-      await validate(items, constraints);
-    } catch (error) {
-      assert.deepEqual(error.result, [
-        {
-          type: [],
-          value: ['Required value']
-        },
-        {
-          type: [],
-          value: ['Required value', 'Invalid number']
-        },
-        {
-          type: [],
-          value: ['Required value', 'Invalid email']
-        },
-        {
-          type: [],
-          value: ['Required value', 'Invalid date, expecting dd/MM/yyyy']
-        },
-        {
-          type: ['Unknown type'],
-          value: []
-        }
-      ]);
-    }
+    const errors = await validate(items, constraints);
+
+    assert.deepEqual(errors, [
+      {
+        type: [],
+        value: ['Required value']
+      },
+      {
+        type: [],
+        value: ['Required value', 'Invalid number']
+      },
+      {
+        type: [],
+        value: ['Required value', 'Invalid email']
+      },
+      {
+        type: [],
+        value: ['Required value', 'Invalid date, expecting dd/MM/yyyy']
+      },
+      {
+        type: ['Unknown type'],
+        value: []
+      }
+    ]);
   });
 });

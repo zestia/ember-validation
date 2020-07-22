@@ -1,5 +1,4 @@
 import { get } from '@ember/object';
-import { ValidationError } from './errors';
 import { typeOf } from '@ember/utils';
 import { assert } from '@ember/debug';
 const { keys, values } = Object;
@@ -20,7 +19,7 @@ export default async function validate(object, constraints = {}) {
   }
 
   if (erred) {
-    throw new ValidationError(null, messages);
+    return messages;
   }
 
   return null;
