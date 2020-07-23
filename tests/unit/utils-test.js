@@ -4,97 +4,76 @@ import {
   collateMessages
 } from '@zestia/ember-validation/utils';
 
-module('utils', function () {
-  test('#flattenMessages', function (assert) {
-    assert.expect(3);
-
-    const result = {
-      'recipe.description': [
+module('utils', function (hooks) {
+  hooks.beforeEach(function () {
+    this.errors = {
+      name: null,
+      description: [
         'recipe must have a description',
         'description is too short'
       ],
-      'recipe.ingredients': [
+      ingredients: [
         {
           name: ['ingredient name required'],
           quantity: ['quantity too small']
         },
         {
-          name: [],
-          quantity: []
+          name: null,
+          quantity: null
         },
         {
-          name: [],
+          name: null,
           quantity: ['quantity required', 'invalid unit']
         }
       ]
     };
+  });
 
-    assert.deepEqual(
-      flattenMessages(result),
-      [
+  module('#flattenMessages', function () {
+    test('it flattens the object into an array of messages', function (assert) {
+      assert.expect(1);
+
+      assert.deepEqual(flattenMessages(this.errors), [
         'recipe must have a description',
         'description is too short',
         'ingredient name required',
         'quantity too small',
         'quantity required',
         'invalid unit'
-      ],
-      'flattens the entire error result into just the messages'
-    );
+      ]);
+    });
 
-    assert.deepEqual(
-      flattenMessages(result['recipe.ingredients']),
-      [
+    test('it flattens the array into an array of messages', function (assert) {
+      assert.expect(1);
+
+      assert.deepEqual(flattenMessages(this.errors.ingredients), [
         'ingredient name required',
         'quantity too small',
         'quantity required',
         'invalid unit'
-      ],
-      'flattens the array of error results into just the messages'
-    );
+      ]);
+    });
 
-    assert.deepEqual(
-      flattenMessages(null),
-      null,
-      'does not blow up if there were no messages'
-    );
+    test('it does not blow up when there are no errors', function (assert) {
+      assert.expect(1);
+      assert.deepEqual(flattenMessages(null), null);
+    });
   });
 
-  test('#collateMessages', function (assert) {
-    assert.expect(2);
+  module('#collateMessages', function () {
+    test('it throws the object keys away, and retains the array structure', function (assert) {
+      assert.expect(1);
 
-    const result = {
-      'recipe.ingredients': [
-        {
-          name: [],
-          quantity: ['quantity required', 'invalid unit']
-        },
-        {
-          name: [],
-          quantity: []
-        },
-        {
-          name: ['ingredient name required'],
-          quantity: ['quantity too small']
-        }
-      ]
-    };
+      assert.deepEqual(collateMessages(this.errors.ingredients), [
+        ['ingredient name required', 'quantity too small'],
+        null,
+        ['quantity required', 'invalid unit']
+      ]);
+    });
 
-    assert.deepEqual(
-      collateMessages(result['recipe.ingredients']),
-      [
-        ['quantity required', 'invalid unit'],
-        [],
-        ['ingredient name required', 'quantity too small']
-      ],
-      'collates the array of error results into just the messages ' +
-        'whilst retaining the array structure'
-    );
-
-    assert.deepEqual(
-      collateMessages(null),
-      null,
-      'does not blow up if there were no messages'
-    );
+    test('it does not blow up when there are no errors', function (assert) {
+      assert.expect(1);
+      assert.deepEqual(collateMessages(null), null);
+    });
   });
 });

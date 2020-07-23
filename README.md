@@ -128,8 +128,8 @@ const errors = await validate(person, constraints);
 
 /**
  *  {
- *    firstName: [],
- *    lastName: [],
+ *    firstName: null,
+ *    lastName: null,
  *    name: ['Must be unique']
  *  }
  */
@@ -197,11 +197,6 @@ const errors = await validate(items, constraints);
  */
 ```
 
-## Utils
-
-- [`flattenMessages`](tests/unit/utils-test.js#L7)
-- [`collateMessages`](tests/unit/utils-test.js#L57)
-
 ## Constraints
 
 - bigDecimal
@@ -240,3 +235,11 @@ const errors = await validate(items, constraints);
   - `message`
 - truthy
   - `message`
+
+## Utils
+
+- [`flattenMessages`](tests/unit/utils-test.js#L7)<br>
+  Flatten a messages object (or an array of objects) into a single array of _all_ the message strings.
+
+- [`collateMessages`](tests/unit/utils-test.js#L57)<br>
+  Flatten a messages array of objects into an array of message strings.

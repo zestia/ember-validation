@@ -131,7 +131,7 @@ module('validation', function () {
     assert.deepEqual(errors, {
       firstName: ['Required value'],
       emailAddress: ['Invalid email'],
-      dob: []
+      dob: null
     });
   });
 
@@ -200,7 +200,7 @@ module('validation', function () {
 
     let errors = await validate(array, constraints);
 
-    assert.deepEqual(errors, [{ name: [] }, { name: ['Required value'] }]);
+    assert.deepEqual(errors, [{ name: null }, { name: ['Required value'] }]);
 
     assert.deepEqual(args, [tag1, tag2]);
 
@@ -245,7 +245,7 @@ module('validation', function () {
 
     assert.deepEqual(errors, {
       'courses.0.name': ['Required value'],
-      'courses.1.name': [],
+      'courses.1.name': null,
       'courses.2.name': ['Required value']
     });
   });
@@ -266,7 +266,7 @@ module('validation', function () {
     const errors = await validate(array, constraints);
 
     assert.deepEqual(errors, [
-      { id: [] },
+      { id: null },
       { id: ['Required value'] },
       { id: ['Required value'] },
       { id: ['Required value'] }
@@ -421,7 +421,7 @@ module('validation', function () {
 
     assert.deepEqual(errors, {
       firstName: ['Required value'],
-      lastName: []
+      lastName: null
     });
   });
 
@@ -515,24 +515,24 @@ module('validation', function () {
 
     assert.deepEqual(errors, [
       {
-        type: [],
+        type: null,
         value: ['Required value']
       },
       {
-        type: [],
+        type: null,
         value: ['Required value', 'Invalid number']
       },
       {
-        type: [],
+        type: null,
         value: ['Required value', 'Invalid email']
       },
       {
-        type: [],
+        type: null,
         value: ['Required value', 'Invalid date, expecting dd/MM/yyyy']
       },
       {
         type: ['Unknown type'],
-        value: []
+        value: null
       }
     ]);
   });

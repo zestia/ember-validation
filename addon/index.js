@@ -10,11 +10,11 @@ export default async function validate(object, constraints = {}) {
   switch (typeOf(object)) {
     case 'array':
       messages = await _validateArray(object, constraints);
-      erred = messages.some((object) => values(object).some(_hasError));
+      erred = messages.some((object) => values(object).some(Boolean));
       break;
     default:
       messages = await _validateObject(object, constraints);
-      erred = values(messages).some(_hasError);
+      erred = values(messages).some(Boolean);
       break;
   }
 
@@ -52,10 +52,6 @@ async function _validateArray(array, constraints) {
   return messages;
 }
 
-function _hasError(messages) {
-  return messages.length > 0;
-}
-
 function _applyConstraints(object, key, value, constraints) {
   const messages = [];
 
@@ -71,5 +67,5 @@ function _applyConstraints(object, key, value, constraints) {
     }
   }
 
-  return messages;
+  return messages.length > 0 ? messages : null;
 }
