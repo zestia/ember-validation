@@ -84,7 +84,7 @@ module('validation', function () {
 
     errors = await validate(object, constraints);
 
-    assert.deepEqual(errors, null);
+    assert.strictEqual(errors, null);
   });
 
   test('#validate (multiple constraints)', async function (assert) {
@@ -177,7 +177,7 @@ module('validation', function () {
 
     errors = await validate(object, constraints);
 
-    assert.deepEqual(errors, null);
+    assert.strictEqual(errors, null);
   });
 
   test('#validate (array of objects)', async function (assert) {
@@ -208,7 +208,7 @@ module('validation', function () {
 
     errors = await validate(array, constraints);
 
-    assert.deepEqual(errors, null);
+    assert.strictEqual(errors, null);
   });
 
   test('#validate (array of objects, individually)', async function (assert) {
@@ -450,7 +450,7 @@ module('validation', function () {
 
     errors = await validate(object, constraints);
 
-    assert.deepEqual(errors, null);
+    assert.strictEqual(errors, null);
   });
 
   test('readme example', async function (assert) {
