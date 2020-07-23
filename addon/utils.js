@@ -2,18 +2,20 @@ import { typeOf } from '@ember/utils';
 const { keys } = Object;
 
 export function flattenMessages(errors) {
+  let messages;
+
   if (typeOf(errors) === 'object') {
-    return _flattenObjectMessages(errors);
+    messages = _flattenObjectMessages(errors);
   } else if (typeOf(errors) === 'array') {
-    return _flattenArrayMessages(errors);
-  } else {
-    return null;
+    messages = _flattenArrayMessages(errors);
   }
+
+  return messages && messages.length > 0 ? messages : null;
 }
 
-function _flattenObjectMessages(errors) {
-  return keys(errors).reduce((messages, key) => {
-    const item = errors[key];
+function _flattenObjectMessages(object) {
+  return keys(object).reduce((messages, key) => {
+    const item = object[key];
 
     if (typeOf(item) === 'array') {
       messages = messages.concat(_flattenArrayMessages(item));
@@ -34,17 +36,19 @@ function _flattenArrayMessages(array) {
 }
 
 export function collateMessages(errors) {
+  let messages;
+
   if (typeOf(errors) === 'array') {
-    return errors.reduce((messages, object) => {
-      messages.push(_collateObjectMessages(object));
-      return messages;
-    }, []);
-  } else {
-    return null;
+    messages = _collateArrayMessages(errors);
   }
+
+  return messages && messages.length > 0 ? messages : null;
 }
 
-function _collateObjectMessages(object) {
-  const messages = _flattenObjectMessages(object);
-  return messages.length > 0 ? messages : null;
+function _collateArrayMessages(array) {
+  return array.reduce((messages, object) => {
+    const msgs = _flattenObjectMessages(object);
+    messages.push(msgs.length > 0 ? msgs : null);
+    return messages;
+  }, []);
 }

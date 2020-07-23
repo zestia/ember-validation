@@ -54,9 +54,12 @@ module('utils', function (hooks) {
       ]);
     });
 
-    test('it does not blow up when there are no errors', function (assert) {
-      assert.expect(1);
+    test('it returns null when there are no errors', function (assert) {
+      assert.expect(3);
+
       assert.deepEqual(flattenMessages(null), null);
+      assert.deepEqual(flattenMessages({}), null);
+      assert.deepEqual(flattenMessages([]), null);
     });
   });
 
@@ -71,9 +74,10 @@ module('utils', function (hooks) {
       ]);
     });
 
-    test('it does not blow up when there are no errors', function (assert) {
-      assert.expect(1);
+    test('it returns null when there are no errors', function (assert) {
+      assert.expect(2);
       assert.deepEqual(collateMessages(null), null);
+      assert.deepEqual(collateMessages([]), null);
     });
   });
 });
