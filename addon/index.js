@@ -3,7 +3,7 @@ import { typeOf } from '@ember/utils';
 import { assert } from '@ember/debug';
 const { keys, values } = Object;
 
-export default async function validate(object, constraints = {}) {
+export default async function validate(object, constraints) {
   let messages;
   let erred = false;
 

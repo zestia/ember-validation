@@ -14,7 +14,7 @@ module('validation', function () {
   test('#validate (defaults)', async function (assert) {
     assert.expect(1);
 
-    const errors = await validate();
+    const errors = await validate(null, {});
 
     assert.deepEqual(errors, null, 'no errors by default');
   });
