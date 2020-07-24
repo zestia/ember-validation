@@ -39,7 +39,7 @@ ember install @zestia/ember-validation
 - Supports [adhoc constraints](#adhoc-constraints) ✔︎
 - Supports [dynamic constraints](#dynamic-constraints) ✔︎
 - Uses [date-fns](https://date-fns.org) for date validation. ✔︎
-- Simple [reformatting](#utils) of error messages ✔︎
+- Simple [restructuring](#utils) of error messages ✔︎
 
 ## Example
 
