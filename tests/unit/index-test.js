@@ -184,15 +184,21 @@ module('validation', function () {
     assert.expect(3);
 
     const args = [];
-    const tag1 = { name: 'foo' };
-    const tag2 = { name: '' };
-    const array = [tag1, tag2];
 
-    const constraints = (tag) => {
-      args.push(tag);
+    const person1 = { firstName: 'fred', lastName: 'smith' };
+    const person2 = { firstName: 'joe' };
+
+    const array = [person1, person2];
+
+    const constraints = (person) => {
+      args.push(person);
 
       return {
-        name() {
+        firstName() {
+          return [present()];
+        },
+
+        lastName() {
           return [present()];
         }
       };
@@ -200,11 +206,17 @@ module('validation', function () {
 
     let errors = await validate(array, constraints);
 
-    assert.deepEqual(errors, [{ name: null }, { name: ['Required value'] }]);
+    assert.deepEqual(errors, [
+      null,
+      {
+        firstName: null,
+        lastName: ['Required value']
+      }
+    ]);
 
-    assert.deepEqual(args, [tag1, tag2]);
+    assert.deepEqual(args, [person1, person2]);
 
-    tag2.name = 'bar';
+    person2.lastName = 'bloggs';
 
     errors = await validate(array, constraints);
 
@@ -266,7 +278,7 @@ module('validation', function () {
     const errors = await validate(array, constraints);
 
     assert.deepEqual(errors, [
-      { id: null },
+      null,
       { id: ['Required value'] },
       { id: ['Required value'] },
       { id: ['Required value'] }
