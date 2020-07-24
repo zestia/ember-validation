@@ -20,7 +20,7 @@
   <img src="https://img.shields.io/badge/Ember-%3E%3D%203.12-brightgreen">
 </p>
 
-This lightweight addon lets you validate an object, or an array of objects. It will throw an error if anything failed a _constraint_, and if this happens the resulting error will provide you with a structured array of error messages as to why.
+This lightweight addon lets you validate an object, or an array of objects. It will return a structured response with error messages for anything that failed a _constraint_.
 
 You can run validation and get the result as a one-off, or alternatively, you can re-compute validation automatically using a computed property.
 
