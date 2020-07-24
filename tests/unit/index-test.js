@@ -8,6 +8,7 @@ import {
   present
 } from '@zestia/ember-validation/constraints';
 import validate from '@zestia/ember-validation';
+import EmberObject from '@ember/object';
 import { resolve } from 'rsvp';
 
 module('validation', function () {
@@ -504,6 +505,24 @@ module('validation', function () {
     errors = await validate(object, constraints);
 
     assert.strictEqual(errors, null);
+  });
+
+  test('#validate instances', async function (assert) {
+    assert.expect(1);
+
+    const object = EmberObject.create();
+
+    const constraints = {
+      name() {
+        return [present()];
+      }
+    };
+
+    const errors = await validate(object, constraints);
+
+    assert.deepEqual(errors, {
+      name: ['Required value']
+    });
   });
 
   test('readme example', async function (assert) {

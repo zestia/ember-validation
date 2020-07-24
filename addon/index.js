@@ -1,20 +1,19 @@
 import { get } from '@ember/object';
-import { typeOf } from '@ember/utils';
 import { assert } from '@ember/debug';
-import { result } from './utils';
-import { all, resolve } from 'rsvp';
+import { result, isArray, isObject, isFunction } from './utils';
+import { all } from 'rsvp';
 const { keys } = Object;
 
-export default function validate(object, constraints) {
-  if (typeOf(object) === 'object') {
-    return validateObject(object, constraints);
-  } else if (typeOf(object) === 'array') {
-    return validateArray(object, constraints);
+export default async function validate(input, constraints) {
+  if (isObject(input)) {
+    return await validateObject(input, constraints);
+  } else if (isArray(input)) {
+    return await validateArray(input, constraints);
   }
 }
 
 async function validateObject(_object, _constraints) {
-  assert('Constraints must be an object', typeOf(_constraints) === 'object');
+  assert('Constraints must be an object', isObject(_constraints));
 
   const object = (await _object) || {};
 
@@ -28,24 +27,24 @@ async function validateObject(_object, _constraints) {
     return errors;
   }, {});
 
-  return resolve(result(errors));
+  return result(errors);
 }
 
 async function validateArray(array, constraints) {
-  assert('Constraints must be a function', typeOf(constraints) === 'function');
+  assert('Constraints must be a function', isFunction(constraints));
 
   const errors = await all(
     array.map((object) => validateObject(object, constraints(object)))
   );
 
-  return resolve(result(errors));
+  return result(errors);
 }
 
 function applyConstraints(object, key, value, constraints) {
   const errors = constraints.reduce((errors, constraint) => {
     let message = constraint(value, object);
 
-    if (typeOf(message) === 'function') {
+    if (isFunction(message)) {
       message = message(value, object);
     }
 

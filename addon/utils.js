@@ -1,12 +1,29 @@
-import { typeOf } from '@ember/utils';
 const { keys, values } = Object;
 
+export const isArray = Array.isArray;
+
+export function isNull(input) {
+  return input === null;
+}
+
+export function isString(input) {
+  return typeof input === 'string';
+}
+
+export function isFunction(input) {
+  return typeof input === 'function';
+}
+
+export function isObject(input) {
+  return typeof input === 'object' && !isNull(input) && !isArray(input);
+}
+
 export function flattenErrors(errors) {
-  if (typeOf(errors) === 'null') {
+  if (isNull(errors)) {
     return errors;
-  } else if (typeOf(errors) === 'object') {
+  } else if (isObject(errors)) {
     return flattenObjectErrors(errors);
-  } else if (typeOf(errors) === 'array') {
+  } else if (isArray(errors)) {
     return flattenArrayErrors(errors);
   }
 }
@@ -15,7 +32,7 @@ function flattenObjectErrors(object) {
   const errors = keys(object).reduce((errors, key) => {
     const item = object[key];
 
-    if (typeOf(item) === 'array') {
+    if (isArray(item)) {
       errors = errors.concat(flattenArrayErrors(item));
     }
 
@@ -27,9 +44,9 @@ function flattenObjectErrors(object) {
 
 function flattenArrayErrors(array) {
   const errors = array.reduce((errors, item) => {
-    if (typeOf(item) === 'string') {
+    if (isString(item)) {
       return errors.concat(item);
-    } else if (typeOf(item) === 'object') {
+    } else if (isObject(item)) {
       return errors.concat(flattenObjectErrors(item));
     }
 
@@ -40,18 +57,18 @@ function flattenArrayErrors(array) {
 }
 
 export function collateErrors(errors) {
-  if (typeOf(errors) === 'null') {
+  if (isNull(errors)) {
     return errors;
-  } else if (typeOf(errors) === 'array') {
+  } else if (isArray(errors)) {
     return collateArrayErrors(errors);
   }
 }
 
 function collateArrayErrors(array) {
   const errors = array.reduce((errors, item) => {
-    if (typeOf(item) === 'null') {
+    if (isNull(item)) {
       errors.push(item);
-    } else if (typeOf(item) === 'object') {
+    } else if (isObject(item)) {
       errors.push(flattenObjectErrors(item));
     }
 
@@ -64,9 +81,9 @@ function collateArrayErrors(array) {
 export function result(errors) {
   let erred;
 
-  if (typeOf(errors) === 'object') {
+  if (isObject(errors)) {
     erred = values(errors).some(Boolean);
-  } else if (typeOf(errors) === 'array') {
+  } else if (isArray(errors)) {
     erred = errors.some(Boolean);
   }
 
