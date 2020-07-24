@@ -4,11 +4,11 @@ import { result, isArray, isObject, isFunction } from './utils';
 import { all } from 'rsvp';
 const { keys } = Object;
 
-export default async function validate(input, constraints) {
+export default function validate(input, constraints) {
   if (isObject(input)) {
-    return await validateObject(input, constraints);
+    return validateObject(input, constraints);
   } else if (isArray(input)) {
-    return await validateArray(input, constraints);
+    return validateArray(input, constraints);
   }
 }
 
