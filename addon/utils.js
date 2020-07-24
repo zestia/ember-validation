@@ -1,54 +1,78 @@
 import { typeOf } from '@ember/utils';
-const { keys } = Object;
+const { keys, values } = Object;
 
-export function flattenMessages(errors) {
-  let messages;
-
-  if (typeOf(errors) === 'object') {
-    messages = _flattenObjectMessages(errors);
+export function flattenErrors(errors) {
+  if (typeOf(errors) === 'null') {
+    return errors;
+  } else if (typeOf(errors) === 'object') {
+    return flattenObjectErrors(errors);
   } else if (typeOf(errors) === 'array') {
-    messages = _flattenArrayMessages(errors);
+    return flattenArrayErrors(errors);
   }
-
-  return messages && messages.length > 0 ? messages : null;
 }
 
-function _flattenObjectMessages(object) {
-  return keys(object).reduce((messages, key) => {
+function flattenObjectErrors(object) {
+  const errors = keys(object).reduce((errors, key) => {
     const item = object[key];
 
     if (typeOf(item) === 'array') {
-      messages = messages.concat(_flattenArrayMessages(item));
+      errors = errors.concat(flattenArrayErrors(item));
     }
 
-    return messages;
+    return errors;
   }, []);
+
+  return result(errors);
 }
 
-function _flattenArrayMessages(array) {
-  return array.reduce((messages, item) => {
+function flattenArrayErrors(array) {
+  const errors = array.reduce((errors, item) => {
     if (typeOf(item) === 'string') {
-      return messages.concat(item);
+      return errors.concat(item);
     } else if (typeOf(item) === 'object') {
-      return messages.concat(_flattenObjectMessages(item));
+      return errors.concat(flattenObjectErrors(item));
     }
+
+    return errors;
   }, []);
+
+  return result(errors);
 }
 
-export function collateMessages(errors) {
-  let messages;
+export function collateErrors(errors) {
+  if (typeOf(errors) === 'null') {
+    return errors;
+  } else if (typeOf(errors) === 'array') {
+    return collateArrayErrors(errors);
+  }
+}
 
-  if (typeOf(errors) === 'array') {
-    messages = _collateArrayMessages(errors);
+function collateArrayErrors(array) {
+  const errors = array.reduce((errors, item) => {
+    if (typeOf(item) === 'null') {
+      errors.push(item);
+    } else if (typeOf(item) === 'object') {
+      errors.push(flattenObjectErrors(item));
+    }
+
+    return errors;
+  }, []);
+
+  return result(errors);
+}
+
+export function result(errors) {
+  let erred;
+
+  if (typeOf(errors) === 'object') {
+    erred = values(errors).some(Boolean);
+  } else if (typeOf(errors) === 'array') {
+    erred = errors.some(Boolean);
   }
 
-  return messages && messages.length > 0 ? messages : null;
-}
+  if (erred) {
+    return errors;
+  }
 
-function _collateArrayMessages(array) {
-  return array.reduce((messages, object) => {
-    const msgs = _flattenObjectMessages(object);
-    messages.push(msgs.length > 0 ? msgs : null);
-    return messages;
-  }, []);
+  return null;
 }

@@ -1,14 +1,15 @@
 import { get } from '@ember/object';
 import { typeOf } from '@ember/utils';
 import { assert } from '@ember/debug';
-const { keys, values } = Object;
+import { result } from './utils';
+import { all, resolve } from 'rsvp';
+const { keys } = Object;
 
 export default function validate(object, constraints) {
-  switch (typeOf(object)) {
-    case 'array':
-      return validateArray(object, constraints);
-    default:
-      return validateObject(object, constraints);
+  if (typeOf(object) === 'object') {
+    return validateObject(object, constraints);
+  } else if (typeOf(object) === 'array') {
+    return validateArray(object, constraints);
   }
 }
 
@@ -16,42 +17,32 @@ async function validateObject(_object, _constraints) {
   assert('Constraints must be an object', typeOf(_constraints) === 'object');
 
   const object = (await _object) || {};
-  const messages = {};
 
-  for (const key of keys(_constraints)) {
+  const errors = await keys(_constraints).reduce(async (_errors, key) => {
+    const errors = await _errors;
     const constraints = _constraints[key];
     const value = await get(object, key);
 
-    messages[key] = applyConstraints(object, key, value, constraints(object));
-  }
+    errors[key] = applyConstraints(object, key, value, constraints(object));
 
-  if (values(messages).some(Boolean)) {
-    return messages;
-  }
+    return errors;
+  }, {});
 
-  return null;
+  return resolve(result(errors));
 }
 
 async function validateArray(array, constraints) {
   assert('Constraints must be a function', typeOf(constraints) === 'function');
 
-  const messages = [];
+  const errors = await all(
+    array.map((object) => validateObject(object, constraints(object)))
+  );
 
-  for (const object of array) {
-    messages.push(await validateObject(object, constraints(object)));
-  }
-
-  if (messages.some(Boolean)) {
-    return messages;
-  }
-
-  return null;
+  return resolve(result(errors));
 }
 
 function applyConstraints(object, key, value, constraints) {
-  const messages = [];
-
-  for (const constraint of constraints) {
+  const errors = constraints.reduce((errors, constraint) => {
     let message = constraint(value, object);
 
     if (typeOf(message) === 'function') {
@@ -59,13 +50,11 @@ function applyConstraints(object, key, value, constraints) {
     }
 
     if (message) {
-      messages.push(message);
+      errors.push(message);
     }
-  }
 
-  if (messages.some(Boolean)) {
-    return messages;
-  }
+    return errors;
+  }, []);
 
-  return null;
+  return result(errors);
 }

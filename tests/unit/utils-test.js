@@ -1,8 +1,5 @@
 import { module, test } from 'qunit';
-import {
-  flattenMessages,
-  collateMessages
-} from '@zestia/ember-validation/utils';
+import { flattenErrors, collateErrors } from '@zestia/ember-validation/utils';
 
 module('utils', function (hooks) {
   hooks.beforeEach(function () {
@@ -17,10 +14,7 @@ module('utils', function (hooks) {
           name: ['ingredient name required'],
           quantity: ['quantity too small']
         },
-        {
-          name: null,
-          quantity: null
-        },
+        null,
         {
           name: null,
           quantity: ['quantity required', 'invalid unit']
@@ -29,11 +23,11 @@ module('utils', function (hooks) {
     };
   });
 
-  module('#flattenMessages', function () {
+  module('#flattenErrors', function () {
     test('it flattens the object into an array of messages', function (assert) {
       assert.expect(1);
 
-      assert.deepEqual(flattenMessages(this.errors), [
+      assert.deepEqual(flattenErrors(this.errors), [
         'recipe must have a description',
         'description is too short',
         'ingredient name required',
@@ -46,7 +40,7 @@ module('utils', function (hooks) {
     test('it flattens the array into an array of messages', function (assert) {
       assert.expect(1);
 
-      assert.deepEqual(flattenMessages(this.errors.ingredients), [
+      assert.deepEqual(flattenErrors(this.errors.ingredients), [
         'ingredient name required',
         'quantity too small',
         'quantity required',
@@ -57,17 +51,17 @@ module('utils', function (hooks) {
     test('it returns null when there are no errors', function (assert) {
       assert.expect(3);
 
-      assert.deepEqual(flattenMessages(null), null);
-      assert.deepEqual(flattenMessages({}), null);
-      assert.deepEqual(flattenMessages([]), null);
+      assert.deepEqual(flattenErrors(null), null);
+      assert.deepEqual(flattenErrors({}), null);
+      assert.deepEqual(flattenErrors([]), null);
     });
   });
 
-  module('#collateMessages', function () {
+  module('#collateErrors', function () {
     test('it throws the object keys away, and retains the array structure', function (assert) {
       assert.expect(1);
 
-      assert.deepEqual(collateMessages(this.errors.ingredients), [
+      assert.deepEqual(collateErrors(this.errors.ingredients), [
         ['ingredient name required', 'quantity too small'],
         null,
         ['quantity required', 'invalid unit']
@@ -76,8 +70,8 @@ module('utils', function (hooks) {
 
     test('it returns null when there are no errors', function (assert) {
       assert.expect(2);
-      assert.deepEqual(collateMessages(null), null);
-      assert.deepEqual(collateMessages([]), null);
+      assert.deepEqual(collateErrors(null), null);
+      assert.deepEqual(collateErrors([]), null);
     });
   });
 });

@@ -238,8 +238,8 @@ const errors = await validate(items, constraints);
 
 ## Utils
 
-- [`flattenMessages`](tests/unit/utils-test.js#L32)<br>
+- [`flattenErrors`](tests/unit/utils-test.js#L32)<br>
   Flatten a messages object (or an array of objects) into a single array of _all_ the message strings.
 
-- [`collateMessages`](tests/unit/utils-test.js#L66)<br>
+- [`collateErrors`](tests/unit/utils-test.js#L66)<br>
   Flatten a messages array of objects into an array of message strings.

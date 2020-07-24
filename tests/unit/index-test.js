@@ -14,7 +14,7 @@ module('validation', function () {
   test('#validate (defaults)', async function (assert) {
     assert.expect(1);
 
-    const errors = await validate(null, {});
+    const errors = await validate({}, {});
 
     assert.deepEqual(errors, null, 'no errors by default');
   });
@@ -434,6 +434,47 @@ module('validation', function () {
     assert.deepEqual(errors, {
       firstName: ['Required value'],
       lastName: null
+    });
+  });
+
+  test('#validate object (thenable)', function (assert) {
+    assert.expect(1);
+
+    const object = {};
+
+    const constraints = {
+      name() {
+        return [present()];
+      }
+    };
+
+    return validate(object, constraints).then((errors) => {
+      assert.deepEqual(errors, {
+        name: ['Required value']
+      });
+    });
+  });
+
+  test('#validate array (thenable)', function (assert) {
+    assert.expect(1);
+
+    const array = [{}, {}];
+
+    const constraints = (item) => ({
+      name() {
+        return [present()];
+      }
+    });
+
+    return validate(array, constraints).then((errors) => {
+      assert.deepEqual(errors, [
+        {
+          name: ['Required value']
+        },
+        {
+          name: ['Required value']
+        }
+      ]);
     });
   });
 
