@@ -1,24 +1,17 @@
 /* stylelint-disable selector-max-type */
 
-:root {
-  --code-font: monospace;
+form {
+  margin-bottom: 40px;
+  position: relative;
+  display: flex;
+}
+
+form > fieldset {
+  flex-basis: 320px;
+  flex-shrink: 0;
+  margin-right: 20px;
 }
 
 fieldset {
-  width: 320px;
-  margin-bottom: 20px;
-}
-
-form {
-  margin-bottom: 60px;
-  position: relative;
-}
-
-form::after {
-  font-family: var(--code-font);
-  content: attr(data-errors);
-  white-space: pre-wrap;
-  position: absolute;
-  top: 20px;
-  left: 400px;
+  margin-bottom: 10px;
 }

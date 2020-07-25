@@ -25,7 +25,7 @@
 
 <br />
 
-<form novalidate {{on "submit" this.handleSubmit}} data-errors={{this.personStringErrors}}>
+<form novalidate {{on "submit" this.handleSubmit}}>
   <fieldset>
     <legend>
       An object
@@ -48,7 +48,11 @@
 
     <p>
       {{this.errors.person.dateOfBirth}}
-      <Input @type="text" @value={{this.person.dateOfBirth}} placeholder="Date of birth" />
+      <Input
+        @type="text"
+        @value={{this.person.dateOfBirth}}
+        placeholder="Date of birth"
+      />
     </p>
     <Errors @errors={{this.personErrors.dateOfBirth}} />
 
@@ -60,18 +64,29 @@
       </label>
     </p>
     <Errors @errors={{this.personErrors.terms}} />
+
+    <p>
+      <button type="submit" {{on "click" this.validatePerson}}>
+        Submit
+      </button>
+    </p>
   </fieldset>
 
-  <p>
-    Validates: {{if this.personValidates "✔" "✗"}}
-  </p>
-
-  <button type="submit" {{on "click" this.validatePerson}}>
-    Submit
-  </button>
+  <fieldset>
+    <legend>
+      Validates: {{if this.personValidates "✔" "✗"}}
+    </legend>
+    <pre>
+      {{~this.personStringErrors~}}
+    </pre>
+  </fieldset>
 </form>
 
-<form novaidate {{on "submit" this.handleSubmit}} data-errors={{this.mealStringErrors}}>
+<form
+  novaidate
+  data-errors={{this.mealStringErrors}}
+  {{on "submit" this.handleSubmit}}
+>
   <fieldset>
     <legend>
       An array of objects
@@ -93,13 +108,20 @@
         <Errors @errors={{get (get this.mealErrors index) "description"}} />
       </fieldset>
     {{/each}}
+
+    <p>
+      <button type="submit" {{on "click" this.validateMeals}}>
+        Submit
+      </button>
+    </p>
   </fieldset>
 
-  <p>
-    Validates: {{if this.mealsValidate "✔" "✗"}}
-  </p>
-
-  <button type="submit" {{on "click" this.validateMeals}}>
-    Submit
-  </button>
+  <fieldset>
+    <legend>
+      Validates: {{if this.mealsValidate "✔" "✗"}}
+    </legend>
+    <pre>
+      {{~this.mealStringErrors~}}
+    </pre>
+  </fieldset>
 </form>
