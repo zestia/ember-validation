@@ -22,8 +22,6 @@
 
 This lightweight addon lets you validate an object, or an array of objects. It will return a structured response with error messages for anything that failed a _constraint_.
 
-You can run validation and get the result as a one-off, or alternatively, you can re-compute validation automatically using a computed property.
-
 ### Installation
 
 ```
