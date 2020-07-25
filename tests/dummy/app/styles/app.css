@@ -1,5 +1,9 @@
 /* stylelint-disable selector-max-type */
 
+:root {
+  --code-font: monospace;
+}
+
 fieldset {
   width: 320px;
   margin-bottom: 20px;
@@ -7,4 +11,14 @@ fieldset {
 
 form {
   margin-bottom: 60px;
+  position: relative;
+}
+
+form::after {
+  font-family: var(--code-font);
+  content: attr(data-errors);
+  white-space: pre-wrap;
+  position: absolute;
+  top: 20px;
+  left: 400px;
 }

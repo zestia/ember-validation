@@ -25,7 +25,7 @@
 
 <br />
 
-<form novalidate {{on "submit" this.handleSubmit}}>
+<form novalidate {{on "submit" this.handleSubmit}} data-errors={{this.personStringErrors}}>
   <fieldset>
     <legend>
       An object
@@ -71,7 +71,7 @@
   </button>
 </form>
 
-<form {{on "submit" this.handleSubmit}}>
+<form novaidate {{on "submit" this.handleSubmit}} data-errors={{this.mealStringErrors}}>
   <fieldset>
     <legend>
       An array of objects

@@ -9,6 +9,7 @@ import {
   truthy,
   date
 } from '@zestia/ember-validation/constraints';
+const { stringify } = JSON;
 
 export default class ApplicationController extends Controller {
   @tracked personErrors;
@@ -54,6 +55,14 @@ export default class ApplicationController extends Controller {
 
   get personValidates() {
     return this.personErrors === null;
+  }
+
+  get personStringErrors() {
+    return stringify(this.personErrors, null, 2);
+  }
+
+  get mealStringErrors() {
+    return stringify(this.mealErrors, null, 2);
   }
 
   get mealsValidate() {
