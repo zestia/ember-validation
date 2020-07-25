@@ -49,7 +49,9 @@ export default class ApplicationController extends Controller {
 
   mealConstraints = (meal) => ({
     description() {
-      return [present({ message: 'Please describe your meal' })];
+      return [
+        present({ message: `Please describe your ${meal.name.toLowerCase()}` })
+      ];
     }
   });
 
