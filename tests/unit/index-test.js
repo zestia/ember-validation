@@ -25,7 +25,7 @@ module('#validate', function () {
 
     const object = {};
 
-    const constraints = (object) => {
+    const constraints = () => {
       return {
         name() {
           return [present()];
@@ -460,7 +460,7 @@ module('#validate', function () {
 
     const array = [{}, {}];
 
-    const constraints = (item) => ({
+    const constraints = () => ({
       name() {
         return [present()];
       }
