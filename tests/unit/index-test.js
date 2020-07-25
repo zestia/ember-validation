@@ -11,60 +11,52 @@ import validate from '@zestia/ember-validation';
 import EmberObject from '@ember/object';
 import { resolve } from 'rsvp';
 
-module('validation', function () {
-  test('#validate (defaults)', async function (assert) {
+module('#validate', function () {
+  test('it returns no errors by default', async function (assert) {
     assert.expect(1);
 
     const errors = await validate({}, {});
 
-    assert.deepEqual(errors, null, 'no errors by default');
+    assert.deepEqual(errors, null);
   });
 
-  test('#validate (object constraints)', async function (assert) {
+  test('it checks the objects constraints', function (assert) {
     assert.expect(1);
 
     const object = {};
 
     const constraints = (object) => {
       return {
-        foo() {
+        name() {
           return [present()];
         }
       };
     };
 
-    try {
-      await validate(object, constraints);
-    } catch (error) {
-      assert.equal(
-        error.message,
-        'Assertion Failed: Constraints must be an object'
-      );
-    }
+    assert.rejects(
+      validate(object, constraints),
+      /Assertion Failed: Constraints must be an object/
+    );
   });
 
-  test('#validate (array constraints)', async function (assert) {
+  test('it checks the array constraints', function (assert) {
     assert.expect(1);
 
     const array = [];
 
     const constraints = {
-      foo() {
+      name() {
         return [present()];
       }
     };
 
-    try {
-      await validate(array, constraints);
-    } catch (error) {
-      assert.equal(
-        error.message,
-        'Assertion Failed: Constraints must be a function'
-      );
-    }
+    assert.rejects(
+      validate(array, constraints),
+      /Assertion Failed: Constraints must be a function/
+    );
   });
 
-  test('#validate (basics)', async function (assert) {
+  test('it validates single constraints', async function (assert) {
     assert.expect(2);
 
     const object = {};
@@ -88,7 +80,7 @@ module('validation', function () {
     assert.strictEqual(errors, null);
   });
 
-  test('#validate (multiple constraints)', async function (assert) {
+  test('it validates multiple constraints', async function (assert) {
     assert.expect(1);
 
     const object = {};
@@ -106,7 +98,7 @@ module('validation', function () {
     });
   });
 
-  test('#validate (multiple properties)', async function (assert) {
+  test('it validates multiple properties', async function (assert) {
     assert.expect(1);
 
     const object = {
@@ -136,7 +128,7 @@ module('validation', function () {
     });
   });
 
-  test('#validate (adhoc constraints)', async function (assert) {
+  test('it allows adhoc constraints', async function (assert) {
     assert.expect(3);
 
     const message = 'First and last name are both required';
@@ -181,7 +173,7 @@ module('validation', function () {
     assert.strictEqual(errors, null);
   });
 
-  test('#validate (array of objects)', async function (assert) {
+  test('it validates an array of objects', async function (assert) {
     assert.expect(3);
 
     const args = [];
@@ -224,8 +216,8 @@ module('validation', function () {
     assert.strictEqual(errors, null);
   });
 
-  test('#validate (array of objects, individually)', async function (assert) {
-    assert.expect(2);
+  test('it validates an array of objects via individual keys', async function (assert) {
+    assert.expect(3);
 
     const starter = { name: '' };
     const main = { name: '' };
@@ -261,9 +253,16 @@ module('validation', function () {
       'courses.1.name': null,
       'courses.2.name': ['Required value']
     });
+
+    starter.name = 'Pâté';
+    dessert.name = 'Crème caramel';
+
+    errors = await validate(meal, constraints);
+
+    assert.strictEqual(errors, null);
   });
 
-  test('#validate (expecting an array of objects)', async function (assert) {
+  test('it handles non objects', async function (assert) {
     assert.expect(1);
 
     const array = [{ id: 1 }, {}, null, undefined];
@@ -286,7 +285,7 @@ module('validation', function () {
     ]);
   });
 
-  test('#validate (custom error messages)', async function (assert) {
+  test('it allows custom error messages', async function (assert) {
     assert.expect(1);
 
     const object = {};
@@ -308,7 +307,7 @@ module('validation', function () {
     });
   });
 
-  test('#validate (custom error message functions)', async function (assert) {
+  test('it allows custom error message functions', async function (assert) {
     assert.expect(2);
 
     let args;
@@ -340,7 +339,7 @@ module('validation', function () {
     assert.deepEqual(args, ['foo@bar', object]);
   });
 
-  test('#validate (custom error message functions - no escaping)', async function (assert) {
+  test('it does not escape messages', async function (assert) {
     assert.expect(1);
 
     const object = {
@@ -367,7 +366,7 @@ module('validation', function () {
     });
   });
 
-  test('#validate (path properties)', async function (assert) {
+  test('it supports path properties', async function (assert) {
     assert.expect(1);
 
     const person = {
@@ -395,7 +394,7 @@ module('validation', function () {
     });
   });
 
-  test('#validate (case of properties)', async function (assert) {
+  test('it retains the case of the properties', async function (assert) {
     assert.expect(1);
 
     const object = {};
@@ -413,7 +412,7 @@ module('validation', function () {
     });
   });
 
-  test('#validate (cumulative validity)', async function (assert) {
+  test('cumulative validity', async function (assert) {
     assert.expect(1);
 
     const object = {
@@ -438,7 +437,7 @@ module('validation', function () {
     });
   });
 
-  test('#validate object (thenable)', function (assert) {
+  test('validating an object is thenable', function (assert) {
     assert.expect(1);
 
     const object = {};
@@ -456,7 +455,7 @@ module('validation', function () {
     });
   });
 
-  test('#validate array (thenable)', function (assert) {
+  test('validating an array is thenable', function (assert) {
     assert.expect(1);
 
     const array = [{}, {}];
@@ -479,7 +478,7 @@ module('validation', function () {
     });
   });
 
-  test('#validate (promises)', async function (assert) {
+  test('it resolves the object and its properties', async function (assert) {
     assert.expect(2);
 
     let object = resolve({
@@ -507,7 +506,7 @@ module('validation', function () {
     assert.strictEqual(errors, null);
   });
 
-  test('#validate instances', async function (assert) {
+  test('its supports instances', async function (assert) {
     assert.expect(1);
 
     const object = EmberObject.create();
@@ -525,7 +524,7 @@ module('validation', function () {
     });
   });
 
-  test('readme example', async function (assert) {
+  test('the readme example', async function (assert) {
     const items = [
       {
         id: 1,

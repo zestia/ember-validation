@@ -1,3 +1,5 @@
+import { assert } from '@ember/debug';
+
 const { keys, values } = Object;
 
 export const isArray = Array.isArray;
@@ -57,11 +59,9 @@ function flattenArrayErrors(array) {
 }
 
 export function collateErrors(errors) {
-  if (isNull(errors)) {
-    return errors;
-  } else if (isArray(errors)) {
-    return collateArrayErrors(errors);
-  }
+  assert('Errors must be an array', isArray(errors));
+
+  return collateArrayErrors(errors);
 }
 
 function collateArrayErrors(array) {
