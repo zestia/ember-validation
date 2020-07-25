@@ -1,3 +1,10 @@
-/**
- * Nada
- */
+/* stylelint-disable selector-max-type */
+
+fieldset {
+  width: 320px;
+  margin-bottom: 20px;
+}
+
+form {
+  margin-bottom: 60px;
+}

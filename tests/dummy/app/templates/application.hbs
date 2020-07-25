@@ -1,5 +1,95 @@
-<h2 id="title">
-  Welcome to Ember
-</h2>
+<h1>
+  @zestia/ember-validation
+</h1>
 
-{{outlet}}
+{{! template-lint-disable no-inline-styles }}
+<a href="https://github.com/zestia/ember-validation">
+  <img
+    style="position: absolute; top: 0; right: 0; border: 0;"
+    width="149"
+    height="149"
+    src="https://github.blog/wp-content/uploads/2008/12/forkme_right_darkblue_121621.png?resize=149%2C149"
+    class="attachment-full size-full"
+    alt="Fork me on GitHub"
+    data-recalc-dims="1"
+  />
+</a>
+
+<form novalidate {{on "submit" this.handleSubmit}}>
+  <fieldset>
+    <legend>
+      An object
+    </legend>
+
+    <p>
+      <Input @type="text" @value={{this.person.name}} placeholder="Name" />
+    </p>
+    <Errors @errors={{this.personErrors.name}} />
+
+    <p>
+      {{this.errors.person.emailAddress}}
+      <Input
+        @type="email"
+        @value={{this.person.emailAddress}}
+        placeholder="Email address"
+      />
+    </p>
+    <Errors @errors={{this.personErrors.emailAddress}} />
+
+    <p>
+      {{this.errors.person.dateOfBirth}}
+      <Input @type="date" @value={{this.person.dateOfBirth}} />
+    </p>
+    <Errors @errors={{this.personErrors.dateOfBirth}} />
+
+    <p>
+      {{this.errors.person.terms}}
+      <label>
+        <Input @type="checkbox" @checked={{this.person.terms}} />
+        Agree to terms
+      </label>
+    </p>
+    <Errors @errors={{this.personErrors.terms}} />
+  </fieldset>
+
+  <p>
+    Validates: {{if this.personValidates "✔" "✗"}}
+  </p>
+
+  <button type="submit" {{on "click" this.validatePerson}}>
+    Submit
+  </button>
+</form>
+
+<form {{on "submit" this.handleSubmit}}>
+  <fieldset>
+    <legend>
+      An array of objects
+    </legend>
+
+    {{#each this.meals as |meal index|}}
+      <fieldset>
+        <legend>
+          {{meal.name}}
+        </legend>
+
+        <p>
+          <Input
+            @type="text"
+            @value={{meal.description}}
+            placeholder="Description"
+          />
+        </p>
+        <Errors @errors={{get (get this.mealErrors index) "description"}} />
+      </fieldset>
+    {{/each}}
+  </fieldset>
+
+  <p>
+    Validates: {{if this.mealsValidate "✔" "✗"}}
+  </p>
+
+  <button type="submit" {{on "click" this.validateMeals}}>
+    Submit
+  </button>
+</form>

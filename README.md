@@ -30,6 +30,10 @@ You can run validation and get the result as a one-off, or alternatively, you ca
 ember install @zestia/ember-validation
 ```
 
+## Demo
+
+https://zestia.github.io/ember-validation/
+
 ## Features
 
 - Validates objects ✔︎
@@ -56,9 +60,9 @@ import {
 const person = {
   id: 1,
   name: '',
-  terms: false,
   emailAddress: 'joe@bloggs',
-  dateOfBirth: null
+  dateOfBirth: null,
+  terms: false
 };
 
 const constraints = {
@@ -68,14 +72,14 @@ const constraints = {
       maxLength({ max: 255 })
     ];
   },
-  terms() {
-    return [truthy({ message: 'Please accept the terms' })];
-  },
   emailAddress() {
     return [present(), email()];
   },
   dateOfBirth() {
     return [present(), date({ format: 'dd/MM/yyyy' })];
+  },
+  terms() {
+    return [truthy({ message: 'Please accept the terms' })];
   }
 };
 
