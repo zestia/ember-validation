@@ -28,7 +28,10 @@ export default class ApplicationController extends Controller {
       return [present(), email()];
     },
     dateOfBirth() {
-      return [present(), date({ format: 'yyyy-MM-dd' })];
+      return [
+        present(),
+        date({ format: 'dd/MM/yy', message: 'Invalid date expecting dd/mm/yy' })
+      ];
     },
     terms() {
       return [truthy({ message: 'Please accept the terms' })];
