@@ -20,7 +20,7 @@
   <img src="https://img.shields.io/badge/Ember-%3E%3D%203.12-brightgreen">
 </p>
 
-This lightweight addon lets you validate an object, or an array of objects. It will throw an error if anything failed a _constraint_, and if this happens the resulting error will provide you with a structured array of error messages as to why.
+This lightweight addon lets you validate an object, or an array of objects. It will return a structured response with error messages for anything that failed a _constraint_.
 
 You can run validation and get the result as a one-off, or alternatively, you can re-compute validation automatically using a computed property.
 
@@ -29,6 +29,10 @@ You can run validation and get the result as a one-off, or alternatively, you ca
 ```
 ember install @zestia/ember-validation
 ```
+
+## Demo
+
+https://zestia.github.io/ember-validation/
 
 ## Features
 
@@ -39,7 +43,7 @@ ember install @zestia/ember-validation
 - Supports [adhoc constraints](#adhoc-constraints) ✔︎
 - Supports [dynamic constraints](#dynamic-constraints) ✔︎
 - Uses [date-fns](https://date-fns.org) for date validation. ✔︎
-- Simple [reformatting](#utils) of error messages ✔︎
+- Simple [restructuring](#utils) of error messages ✔︎
 
 ## Example
 
@@ -56,9 +60,9 @@ import {
 const person = {
   id: 1,
   name: '',
-  terms: false,
   emailAddress: 'joe@bloggs',
-  dateOfBirth: null
+  dateOfBirth: null,
+  terms: false
 };
 
 const constraints = {
@@ -68,39 +72,36 @@ const constraints = {
       maxLength({ max: 255 })
     ];
   },
-  terms() {
-    return [truthy({ message: 'Please accept the terms' })];
-  },
   emailAddress() {
     return [present(), email()];
   },
   dateOfBirth() {
     return [present(), date({ format: 'dd/MM/yyyy' })];
+  },
+  terms() {
+    return [truthy({ message: 'Please accept the terms' })];
   }
 };
 
-try {
-  await validate(person, constraints);
-} catch (error) {
-  console.log(error.result);
-  /**
-   *  {
-   *    name: [
-   *      'Please enter your name'
-   *    ],
-   *    terms: [
-   *      'Please accept the terms'
-   *    ],
-   *    emailAddress: [
-   *      'Invalid email'
-   *    ],
-   *    dateOfBirth: [
-   *      'Required value',
-   *      'Invalid date, expecting dd/MM/yyyy'
-   *    ]
-   *  }
-   */
-}
+const errors = await validate(person, constraints);
+
+/**
+ *  {
+ *    name: [
+ *      'Please enter your name'
+ *    ],
+ *    terms: [
+ *      'Please accept the terms'
+ *    ],
+ *    emailAddress: [
+ *      'Invalid email'
+ *    ],
+ *    dateOfBirth: [
+ *      'Required value',
+ *      'Invalid date, expecting dd/MM/yyyy'
+ *    ]
+ *  }
+ */
 ```
 
 ## Adhoc Constraints
@@ -127,18 +128,15 @@ const constraints = {
   }
 };
 
-try {
-  await validate(person, constraints);
-} catch (error) {
-  console.log(error.result);
-  /**
-   *  {
-   *    firstName: [],
-   *    lastName: [],
-   *    name: ['Must be unique']
-   *  }
-   */
-}
+const errors = await validate(person, constraints);
+
+/**
+ *  {
+ *    firstName: null,
+ *    lastName: null,
+ *    name: ['Must be unique']
+ *  }
+ */
 
 const names = ['Joe Bloggs'];
 
@@ -183,33 +181,25 @@ const constraints = (item) => {
   };
 }
 
-try {
-  await validate(items, constraints);
-} catch(error) {
-  console.log(error.result);
-  /*
-   *  [
-   *    {
-   *      value: ['Required value']
-   *    },
-   *    {
-   *      value: ['Required value', 'Invalid number']
-   *    },
-   *    {
-   *      value: ['Required value', 'Invalid email']
-   *    },
-   *    {
-   *      value: ['Required value', 'Invalid date, expecting dd/MM/yyyy']
-   *    }
-   *  ]
-   */
-}
+const errors = await validate(items, constraints);
+
+/*
+ *  [
+ *    {
+ *      value: ['Required value']
+ *    },
+ *    {
+ *      value: ['Required value', 'Invalid number']
+ *    },
+ *    {
+ *      value: ['Required value', 'Invalid email']
+ *    },
+ *    {
+ *      value: ['Required value', 'Invalid date, expecting dd/MM/yyyy']
+ *    }
+ *  ]
+ */
 ```
-
-## Utils
-
-- [`flattenMessages`](tests/unit/utils-test.js#L7)
-- [`collateMessages`](tests/unit/utils-test.js#L57)
 
 ## Constraints
 
@@ -249,3 +239,11 @@ try {
   - `message`
 - truthy
   - `message`
+
+## Utils
+
+- [`flattenErrors`](tests/unit/utils-test.js#L32)<br>
+  Flatten a messages object (or an array of objects) into a single array of _all_ the message strings.
+
+- [`collateErrors`](tests/unit/utils-test.js#L66)<br>
+  Flatten a messages array of objects into an array of message strings.

@@ -1,76 +1,59 @@
 import { get } from '@ember/object';
-import { ValidationError } from './errors';
-import { typeOf } from '@ember/utils';
 import { assert } from '@ember/debug';
-const { keys, values } = Object;
+import { result, isArray, isObject, isFunction } from './utils';
+import { all } from 'rsvp';
+const { keys } = Object;
 
-export default async function validate(object, constraints = {}) {
-  let messages;
-  let erred = false;
-
-  switch (typeOf(object)) {
-    case 'array':
-      messages = await _validateArray(object, constraints);
-      erred = messages.some((object) => values(object).some(_hasError));
-      break;
-    default:
-      messages = await _validateObject(object, constraints);
-      erred = values(messages).some(_hasError);
-      break;
+export default function validate(input, constraints) {
+  if (isObject(input)) {
+    return validateObject(input, constraints);
+  } else if (isArray(input)) {
+    return validateArray(input, constraints);
   }
-
-  if (erred) {
-    throw new ValidationError(null, messages);
-  }
-
-  return null;
 }
 
-async function _validateObject(_object, _constraints) {
-  assert('Constraints must be an object', typeOf(_constraints) === 'object');
+async function validateObject(_object, _constraints) {
+  assert('Constraints must be an object', isObject(_constraints));
 
   const object = (await _object) || {};
-  const messages = {};
 
-  for (const key of keys(_constraints)) {
+  const errors = await keys(_constraints).reduce(async (_errors, key) => {
+    const errors = await _errors;
     const constraints = _constraints[key];
     const value = await get(object, key);
-    messages[key] = _applyConstraints(object, key, value, constraints(object));
-  }
 
-  return messages;
+    errors[key] = applyConstraints(object, key, value, constraints(object));
+
+    return errors;
+  }, {});
+
+  return result(errors);
 }
 
-async function _validateArray(array, constraints) {
-  assert('Constraints must be a function', typeOf(constraints) === 'function');
+async function validateArray(array, constraints) {
+  assert('Constraints must be a function', isFunction(constraints));
 
-  const messages = [];
+  const errors = await all(
+    array.map((object) => validateObject(object, constraints(object)))
+  );
 
-  for (const object of array) {
-    messages.push(await _validateObject(object, constraints(object)));
-  }
-
-  return messages;
+  return result(errors);
 }
 
-function _hasError(messages) {
-  return messages.length > 0;
-}
-
-function _applyConstraints(object, key, value, constraints) {
-  const messages = [];
-
-  for (const constraint of constraints) {
+function applyConstraints(object, key, value, constraints) {
+  const errors = constraints.reduce((errors, constraint) => {
     let message = constraint(value, object);
 
-    if (typeOf(message) === 'function') {
+    if (isFunction(message)) {
       message = message(value, object);
     }
 
     if (message) {
-      messages.push(message);
+      errors.push(message);
     }
-  }
 
-  return messages;
+    return errors;
+  }, []);
+
+  return result(errors);
 }
