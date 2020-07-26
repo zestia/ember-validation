@@ -265,11 +265,11 @@ module('#validate', function () {
   test('it handles non objects', async function (assert) {
     assert.expect(1);
 
-    const array = [{ id: 1 }, {}, null, undefined];
+    const array = [{ name: 1 }, {}, null, undefined];
 
     const constraints = () => {
       return {
-        id() {
+        name() {
           return [present()];
         }
       };
@@ -279,9 +279,9 @@ module('#validate', function () {
 
     assert.deepEqual(errors, [
       null,
-      { id: ['Required value'] },
-      { id: ['Required value'] },
-      { id: ['Required value'] }
+      { name: ['Required value'] },
+      { name: ['Required value'] },
+      { name: ['Required value'] }
     ]);
   });
 
@@ -482,7 +482,7 @@ module('#validate', function () {
     assert.expect(2);
 
     let object = resolve({
-      amount: resolve(9)
+      amount: resolve(10)
     });
 
     const constraints = {
@@ -502,6 +502,32 @@ module('#validate', function () {
     });
 
     errors = await validate(object, constraints);
+
+    assert.strictEqual(errors, null);
+  });
+
+  test('it resolves the array and its objects', async function (assert) {
+    assert.expect(2);
+
+    let array = resolve([resolve({ amount: resolve(10) })]);
+
+    const constraints = () => ({
+      amount() {
+        return [greaterThan({ value: 10 })];
+      }
+    });
+
+    let errors = await validate(array, constraints);
+
+    assert.deepEqual(errors, [
+      {
+        amount: ['Must be greater than 10']
+      }
+    ]);
+
+    array = resolve([resolve({ amount: resolve(11) })]);
+
+    errors = await validate(array, constraints);
 
     assert.strictEqual(errors, null);
   });

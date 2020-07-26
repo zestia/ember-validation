@@ -4,7 +4,9 @@ import { result, isArray, isObject, isFunction } from './utils';
 import { all } from 'rsvp';
 const { keys } = Object;
 
-export default function validate(input, constraints) {
+export default async function validate(_input, constraints) {
+  const input = await _input;
+
   if (isObject(input)) {
     return validateObject(input, constraints);
   } else if (isArray(input)) {
