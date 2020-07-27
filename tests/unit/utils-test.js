@@ -69,13 +69,14 @@ module('utils', function (hooks) {
     });
 
     test('it returns null when there are no errors', function (assert) {
-      assert.expect(1);
+      assert.expect(2);
+
+      assert.deepEqual(collateErrors(null), null);
       assert.deepEqual(collateErrors([]), null);
     });
 
     test('it only supports arrays', function (assert) {
-      assert.expect(2);
-      assert.throws(() => collateErrors(null), 'Errors must be an array');
+      assert.expect(1);
       assert.throws(() => collateErrors({}), 'Errors must be an array');
     });
   });

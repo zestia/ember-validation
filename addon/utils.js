@@ -59,9 +59,13 @@ function flattenArrayErrors(array) {
 }
 
 export function collateErrors(errors) {
-  assert('Errors must be an array', isArray(errors));
-
-  return collateArrayErrors(errors);
+  if (isNull(errors)) {
+    return errors;
+  } else if (isArray(errors)) {
+    return collateArrayErrors(errors);
+  } else {
+    assert('Errors must be an array');
+  }
 }
 
 function collateArrayErrors(array) {
