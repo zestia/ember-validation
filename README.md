@@ -70,12 +70,15 @@ const constraints = {
       maxLength({ max: 255 })
     ];
   },
+
   emailAddress() {
     return [present(), email()];
   },
+
   dateOfBirth() {
     return [present(), date({ format: 'dd/MM/yyyy' })];
   },
+
   terms() {
     return [truthy({ message: 'Please accept the terms' })];
   }
