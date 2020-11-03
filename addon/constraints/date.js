@@ -1,5 +1,6 @@
 import { isPresent } from '@ember/utils';
-import { isValid, parse } from 'date-fns/esm';
+import isValid from 'date-fns/isValid';
+import parse from 'date-fns/parse';
 
 export default function date(options) {
   return function (value) {
