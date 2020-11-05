@@ -1,8 +1,13 @@
 # Changelog
 
+## 4.0.4
+
+- Upgrade dependencies
+
 ## 4.0.3
 
 - Upgrade dependencies
+- Use named imports to retain tree shaking ([Issue](https://github.com/ef4/ember-auto-import/issues/121))
 
 ## 4.0.2
 
