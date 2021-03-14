@@ -25,14 +25,23 @@
 
 <br />
 
-<form novalidate {{on "submit" this.handleSubmit}}>
+<form
+  novalidate
+  aria-label="Validating an object"
+  {{on "submit" this.handleSubmit}}
+>
   <fieldset>
     <legend>
       An object
     </legend>
 
     <p>
-      <Input @type="text" @value={{this.person.name}} placeholder="Name" />
+      <Input
+        @type="text"
+        @value={{this.person.name}}
+        placeholder="Name"
+        aria-label="Name"
+      />
     </p>
     <Errors @errors={{this.personErrors.name}} />
 
@@ -42,6 +51,7 @@
         @type="email"
         @value={{this.person.emailAddress}}
         placeholder="Email address"
+        aria-label="Email address"
       />
     </p>
     <Errors @errors={{this.personErrors.emailAddress}} />
@@ -52,6 +62,7 @@
         @type="text"
         @value={{this.person.dateOfBirth}}
         placeholder="Date of birth"
+        aria-label="Date of birth"
       />
     </p>
     <Errors @errors={{this.personErrors.dateOfBirth}} />
@@ -83,8 +94,9 @@
 </form>
 
 <form
-  novaidate
+  novalidate
   data-errors={{this.mealStringErrors}}
+  aria-label="Validating an array of objects"
   {{on "submit" this.handleSubmit}}
 >
   <fieldset>
@@ -103,6 +115,7 @@
             @type="text"
             @value={{meal.description}}
             placeholder="Description"
+            aria-label="Description"
           />
         </p>
         <Errors @errors={{get (get this.mealErrors index) "description"}} />
