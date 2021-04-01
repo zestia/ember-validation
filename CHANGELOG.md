@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.1.0
+
+- Upgrade dependencies
+- Add Embroider support
+
 ## 4.0.6
 
 - Upgrade dependencies
