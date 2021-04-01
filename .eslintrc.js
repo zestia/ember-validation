@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  extends: '@zestia/eslint-config/ember-addon',
+  ...require('@zestia/eslint-config/ember-addon'),
 
   rules: {
     'no-restricted-imports': [
