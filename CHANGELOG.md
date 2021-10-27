@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.2.0
+
+- Support record arrays
+
 ## 4.1.0 (not yet published)
 
 - Upgrade dependencies

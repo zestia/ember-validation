@@ -1,8 +1,9 @@
 import { assert } from '@ember/debug';
+import { isArray as isEmberArray } from '@ember/array';
 
 const { keys, values } = Object;
 
-export const isArray = Array.isArray;
+export const isArray = isEmberArray;
 
 export function isNull(input) {
   return input === null;

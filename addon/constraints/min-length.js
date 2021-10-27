@@ -1,4 +1,4 @@
-const { isArray } = Array;
+import { isArray } from '../utils';
 
 export default function minLength(options = {}) {
   return function (value) {

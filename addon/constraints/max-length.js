@@ -1,4 +1,4 @@
-const { isArray } = Array;
+import { isArray } from '../utils';
 
 export default function maxLength(options = {}) {
   return function (value) {

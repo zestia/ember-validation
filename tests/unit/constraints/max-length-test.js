@@ -1,7 +1,14 @@
 import { module, test } from 'qunit';
 import maxLength from '@zestia/ember-validation/constraints/max-length';
+import { setupTest } from 'ember-qunit';
 
-module('maxLength', function () {
+module('maxLength', function (hooks) {
+  setupTest(hooks);
+
+  hooks.beforeEach(function () {
+    this.store = this.owner.lookup('service:store');
+  });
+
   test('it returns nothing when valid', function (assert) {
     assert.expect(1);
 
@@ -21,6 +28,26 @@ module('maxLength', function () {
       maxLength({ max: 4, message: 'exceeds max' })('hello'),
       'exceeds max'
     );
+  });
+
+  test('supports ember data', function (assert) {
+    assert.expect(2);
+
+    const foo = this.store.createRecord('foo', {
+      bars: [
+        this.store.createRecord('bar'),
+        this.store.createRecord('bar'),
+        this.store.createRecord('bar')
+      ]
+    });
+
+    const validate = maxLength({ max: 2 });
+
+    assert.equal(validate(foo.bars), 'Length is too long (max 2)');
+
+    foo.bars.popObject();
+
+    assert.equal(validate(foo.bars), null);
   });
 
   test('inputs', function (assert) {

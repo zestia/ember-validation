@@ -1,7 +1,14 @@
 import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 import minLength from '@zestia/ember-validation/constraints/min-length';
 
-module('minLength', function () {
+module('minLength', function (hooks) {
+  setupTest(hooks);
+
+  hooks.beforeEach(function () {
+    this.store = this.owner.lookup('service:store');
+  });
+
   test('it returns nothing when valid', function (assert) {
     assert.expect(1);
 
@@ -22,6 +29,22 @@ module('minLength', function () {
       'too short',
       'returns custom message if invalid'
     );
+  });
+
+  test('supports ember data', function (assert) {
+    assert.expect(2);
+
+    const foo = this.store.createRecord('foo', {
+      bars: [this.store.createRecord('bar')]
+    });
+
+    const validate = minLength({ min: 2 });
+
+    assert.equal(validate(foo.bars), 'Length must be at least 2');
+
+    foo.bars.addObject(this.store.createRecord('bar'));
+
+    assert.equal(validate(foo.bars), null);
   });
 
   test('inputs', function (assert) {

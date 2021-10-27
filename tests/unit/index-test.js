@@ -8,10 +8,17 @@ import {
   present
 } from '@zestia/ember-validation/constraints';
 import validate from '@zestia/ember-validation';
+import { setupTest } from 'ember-qunit';
 import EmberObject from '@ember/object';
 import { resolve } from 'rsvp';
 
-module('#validate', function () {
+module('#validate', function (hooks) {
+  setupTest(hooks);
+
+  hooks.beforeEach(function () {
+    this.store = this.owner.lookup('service:store');
+  });
+
   test('it returns no errors by default', async function (assert) {
     assert.expect(1);
 
@@ -532,7 +539,7 @@ module('#validate', function () {
     assert.strictEqual(errors, null);
   });
 
-  test('its supports instances', async function (assert) {
+  test('it supports instances', async function (assert) {
     assert.expect(1);
 
     const object = EmberObject.create();
@@ -547,6 +554,24 @@ module('#validate', function () {
 
     assert.deepEqual(errors, {
       name: ['Required value']
+    });
+  });
+
+  test('it supports ember data record arrays', async function (assert) {
+    assert.expect(1);
+
+    const foo = this.store.createRecord('foo');
+
+    const constraints = {
+      bars() {
+        return [minLength({ min: 1 })];
+      }
+    };
+
+    const errors = await validate(foo, constraints);
+
+    assert.deepEqual(errors, {
+      bars: ['Length must be at least 1']
     });
   });
 
