@@ -1,12 +1,9 @@
 # Changelog
 
-## 4.2.0
-
-- Support record arrays
-
-## 4.1.0 (not yet published)
+## 4.1.0
 
 - Upgrade dependencies
+- Support record arrays
 - Add Embroider support
 
 ## 4.0.6
