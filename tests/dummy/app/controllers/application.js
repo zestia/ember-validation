@@ -74,15 +74,18 @@ export default class ApplicationController extends Controller {
     return this.mealErrors === null;
   }
 
-  handleSubmit = (event) => {
+  @action
+  handleSubmit(event) {
     event.preventDefault();
-  };
+  }
 
-  validatePerson = async () => {
+  @action
+  async validatePerson() {
     this.personErrors = await validate(this.person, this.personConstraints);
-  };
+  }
 
-  validateMeals = async () => {
+  @action
+  async validateMeals() {
     this.mealErrors = await validate(this.meals, this.mealConstraints);
-  };
+  }
 }
