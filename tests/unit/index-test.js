@@ -180,6 +180,46 @@ module('#validate', function (hooks) {
     assert.strictEqual(errors, null);
   });
 
+  test('it allows async constraints', async function (assert) {
+    assert.expect(2);
+
+    const message = 'Email is already in use';
+    const email = 'user@example.org';
+
+    const emailIsUnique = async (value, object) => {
+      // simulate a server call to check for email uniqueness
+      await setTimeout(() => {}, 100);
+
+      if (object.email !== email) {
+        return;
+      }
+
+      return message;
+    };
+
+    const object = {
+      email: 'user@example.org'
+    };
+
+    const constraints = {
+      email() {
+        return [emailIsUnique];
+      }
+    };
+
+    let errors = await validate(object, constraints);
+
+    assert.deepEqual(errors, {
+      email: [message]
+    });
+
+    object.email = 'new_user@example.org';
+
+    errors = await validate(object, constraints);
+
+    assert.strictEqual(errors, null);
+  });
+
   test('it validates an array of objects', async function (assert) {
     assert.expect(3);
 
