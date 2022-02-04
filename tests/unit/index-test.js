@@ -180,6 +180,44 @@ module('#validate', function (hooks) {
     assert.strictEqual(errors, null);
   });
 
+  test('it allows async constraints', async function (assert) {
+    assert.expect(2);
+
+    const message = 'Please enter a lucky number';
+
+    const isLucky = async (value) => {
+      value = await value;
+
+      if (value === 7) {
+        return;
+      }
+
+      return message;
+    };
+
+    const object = {
+      number: 0
+    };
+
+    const constraints = {
+      number() {
+        return [isLucky];
+      }
+    };
+
+    let errors = await validate(object, constraints);
+
+    assert.deepEqual(errors, {
+      number: [message]
+    });
+
+    object.number = 7;
+
+    errors = await validate(object, constraints);
+
+    assert.strictEqual(errors, null);
+  });
+
   test('it validates an array of objects', async function (assert) {
     assert.expect(3);
 
