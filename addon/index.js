@@ -24,7 +24,12 @@ async function validateObject(_object, _constraints) {
     const constraints = _constraints[key];
     const value = await get(object, key);
 
-    errors[key] = applyConstraints(object, key, value, constraints(object));
+    errors[key] = await applyConstraints(
+      object,
+      key,
+      value,
+      constraints(object)
+    );
 
     return errors;
   }, {});
@@ -42,9 +47,14 @@ async function validateArray(array, constraints) {
   return result(errors);
 }
 
-function applyConstraints(object, key, value, constraints) {
-  const errors = constraints.reduce((errors, constraint) => {
+async function applyConstraints(object, key, value, constraints) {
+  const errors = await constraints.reduce(async (errors, constraint) => {
+    errors = await errors;
     let message = constraint(value, object);
+
+    if (message?.then) {
+      message = await message;
+    }
 
     if (isFunction(message)) {
       message = message(value, object);
@@ -55,7 +65,7 @@ function applyConstraints(object, key, value, constraints) {
     }
 
     return errors;
-  }, []);
+  }, Promise.resolve([]));
 
   return result(errors);
 }

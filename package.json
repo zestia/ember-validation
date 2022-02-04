@@ -31,7 +31,6 @@
   "license": "MIT",
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
-    "@zestia/ember-template-lint-plugin": "^3.0.8",
     "@zestia/eslint-config": "^3.0.2",
     "@zestia/prettier-config": "^1.0.4",
     "@zestia/stylelint-config": "^2.0.44",
@@ -83,5 +82,9 @@
   "bugs": {
     "url": "https://github.com/zestia/ember-validation/issues"
   },
-  "homepage": "https://github.com/zestia/ember-validation"
+  "homepage": "https://github.com/zestia/ember-validation",
+  "volta": {
+    "node": "12.22.10",
+    "npm": "6.14.16"
+  }
 }
