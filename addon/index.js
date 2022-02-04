@@ -1,7 +1,7 @@
 import { get } from '@ember/object';
 import { assert } from '@ember/debug';
 import { result, isArray, isObject, isFunction } from './utils';
-import { all } from 'rsvp';
+import { all, resolve } from 'rsvp';
 const { keys } = Object;
 
 export default async function validate(_input, constraints) {
@@ -21,15 +21,10 @@ async function validateObject(_object, _constraints) {
 
   const errors = await keys(_constraints).reduce(async (_errors, key) => {
     const errors = await _errors;
-    const constraints = _constraints[key];
+    const constraints = _constraints[key](object);
     const value = await get(object, key);
 
-    errors[key] = await applyConstraints(
-      object,
-      key,
-      value,
-      constraints(object)
-    );
+    errors[key] = await applyConstraints(object, key, value, constraints);
 
     return errors;
   }, {});
@@ -48,8 +43,9 @@ async function validateArray(array, constraints) {
 }
 
 async function applyConstraints(object, key, value, constraints) {
-  const errors = await constraints.reduce(async (errors, constraint) => {
-    errors = await errors;
+  const errors = await constraints.reduce(async (_errors, constraint) => {
+    const errors = await _errors;
+
     let message = await constraint(value, object);
 
     if (isFunction(message)) {
@@ -61,7 +57,7 @@ async function applyConstraints(object, key, value, constraints) {
     }
 
     return errors;
-  }, Promise.resolve([]));
+  }, resolve([]));
 
   return result(errors);
 }
