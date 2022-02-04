@@ -4,6 +4,10 @@
 
 - Ember Auto Import 2x
 
+## 4.2.0
+
+- Add support for async constraints
+
 ## 4.1.0
 
 - Upgrade dependencies
