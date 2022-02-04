@@ -42,6 +42,7 @@ https://zestia.github.io/ember-validation/
 - Supports promises ✔︎
 - Supports [adhoc constraints](#adhoc-constraints) ✔︎
 - Supports [dynamic constraints](#dynamic-constraints) ✔︎
+- Supports [async constraints](#async-constraints) ✔︎
 - Uses [date-fns](https://date-fns.org) for date validation. ✔︎
 - Simple [restructuring](#utils) of error messages ✔︎
 
@@ -201,6 +202,41 @@ const errors = await validate(items, constraints);
  *      value: ['Required value', 'Invalid date, expecting dd/MM/yyyy']
  *    }
  *  ]
+ */
+```
+
+## Async Constraints
+
+Imagine that the process to determine a lucky number is `async`. The constraint function can use `async` / `await`:
+
+```javascript
+const person = {
+  firstName: 'Joe',
+  luckyNumber: Promise.resolve(3)
+};
+
+const isLucky = async (value) => {
+  value = await value;
+
+  if (value === 7) {
+    return;
+  }
+
+  return 'Please enter a lucky number';
+};
+
+const constraints = {
+  luckyNumber() {
+    return [isLucky];
+  },
+};
+
+const errors = await validate(person, constraints);
+
+/**
+ *  {
+ *    luckyNumber: ['Please enter a lucky number']
+ *  }
  */
 ```
 
