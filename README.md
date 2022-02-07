@@ -40,7 +40,7 @@ https://zestia.github.io/ember-validation/
 - Validates arrays ✔︎
 - Ember Data Friendly ✔︎
 - Supports promises ✔︎
-- Supports async constraints ✔︎
+- Supports [async constraints](#constraints) ✔︎
 - Supports [adhoc constraints](#adhoc-constraints) ✔︎
 - Supports [dynamic constraints](#dynamic-constraints) ✔︎
 - Supports [async constraints](#async-constraints) ✔︎
@@ -206,42 +206,9 @@ const errors = await validate(items, constraints);
  */
 ```
 
-## Async Constraints
-
-Imagine that the process to determine a lucky number is `async`. The constraint function can use `async` / `await`:
-
-```javascript
-const person = {
-  firstName: 'Joe',
-  luckyNumber: Promise.resolve(3)
-};
-
-const isLucky = async (value) => {
-  value = await value;
-
-  if (value === 7) {
-    return;
-  }
-
-  return 'Please enter a lucky number';
-};
-
-const constraints = {
-  luckyNumber() {
-    return [isLucky];
-  },
-};
-
-const errors = await validate(person, constraints);
-
-/**
- *  {
- *    luckyNumber: ['Please enter a lucky number']
- *  }
- */
-```
-
 ## Constraints
+
+The following constraints come with this addon. Creating a constraint is as simple as making a function that returns a string if the constraint has failed. Constraints can be asyncronous too.
 
 - bigDecimal
   - `optional`
