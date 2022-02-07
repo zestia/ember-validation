@@ -40,6 +40,7 @@ https://zestia.github.io/ember-validation/
 - Validates arrays ✔︎
 - Ember Data Friendly ✔︎
 - Supports promises ✔︎
+- Supports async constraints ✔︎
 - Supports [adhoc constraints](#adhoc-constraints) ✔︎
 - Supports [dynamic constraints](#dynamic-constraints) ✔︎
 - Uses [date-fns](https://date-fns.org) for date validation. ✔︎
