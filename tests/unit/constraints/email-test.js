@@ -5,13 +5,13 @@ module('email', function () {
   test('it returns nothing when valid', function (assert) {
     assert.expect(1);
 
-    assert.equal(email()('foo@bar.com'), undefined);
+    assert.strictEqual(email()('foo@bar.com'), undefined);
   });
 
   test('it returns default message if invalid', function (assert) {
     assert.expect(1);
 
-    assert.equal(email()(''), 'Invalid email');
+    assert.strictEqual(email()(''), 'Invalid email');
   });
 
   test('it returns nothing if invalid, but optional', function (assert) {
@@ -23,17 +23,17 @@ module('email', function () {
   test('it returns custom message if invalid', function (assert) {
     assert.expect(1);
 
-    assert.equal(email({ message: 'bad email' })('foo@bar'), 'bad email');
+    assert.strictEqual(email({ message: 'bad email' })('foo@bar'), 'bad email');
   });
 
   test('inputs', function (assert) {
     assert.expect(8);
 
-    assert.equal(email()(), 'Invalid email');
-    assert.equal(email()(''), 'Invalid email');
-    assert.equal(email()('a'), 'Invalid email');
-    assert.equal(email()('@'), 'Invalid email');
-    assert.equal(email()('a@b'), 'Invalid email');
+    assert.strictEqual(email()(), 'Invalid email');
+    assert.strictEqual(email()(''), 'Invalid email');
+    assert.strictEqual(email()('a'), 'Invalid email');
+    assert.strictEqual(email()('@'), 'Invalid email');
+    assert.strictEqual(email()('a@b'), 'Invalid email');
     assert.strictEqual(email()('a@b.com'), undefined);
     assert.strictEqual(email()('fred.smith@some-uni.ac.uk'), undefined);
     assert.strictEqual(email()('john.jones+test@example.com'), undefined);

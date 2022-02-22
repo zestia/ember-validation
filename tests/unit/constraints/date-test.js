@@ -16,7 +16,7 @@ module('date', function (hooks) {
   test('it returns default message if invalid', function (assert) {
     assert.expect(1);
 
-    assert.equal(
+    assert.strictEqual(
       date({ format: 'dd/MM/yyyy' })('12/25/2020'),
       'Invalid date, expecting dd/MM/yyyy'
     );
@@ -34,7 +34,7 @@ module('date', function (hooks) {
   test('it returns custom message if invalid', function (assert) {
     assert.expect(1);
 
-    assert.equal(
+    assert.strictEqual(
       date({ message: 'bad date', format: 'dd/MM/yyyy' })('xyz'),
       'bad date'
     );
@@ -43,7 +43,7 @@ module('date', function (hooks) {
   test('inputs', function (assert) {
     assert.expect(9);
 
-    assert.equal(
+    assert.strictEqual(
       date({ format: 'yyyy-MM-dd' })(''),
       'Invalid date, expecting yyyy-MM-dd'
     );
@@ -69,7 +69,7 @@ module('date', function (hooks) {
       undefined
     );
 
-    assert.equal(
+    assert.strictEqual(
       date({ format: 'P', locale: enUS })('25/12/2020'),
       'Invalid date, expecting P'
     );

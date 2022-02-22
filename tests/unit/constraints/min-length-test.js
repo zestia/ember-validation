@@ -18,13 +18,16 @@ module('minLength', function (hooks) {
   test('it returns default message if invalid', function (assert) {
     assert.expect(1);
 
-    assert.equal(minLength({ min: 3 })('hi'), 'Length must be at least 3');
+    assert.strictEqual(
+      minLength({ min: 3 })('hi'),
+      'Length must be at least 3'
+    );
   });
 
   test('it returns custom message if invalid', function (assert) {
     assert.expect(1);
 
-    assert.equal(
+    assert.strictEqual(
       minLength({ min: 6, message: 'too short' })('hello'),
       'too short',
       'returns custom message if invalid'
@@ -40,20 +43,26 @@ module('minLength', function (hooks) {
 
     const validate = minLength({ min: 2 });
 
-    assert.equal(validate(foo.bars), 'Length must be at least 2');
+    assert.strictEqual(validate(foo.bars), 'Length must be at least 2');
 
     foo.bars.addObject(this.store.createRecord('bar'));
 
-    assert.equal(validate(foo.bars), null);
+    assert.strictEqual(validate(foo.bars), undefined);
   });
 
   test('inputs', function (assert) {
     assert.expect(14);
 
-    assert.equal(minLength({ min: 1 })(''), 'Length must be at least 1');
-    assert.equal(minLength({ min: 1 })(), 'Length must be at least 1');
-    assert.equal(minLength({ min: 2 })(['a']), 'Length must be at least 2');
-    assert.equal(minLength({ min: 4 })('abc'), 'Length must be at least 4');
+    assert.strictEqual(minLength({ min: 1 })(''), 'Length must be at least 1');
+    assert.strictEqual(minLength({ min: 1 })(), 'Length must be at least 1');
+    assert.strictEqual(
+      minLength({ min: 2 })(['a']),
+      'Length must be at least 2'
+    );
+    assert.strictEqual(
+      minLength({ min: 4 })('abc'),
+      'Length must be at least 4'
+    );
     assert.strictEqual(minLength({ min: 0 })(''), undefined);
     assert.strictEqual(minLength({ min: 0 })('a'), undefined);
     assert.strictEqual(minLength({ min: 0 })(), undefined);

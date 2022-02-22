@@ -18,13 +18,16 @@ module('maxLength', function (hooks) {
   test('it returns default message if invalid', function (assert) {
     assert.expect(1);
 
-    assert.equal(maxLength({ max: 3 })('hiya'), 'Length is too long (max 3)');
+    assert.strictEqual(
+      maxLength({ max: 3 })('hiya'),
+      'Length is too long (max 3)'
+    );
   });
 
   test('it returns custom message if invalid', function (assert) {
     assert.expect(1);
 
-    assert.equal(
+    assert.strictEqual(
       maxLength({ max: 4, message: 'exceeds max' })('hello'),
       'exceeds max'
     );
@@ -43,23 +46,32 @@ module('maxLength', function (hooks) {
 
     const validate = maxLength({ max: 2 });
 
-    assert.equal(validate(foo.bars), 'Length is too long (max 2)');
+    assert.strictEqual(validate(foo.bars), 'Length is too long (max 2)');
 
     foo.bars.popObject();
 
-    assert.equal(validate(foo.bars), null);
+    assert.strictEqual(validate(foo.bars), undefined);
   });
 
   test('inputs', function (assert) {
     assert.expect(15);
 
-    assert.equal(maxLength({ max: 0 })('a'), 'Length is too long (max 0)');
-    assert.equal(maxLength({ max: 1 })('ab', 1), 'Length is too long (max 1)');
-    assert.equal(
+    assert.strictEqual(
+      maxLength({ max: 0 })('a'),
+      'Length is too long (max 0)'
+    );
+    assert.strictEqual(
+      maxLength({ max: 1 })('ab', 1),
+      'Length is too long (max 1)'
+    );
+    assert.strictEqual(
       maxLength({ max: 1 })(['a', 'b'], 1),
       'Length is too long (max 1)'
     );
-    assert.equal(maxLength({ max: 2 })(100), 'Length is too long (max 2)');
+    assert.strictEqual(
+      maxLength({ max: 2 })(100),
+      'Length is too long (max 2)'
+    );
     assert.strictEqual(maxLength({ max: 0 })(''), undefined);
     assert.strictEqual(maxLength({ max: 1 })(''), undefined);
     assert.strictEqual(maxLength({ max: 1 })('a'), undefined);

@@ -11,7 +11,7 @@ module('bigDecimal', function () {
   test('it returns message if value is blank', function (assert) {
     assert.expect(1);
 
-    assert.equal(
+    assert.strictEqual(
       bigDecimal({ maxIntegerDigits: 5, maxDecimalDigits: 0 })(),
       'Value must be a number'
     );
@@ -25,7 +25,7 @@ module('bigDecimal', function () {
       undefined
     );
 
-    assert.equal(
+    assert.strictEqual(
       bigDecimal({ maxIntegerDigits: 5, maxDecimalDigits: 0 })('123456'),
       'Value too large'
     );
@@ -52,7 +52,7 @@ module('bigDecimal', function () {
   test('decimal digits are not counted as part of maxIntegerDigits check', function (assert) {
     assert.expect(1);
 
-    assert.equal(
+    assert.strictEqual(
       bigDecimal({ maxIntegerDigits: 5, maxDecimalDigits: 2 })('12345.67'),
       undefined
     );
@@ -66,7 +66,7 @@ module('bigDecimal', function () {
       undefined
     );
 
-    assert.equal(
+    assert.strictEqual(
       bigDecimal({ maxIntegerDigits: 5, maxDecimalDigits: 2 })('1.234'),
       'Value must have a maximum of 2 decimal places'
     );
@@ -84,7 +84,7 @@ module('bigDecimal', function () {
   test('it fails for alpha characters', function (assert) {
     assert.expect(1);
 
-    assert.equal(
+    assert.strictEqual(
       bigDecimal({ maxIntegerDigits: 5, maxDecimalDigits: 2 })('bad'),
       'Value must be a number'
     );
@@ -93,7 +93,7 @@ module('bigDecimal', function () {
   test('it should fail for incomplete numbers', function (assert) {
     assert.expect(1);
 
-    assert.equal(
+    assert.strictEqual(
       bigDecimal({ maxIntegerDigits: 5, maxDecimalDigits: 2 })('123.'),
       'Value must be a number'
     );
