@@ -43,7 +43,6 @@ https://zestia.github.io/ember-validation/
 - Supports [async constraints](#constraints) ✔︎
 - Supports [adhoc constraints](#adhoc-constraints) ✔︎
 - Supports [dynamic constraints](#dynamic-constraints) ✔︎
-- Supports [async constraints](#async-constraints) ✔︎
 - Uses [date-fns](https://date-fns.org) for date validation. ✔︎
 - Simple [restructuring](#utils) of error messages ✔︎
 
