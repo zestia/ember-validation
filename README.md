@@ -1,26 +1,15 @@
 # @zestia/ember-validation
 
-<p>
-  <!--
-  <a href="https://github.com/zestia/ember-validation/actions/workflows/ci.yml">
-    <img src="https://github.com/zestia/ember-validation/actions/workflows/ci.yml/badge.svg">
-  </a>
-  -->
+[![Latest npm release][npm-badge]][npm-badge-url]
+[![GitHub Actions][github-actions-badge]][github-actions-url]
+[![Ember Observer][ember-observer-badge]][ember-observer-url]
 
-  <a href="https://david-dm.org/zestia/ember-validation#badge-embed">
-    <img src="https://david-dm.org/zestia/ember-validation.svg">
-  </a>
-
-  <a href="https://david-dm.org/zestia/ember-validation#dev-badge-embed">
-    <img src="https://david-dm.org/zestia/ember-validation/dev-status.svg">
-  </a>
-
-  <a href="https://emberobserver.com/addons/@zestia/ember-validation">
-    <img src="https://emberobserver.com/badges/-zestia-ember-validation.svg">
-  </a>
-
-  <img src="https://img.shields.io/badge/Ember-%3E%3D%203.16-brightgreen">
-</p>
+[npm-badge]: https://img.shields.io/npm/v/@zestia/ember-validation.svg
+[npm-badge-url]: https://www.npmjs.com/package/@zestia/ember-validation
+[github-actions-badge]: https://github.com/zestia/ember-validation/workflows/CI/badge.svg
+[github-actions-url]: https://github.com/zestia/ember-validation/actions
+[ember-observer-badge]: https://emberobserver.com/badges/-zestia-ember-validation.svg
+[ember-observer-url]: https://emberobserver.com/addons/@zestia/ember-validation
 
 This lightweight addon lets you validate an object, or an array of objects. It will return a structured response with an array of error messages for anything that failed a _constraint_. Or, null if it passes validation.
 
