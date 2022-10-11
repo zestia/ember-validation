@@ -3,7 +3,7 @@
 ## Installation
 
 - `git clone <repository-url>`
-- `cd my-addon`
+- `cd @zestia/ember-validation`
 - `npm install`
 
 ## Linting
