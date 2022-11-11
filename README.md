@@ -36,6 +36,10 @@ https://zestia.github.io/ember-validation
 - Uses [date-fns](https://date-fns.org) for date validation. ✔︎
 - Simple [restructuring](#utils) of error messages ✔︎
 
+## Notes
+
+- A validation constraint is as simple as writing just a function that returns nothing if it passes, and a string if it fails.
+
 ## Example
 
 ```javascript
