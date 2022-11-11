@@ -1,8 +1,9 @@
 # @zestia/ember-validation
 
 [![Latest npm release][npm-badge]][npm-badge-url]
-[![GitHub Actions][github-actions-badge]][github-actions-url]
 [![Ember Observer][ember-observer-badge]][ember-observer-url]
+
+<!-- [![GitHub Actions][github-actions-badge]][github-actions-url] -->
 
 [npm-badge]: https://img.shields.io/npm/v/@zestia/ember-validation.svg
 [npm-badge-url]: https://www.npmjs.com/package/@zestia/ember-validation
@@ -21,7 +22,7 @@ ember install @zestia/ember-validation
 
 ## Demo
 
-https://zestia.github.io/ember-validation/
+https://zestia.github.io/ember-validation
 
 ## Features
 
@@ -196,7 +197,7 @@ const errors = await validate(items, constraints);
 
 ## Constraints
 
-The following constraints come with this addon. Creating a constraint is as simple as making a function that returns a string if the constraint has failed. Constraints can be asyncronous too.
+The following constraints come with this addon. Creating a constraint is as simple as making a function that returns a string if the constraint has failed. Constraints can be asynchronous too.
 
 - bigDecimal
   - `optional`
