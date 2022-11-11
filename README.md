@@ -38,7 +38,7 @@ https://zestia.github.io/ember-validation
 
 ## Notes
 
-- A validation constraint is as simple as writing just a function that returns nothing if it passes, and a string if it fails.
+- Making a constraint is as simple as writing just a function that returns nothing if it passes, and a string if it fails.
 
 ## Example
 
