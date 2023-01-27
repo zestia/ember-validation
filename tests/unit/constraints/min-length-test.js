@@ -45,7 +45,7 @@ module('minLength', function (hooks) {
 
     assert.strictEqual(validate(foo.bars), 'Length must be at least 2');
 
-    foo.bars.addObject(this.store.createRecord('bar'));
+    foo.bars.push(this.store.createRecord('bar'));
 
     assert.strictEqual(validate(foo.bars), undefined);
   });
