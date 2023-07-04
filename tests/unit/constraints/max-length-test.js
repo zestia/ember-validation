@@ -48,7 +48,7 @@ module('maxLength', function (hooks) {
 
     assert.strictEqual(validate(foo.bars), 'Length is too long (max 2)');
 
-    foo.bars.popObject();
+    foo.bars.pop();
 
     assert.strictEqual(validate(foo.bars), undefined);
   });

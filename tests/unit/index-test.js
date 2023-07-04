@@ -614,6 +614,8 @@ module('#validate', function (hooks) {
   });
 
   test('the readme example', async function (assert) {
+    assert.expect(1);
+
     const items = [
       {
         id: 1,
