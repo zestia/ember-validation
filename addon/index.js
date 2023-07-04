@@ -1,7 +1,7 @@
 import { get } from '@ember/object';
 import { assert } from '@ember/debug';
 import { result, isArray, isObject, isFunction } from './utils';
-import { all, resolve } from 'rsvp';
+import { all } from 'rsvp';
 const { keys } = Object;
 
 export default async function validate(_input, constraints) {
@@ -57,7 +57,7 @@ async function applyConstraints(object, key, value, constraints) {
     }
 
     return errors;
-  }, resolve([]));
+  }, []);
 
   return result(errors);
 }
