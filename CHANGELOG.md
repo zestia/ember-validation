@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.4.2
+
+- Update `@zestia` scoped packages
+
 ## 4.4.1
 
 - Re-release of 4.4.0 but published to GH Packages instead of NPM
