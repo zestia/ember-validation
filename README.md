@@ -247,3 +247,7 @@ The following constraints come with this addon. Creating a constraint is as simp
 
 - [`collateErrors`](tests/unit/utils-test.js#L60)<br>
   Flattens a validation result into an array of the messages for each field.
+
+## Internationalisation
+
+Whilst this addon _does come_ with default messages for its built-in constraints, they are not localisable. In order to internationalise the strings, it is up to you as the developer to pass in a internationalised `message`.
