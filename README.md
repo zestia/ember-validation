@@ -28,7 +28,6 @@ https://zestia.github.io/ember-validation
 
 - Validates objects ✔︎
 - Validates arrays ✔︎
-- Ember Data Friendly ✔︎
 - Supports promises ✔︎
 - Internationalisation ✔︎
 - Supports [async constraints](#constraints) ✔︎
