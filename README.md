@@ -30,6 +30,7 @@ https://zestia.github.io/ember-validation
 - Validates arrays ✔︎
 - Ember Data Friendly ✔︎
 - Supports promises ✔︎
+- Internationalisation ✔︎
 - Supports [async constraints](#constraints) ✔︎
 - Supports [adhoc constraints](#adhoc-constraints) ✔︎
 - Supports [dynamic constraints](#dynamic-constraints) ✔︎
@@ -203,40 +204,44 @@ const errors = await validate(items, constraints);
 
 The following constraints come with this addon. Creating a constraint is as simple as making a function that returns a string if the constraint has failed. Constraints can be asynchronous too.
 
-- bigDecimal
-  - `optional`
-  - `maxIntegerDigits`
-  - `maxDecimalDigits`
-- date
-  - `optional`
-  - `format`
-- email
-  - `optional`
-- greaterThan
-  - `optional`
-  - `value`
-- lessThan
-  - `optional`
-  - `value`
-- maxLength
-  - `max`
-- minLength
-  - `min`
-- number
-  - `optional`
-- phoneNumber
-  - `optional`
-- present
-- truthy
-
-## Utils
-
-- [`flattenErrors`](tests/unit/utils-test.js#L26)<br>
-  Flattens a validation result into a single array of _all_ the messages.
-
-- [`collateErrors`](tests/unit/utils-test.js#L60)<br>
-  Flattens a validation result into an array of the messages for each field.
+- `bigDecimal`
+- `date`
+- `email`
+- `greaterThan`
+- `lessThan`
+- `maxLength`
+- `minLength`
+- `number`
+- `phoneNumber`
+- `present`
+- `truthy`
 
 ## Internationalisation
 
-Whilst this addon _does come_ with default messages for its built-in constraints, they are not localisable. In order to internationalise the strings, it is up to you as the developer to pass in a internationalised `message`.
+You can provide a function that will be called with a key for each failed constraint. Allowing you to generate internationalised messages. For example:
+
+```javascript
+import { setMessageFn } from '@zestia/ember-validation';
+
+export function initialize(appInstance) {
+  const intl = this.owner.lookup('service:intl');
+
+  setMessageFn((key, tokens) => intl.t(`validation.${key}`, tokens));
+}
+```
+
+...then, instead of passing in a `message: 'Too large'` to each constraint, pass in a key, for example `key: 'too-large'`.
+
+## Utils
+
+- `setMessageFn`<br>
+  Sets the function that will build a string for a given constraint
+
+- `messageFor`<br>
+  Should be used as the return value of constraint function
+
+- `flattenErrors`<br>
+  Flattens a validation result into a single array of _all_ the messages
+
+- `collateErrors`<br>
+  Flattens a validation result into an array of the messages for each field

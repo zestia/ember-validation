@@ -4,8 +4,7 @@
 
 - Change import path for `collateErrors` and `flattenErrors` from
   `@zestia/ember-validation/utils`, to just `@zestia/ember-validation`
-- Removes `message` option from each constraint
-- Makes internationalisation possible by exposing `setMessageFn`, and `t`.
+- Makes internationalisation possible by exposing `setMessageFn`, and `messageFor`
 
 ## 4.4.2
 
