@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import bigDecimal from '@zestia/ember-validation/constraints/big-decimal';
+import { bigDecimal } from '@zestia/ember-validation/constraints';
 
 module('bigDecimal', function () {
   test('it allows blank values if marked as optional', function (assert) {

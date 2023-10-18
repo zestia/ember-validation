@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import maxLength from '@zestia/ember-validation/constraints/max-length';
+import { maxLength } from '@zestia/ember-validation/constraints';
 import { setupTest } from 'ember-qunit';
 
 module('maxLength', function (hooks) {

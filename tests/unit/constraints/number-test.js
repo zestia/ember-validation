@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import number from '@zestia/ember-validation/constraints/number';
+import { number } from '@zestia/ember-validation/constraints';
 
 module('number', function () {
   test('is returns nothing when valid', function (assert) {

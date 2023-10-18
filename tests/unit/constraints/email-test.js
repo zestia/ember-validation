@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import email from '@zestia/ember-validation/constraints/email';
+import { email } from '@zestia/ember-validation/constraints';
 
 module('email', function () {
   test('it returns nothing when valid', function (assert) {

@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import truthy from '@zestia/ember-validation/constraints/truthy';
+import { truthy } from '@zestia/ember-validation/constraints';
 
 module('truthy', function () {
   test('it returns nothing when valid', function (assert) {

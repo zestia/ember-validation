@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import date from '@zestia/ember-validation/constraints/date';
+import { date } from '@zestia/ember-validation/constraints';
 import enGB from 'date-fns/locale/en-GB';
 import enUS from 'date-fns/locale/en-US';
 

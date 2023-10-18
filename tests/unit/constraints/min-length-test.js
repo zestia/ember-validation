@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import minLength from '@zestia/ember-validation/constraints/min-length';
+import { minLength } from '@zestia/ember-validation/constraints';
 
 module('minLength', function (hooks) {
   setupTest(hooks);

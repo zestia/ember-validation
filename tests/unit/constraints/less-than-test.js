@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import lessThan from '@zestia/ember-validation/constraints/less-than';
+import { lessThan } from '@zestia/ember-validation/constraints';
 
 module('lessThan', function () {
   test('it returns nothing when valid', function (assert) {

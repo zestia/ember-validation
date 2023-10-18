@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import {
   date,
   email,
@@ -7,7 +7,7 @@ import {
   minLength,
   present
 } from '@zestia/ember-validation/constraints';
-import validate from '@zestia/ember-validation';
+import validate, { setMessageBuilder } from '@zestia/ember-validation';
 import { setupTest } from 'ember-qunit';
 import EmberObject from '@ember/object';
 import { resolve } from 'rsvp';
@@ -697,5 +697,33 @@ module('#validate', function (hooks) {
         value: null
       }
     ]);
+  });
+
+  skip('internationalisation', async function (assert) {
+    assert.expect(1);
+
+    const object = {};
+
+    const constraints = {
+      name() {
+        return [present()];
+      }
+    };
+
+    const locale = {
+      validation: {
+        constraints: {
+          present: 'Valor requerido'
+        }
+      }
+    };
+
+    setMessageBuilder((constraint) => {
+      return locale.validation.constraints[constraint];
+    });
+
+    const errors = await validate(object, constraints);
+
+    assert.deepEqual(errors, {});
   });
 });
