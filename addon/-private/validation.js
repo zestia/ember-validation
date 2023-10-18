@@ -50,12 +50,7 @@ async function validateArray(array, constraints) {
 async function applyConstraints(object, key, value, constraints) {
   const errors = await constraints.reduce(async (_errors, constraint) => {
     const errors = await _errors;
-
-    let message = await constraint(value, object);
-
-    if (isFunction(message)) {
-      message = message(value, object);
-    }
+    const message = await constraint(value, object);
 
     if (message) {
       errors.push(message);

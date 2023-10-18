@@ -20,15 +20,6 @@ module('phone-number', function () {
     assert.strictEqual(phoneNumber({ optional: true })(''), undefined);
   });
 
-  test('it returns custom message if invalid', function (assert) {
-    assert.expect(1);
-
-    assert.strictEqual(
-      phoneNumber({ message: 'bad phone' })('foo@bar'),
-      'bad phone'
-    );
-  });
-
   test('inputs', function (assert) {
     assert.expect(7);
 

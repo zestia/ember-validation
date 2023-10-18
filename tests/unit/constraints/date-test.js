@@ -31,15 +31,6 @@ module('date', function (hooks) {
     );
   });
 
-  test('it returns custom message if invalid', function (assert) {
-    assert.expect(1);
-
-    assert.strictEqual(
-      date({ message: 'bad date', format: 'dd/MM/yyyy' })('xyz'),
-      'bad date'
-    );
-  });
-
   test('inputs', function (assert) {
     assert.expect(9);
 

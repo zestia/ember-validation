@@ -20,12 +20,6 @@ module('email', function () {
     assert.strictEqual(email({ optional: true })(''), undefined);
   });
 
-  test('it returns custom message if invalid', function (assert) {
-    assert.expect(1);
-
-    assert.strictEqual(email({ message: 'bad email' })('foo@bar'), 'bad email');
-  });
-
   test('inputs', function (assert) {
     assert.expect(8);
 

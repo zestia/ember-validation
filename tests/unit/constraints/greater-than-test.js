@@ -17,15 +17,6 @@ module('greaterThan', function () {
     );
   });
 
-  test('it returns custom message if invalid', function (assert) {
-    assert.expect(1);
-
-    assert.strictEqual(
-      greaterThan({ value: 2, message: 'not big enough' })(2),
-      'not big enough'
-    );
-  });
-
   test('optional', function (assert) {
     assert.expect(2);
 

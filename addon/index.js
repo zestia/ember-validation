@@ -1,9 +1,9 @@
 import validate from '@zestia/ember-validation/-private/validation';
-import setMessageBuilder from '@zestia/ember-validation/-private/message-builder';
+import { setMessageFn, t } from '@zestia/ember-validation/-private/messages';
 import {
   collateErrors,
   flattenErrors
 } from '@zestia/ember-validation/-private/utils';
 
 export default validate;
-export { setMessageBuilder, collateErrors, flattenErrors };
+export { setMessageFn, t, collateErrors, flattenErrors };

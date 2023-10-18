@@ -1,19 +1,21 @@
-import { isArray } from '../utils';
+import { isArray } from '@zestia/ember-validation/-private/utils';
+import { t } from '@zestia/ember-validation';
 
 export default function minLength(options = {}) {
-  return function (value) {
-    let length = 0;
+  return function (_value) {
+    const { min } = options;
+    let value = 0;
 
-    if (isArray(value)) {
-      length = value.length;
-    } else if (typeof value === 'string' || typeof value === 'number') {
-      length = `${value}`.length;
+    if (isArray(_value)) {
+      value = _value.length;
+    } else if (typeof _value === 'string' || typeof _value === 'number') {
+      value = `${_value}`.length;
     }
 
-    if (length >= options.min) {
+    if (value >= min) {
       return;
     }
 
-    return options.message || `Length must be at least ${options.min}`;
+    return t('min-length', { value, min });
   };
 }

@@ -24,16 +24,6 @@ module('minLength', function (hooks) {
     );
   });
 
-  test('it returns custom message if invalid', function (assert) {
-    assert.expect(1);
-
-    assert.strictEqual(
-      minLength({ min: 6, message: 'too short' })('hello'),
-      'too short',
-      'returns custom message if invalid'
-    );
-  });
-
   test('supports ember data', function (assert) {
     assert.expect(2);
 

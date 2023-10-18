@@ -1,9 +1,11 @@
-export default function truthy(options = {}) {
+import { t } from '@zestia/ember-validation';
+
+export default function truthy() {
   return function (value) {
     if (value) {
       return;
     }
 
-    return options.message || 'Must be truthy';
+    return t('truthy', { value });
   };
 }

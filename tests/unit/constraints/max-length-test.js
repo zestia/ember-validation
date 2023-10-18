@@ -24,15 +24,6 @@ module('maxLength', function (hooks) {
     );
   });
 
-  test('it returns custom message if invalid', function (assert) {
-    assert.expect(1);
-
-    assert.strictEqual(
-      maxLength({ max: 4, message: 'exceeds max' })('hello'),
-      'exceeds max'
-    );
-  });
-
   test('supports ember data', function (assert) {
     assert.expect(2);
 

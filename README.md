@@ -205,40 +205,29 @@ The following constraints come with this addon. Creating a constraint is as simp
 
 - bigDecimal
   - `optional`
-  - `message`
   - `maxIntegerDigits`
   - `maxDecimalDigits`
 - date
   - `optional`
   - `format`
-  - `mesaage`
 - email
   - `optional`
-  - `message`
 - greaterThan
   - `optional`
   - `value`
-  - `mesaage`
 - lessThan
   - `optional`
   - `value`
-  - `mesaage`
 - maxLength
   - `max`
-  - `message`
 - minLength
   - `min`
-  - `message`
 - number
   - `optional`
-  - `message`
 - phoneNumber
   - `optional`
-  - `message`
 - present
-  - `message`
 - truthy
-  - `message`
 
 ## Utils
 

@@ -1,4 +1,4 @@
-import { module, test, skip } from 'qunit';
+import { module, test } from 'qunit';
 import {
   date,
   email,
@@ -7,7 +7,8 @@ import {
   minLength,
   present
 } from '@zestia/ember-validation/constraints';
-import validate, { setMessageBuilder } from '@zestia/ember-validation';
+import validate, { setMessageFn, t } from '@zestia/ember-validation';
+import { defaultMessageFn } from '@zestia/ember-validation/-private/messages';
 import { setupTest } from 'ember-qunit';
 import EmberObject from '@ember/object';
 import { resolve } from 'rsvp';
@@ -17,6 +18,10 @@ module('#validate', function (hooks) {
 
   hooks.beforeEach(function () {
     this.store = this.owner.lookup('service:store');
+  });
+
+  hooks.afterEach(function () {
+    setMessageFn(defaultMessageFn);
   });
 
   test('it returns no errors by default', async function (assert) {
@@ -330,87 +335,6 @@ module('#validate', function (hooks) {
     ]);
   });
 
-  test('it allows custom error messages', async function (assert) {
-    assert.expect(1);
-
-    const object = {};
-
-    const constraints = {
-      description() {
-        return [
-          present({
-            message: 'You must enter a description'
-          })
-        ];
-      }
-    };
-
-    const errors = await validate(object, constraints);
-
-    assert.deepEqual(errors, {
-      description: ['You must enter a description']
-    });
-  });
-
-  test('it allows custom error message functions', async function (assert) {
-    assert.expect(2);
-
-    let args;
-
-    const object = {
-      emailAddress: 'foo@bar'
-    };
-
-    const constraints = {
-      emailAddress() {
-        return [
-          email({
-            message(value, object) {
-              args = [value, object];
-
-              return `The email address ${value} is not valid`;
-            }
-          })
-        ];
-      }
-    };
-
-    const errors = await validate(object, constraints);
-
-    assert.deepEqual(errors, {
-      emailAddress: ['The email address foo@bar is not valid']
-    });
-
-    assert.deepEqual(args, ['foo@bar', object]);
-  });
-
-  test('it does not escape messages', async function (assert) {
-    assert.expect(1);
-
-    const object = {
-      name: '<script>'
-    };
-
-    const constraints = {
-      name() {
-        return [
-          minLength({
-            min: 9,
-            message(value) {
-              return `Your name ${value} is too short`;
-            }
-          })
-        ];
-      }
-    };
-
-    const errors = await validate(object, constraints);
-
-    assert.deepEqual(errors, {
-      name: ['Your name <script> is too short']
-    });
-  });
-
   test('it supports path properties', async function (assert) {
     assert.expect(1);
 
@@ -699,7 +623,7 @@ module('#validate', function (hooks) {
     ]);
   });
 
-  skip('internationalisation', async function (assert) {
+  test('can specify an internationalisation message builder function', async function (assert) {
     assert.expect(1);
 
     const object = {};
@@ -718,12 +642,54 @@ module('#validate', function (hooks) {
       }
     };
 
-    setMessageBuilder((constraint) => {
-      return locale.validation.constraints[constraint];
+    setMessageFn((key) => {
+      return locale.validation.constraints[key];
     });
 
     const errors = await validate(object, constraints);
 
-    assert.deepEqual(errors, {});
+    assert.deepEqual(errors, {
+      name: ['Valor requerido']
+    });
+  });
+
+  test('custom constraints can utilise the t function', async function (assert) {
+    assert.expect(1);
+
+    const object = {
+      name: 'John'
+    };
+
+    const isFred = (value) => {
+      if (value === 'Fred') {
+        return;
+      }
+
+      return t('is-fred');
+    };
+
+    const constraints = {
+      name() {
+        return [isFred];
+      }
+    };
+
+    const locale = {
+      validation: {
+        constraints: {
+          'is-fred': 'Must be Fred'
+        }
+      }
+    };
+
+    setMessageFn((key) => {
+      return locale.validation.constraints[key];
+    });
+
+    const errors = await validate(object, constraints);
+
+    assert.deepEqual(errors, {
+      name: ['Must be Fred']
+    });
   });
 });
