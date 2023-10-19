@@ -5,7 +5,7 @@ import {
 } from '@zestia/ember-validation/-private/messages';
 
 const testLocale = {
-  'is-fred': 'Must be Fred',
+  'is-foo': 'validation failed for {value}. Extra data: {baz}',
   present: {
     'must-enter-description': 'You must enter a description',
     'nothing-there': 'nothing there'

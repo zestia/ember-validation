@@ -711,20 +711,20 @@ module('#validate', function (hooks) {
     assert.expect(1);
 
     const object = {
-      name: 'John'
+      name: 'Bar'
     };
 
-    const isFred = (value) => {
-      if (value === 'Fred') {
+    const isFoo = (value) => {
+      if (value === 'Foo') {
         return;
       }
 
-      return messageFor('is-fred');
+      return messageFor('is-foo', value, { baz: 'qux' });
     };
 
     const constraints = {
       name() {
-        return [isFred];
+        return [isFoo];
       }
     };
 
@@ -733,7 +733,7 @@ module('#validate', function (hooks) {
     const errors = await validate(object, constraints);
 
     assert.deepEqual(errors, {
-      name: ['Must be Fred']
+      name: ['validation failed for Bar. Extra data: qux']
     });
   });
 });
