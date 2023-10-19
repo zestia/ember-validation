@@ -29,7 +29,7 @@ module('greaterThan', function (hooks) {
     setMessageFn(testMessageFn);
 
     assert.strictEqual(
-      greaterThan({ value: 2, key: 'not-bigger' })(1),
+      greaterThan({ value: 2, key: 'greater-than.not-bigger' })(1),
       '1 is not bigger than 2'
     );
   });

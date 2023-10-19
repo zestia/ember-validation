@@ -345,7 +345,7 @@ module('#validate', function (hooks) {
       description() {
         return [
           present({
-            key: 'must-enter-description'
+            key: 'present.must-enter-description'
           })
         ];
       }

@@ -43,7 +43,7 @@ module('date', function (hooks) {
     setMessageFn(testMessageFn);
 
     assert.strictEqual(
-      date({ key: 'date-year', format: 'yyyy' })('foo'),
+      date({ key: 'date.year', format: 'yyyy' })('foo'),
       'foo should be in yyyy format'
     );
   });

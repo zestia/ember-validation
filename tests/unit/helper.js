@@ -5,16 +5,22 @@ import {
 } from '@zestia/ember-validation/-private/messages';
 
 const testLocale = {
-  'must-enter-description': 'You must enter a description',
-  'date-year': '{value} should be in {format} format',
   'is-fred': 'Must be Fred',
-  'bad-email': '{value} is not valid',
-  'not-bigger': '{value} is not bigger than {otherValue}',
+  present: {
+    'must-enter-description': 'You must enter a description',
+    'nothing-there': 'nothing there'
+  },
+  date: {
+    year: '{value} should be in {format} format'
+  },
+  email: {
+    bad: '{value} is not valid'
+  },
+  'greater-than': {
+    'not-bigger': '{value} is not bigger than {otherValue}'
+  },
   'big-decimal': {
     'must-be-a-number': '{value} must be a number'
-  },
-  present: {
-    'nothing-there': 'nothing there'
   },
   truthy: {
     'please-accept-the-terms': 'please accept the terms'

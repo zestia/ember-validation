@@ -32,7 +32,7 @@ module('email', function (hooks) {
     setMessageFn(testMessageFn);
 
     assert.strictEqual(
-      email({ key: 'bad-email' })('foo@bar'),
+      email({ key: 'email.bad' })('foo@bar'),
       'foo@bar is not valid'
     );
   });
