@@ -3,7 +3,11 @@ import { truthy } from '@zestia/ember-validation/constraints';
 import { setMessageFn } from '@zestia/ember-validation';
 import { testMessageFn, defaultMessageFn } from 'dummy/tests/unit/helper';
 
-module('truthy', function () {
+module('truthy', function (hooks) {
+  hooks.afterEach(function () {
+    setMessageFn(defaultMessageFn);
+  });
+
   test('it returns nothing when valid', function (assert) {
     assert.expect(1);
 
@@ -12,8 +16,6 @@ module('truthy', function () {
 
   test('it returns the default message if invalid', function (assert) {
     assert.expect(1);
-
-    setMessageFn(defaultMessageFn);
 
     assert.strictEqual(truthy()(false), 'Must be truthy');
   });

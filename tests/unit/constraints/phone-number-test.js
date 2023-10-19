@@ -3,7 +3,11 @@ import { phoneNumber } from '@zestia/ember-validation/constraints';
 import { setMessageFn } from '@zestia/ember-validation';
 import { testMessageFn, defaultMessageFn } from 'dummy/tests/unit/helper';
 
-module('phone-number', function () {
+module('phone-number', function (hooks) {
+  hooks.afterEach(function () {
+    setMessageFn(defaultMessageFn);
+  });
+
   test('it returns nothing when valid', function (assert) {
     assert.expect(1);
 
@@ -35,8 +39,6 @@ module('phone-number', function () {
 
   test('inputs', function (assert) {
     assert.expect(7);
-
-    setMessageFn(defaultMessageFn);
 
     assert.strictEqual(phoneNumber()(), 'Invalid phone number');
     assert.strictEqual(phoneNumber()(''), 'Invalid phone number');

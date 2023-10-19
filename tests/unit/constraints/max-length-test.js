@@ -7,6 +7,10 @@ import { testMessageFn, defaultMessageFn } from 'dummy/tests/unit/helper';
 module('maxLength', function (hooks) {
   setupTest(hooks);
 
+  hooks.afterEach(function () {
+    setMessageFn(defaultMessageFn);
+  });
+
   hooks.beforeEach(function () {
     this.store = this.owner.lookup('service:store');
   });
@@ -39,8 +43,6 @@ module('maxLength', function (hooks) {
 
   test('supports ember data', function (assert) {
     assert.expect(2);
-
-    setMessageFn(defaultMessageFn);
 
     const foo = this.store.createRecord('foo', {
       bars: [

@@ -3,7 +3,11 @@ import { number } from '@zestia/ember-validation/constraints';
 import { setMessageFn } from '@zestia/ember-validation';
 import { testMessageFn, defaultMessageFn } from 'dummy/tests/unit/helper';
 
-module('number', function () {
+module('number', function (hooks) {
+  hooks.afterEach(function () {
+    setMessageFn(defaultMessageFn);
+  });
+
   test('is returns nothing when valid', function (assert) {
     assert.expect(1);
 
@@ -38,8 +42,6 @@ module('number', function () {
 
   test('inputs', function (assert) {
     assert.expect(7);
-
-    setMessageFn(defaultMessageFn);
 
     assert.strictEqual(number()(), 'Invalid number');
     assert.strictEqual(number()(''), 'Invalid number');

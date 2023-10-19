@@ -3,7 +3,11 @@ import { lessThan } from '@zestia/ember-validation/constraints';
 import { setMessageFn } from '@zestia/ember-validation';
 import { testMessageFn, defaultMessageFn } from 'dummy/tests/unit/helper';
 
-module('lessThan', function () {
+module('lessThan', function (hooks) {
+  hooks.afterEach(function () {
+    setMessageFn(defaultMessageFn);
+  });
+
   test('it returns nothing when valid', function (assert) {
     assert.expect(1);
 
@@ -29,8 +33,6 @@ module('lessThan', function () {
 
   test('optional', function (assert) {
     assert.expect(2);
-
-    setMessageFn(defaultMessageFn);
 
     assert.strictEqual(
       lessThan({ value: 0, optional: true })(0),

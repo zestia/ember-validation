@@ -11,6 +11,10 @@ module('minLength', function (hooks) {
     this.store = this.owner.lookup('service:store');
   });
 
+  hooks.afterEach(function () {
+    setMessageFn(defaultMessageFn);
+  });
+
   test('it returns nothing when valid', function (assert) {
     assert.expect(1);
 
@@ -40,8 +44,6 @@ module('minLength', function (hooks) {
 
   test('supports ember data', function (assert) {
     assert.expect(2);
-
-    setMessageFn(defaultMessageFn);
 
     const foo = this.store.createRecord('foo', {
       bars: [this.store.createRecord('bar')]
