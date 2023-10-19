@@ -9,7 +9,7 @@ const testLocale = {
   'date-year': '{value} should be in {format} format',
   'is-fred': 'Must be Fred',
   'bad-email': '{value} is not valid',
-  'not-bigger': '{value} is not bigger than {boundary}',
+  'not-bigger': '{value} is not bigger than {otherValue}',
   'big-decimal': {
     'must-be-a-number': '{value} must be a number'
   }
