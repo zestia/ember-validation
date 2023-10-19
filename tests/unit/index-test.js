@@ -337,13 +337,15 @@ module('#validate', function (hooks) {
   test('it allows custom error messages', async function (assert) {
     assert.expect(1);
 
+    setMessageFn(testMessageFn);
+
     const object = {};
 
     const constraints = {
       description() {
         return [
           present({
-            message: 'You must enter a description'
+            key: 'must-enter-description'
           })
         ];
       }

@@ -30,6 +30,9 @@ const testLocale = {
   },
   number: {
     'bad-number': 'bad number'
+  },
+  'phone-number': {
+    'bad-phone': 'bad phone'
   }
 };
 
