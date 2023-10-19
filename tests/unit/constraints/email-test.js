@@ -1,7 +1,13 @@
 import { module, test } from 'qunit';
 import { email } from '@zestia/ember-validation/constraints';
+import { setMessageFn } from '@zestia/ember-validation';
+import { testMessageFn, defaultMessageFn } from 'dummy/tests/unit/helper';
 
-module('email', function () {
+module('email', function (hooks) {
+  hooks.afterEach(function () {
+    setMessageFn(defaultMessageFn);
+  });
+
   test('it returns nothing when valid', function (assert) {
     assert.expect(1);
 
@@ -18,6 +24,17 @@ module('email', function () {
     assert.expect(1);
 
     assert.strictEqual(email({ optional: true })(''), undefined);
+  });
+
+  test('it returns custom message if invalid', function (assert) {
+    assert.expect(1);
+
+    setMessageFn(testMessageFn);
+
+    assert.strictEqual(
+      email({ key: 'bad-email' })('foo@bar'),
+      'foo@bar is not valid'
+    );
   });
 
   test('inputs', function (assert) {

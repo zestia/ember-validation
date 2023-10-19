@@ -20,6 +20,6 @@ export default function date(options) {
       return;
     }
 
-    return t('date', { value, format });
+    return t(options.key ?? 'date', { value, format });
   };
 }

@@ -1,6 +1,6 @@
 import { get } from '@ember/object';
 
-const engb = {
+const locale = {
   'big-decimal': {
     'must-be-a-number': 'Value must be a number',
     'value-too-large': 'Value too large',
@@ -20,7 +20,11 @@ const engb = {
 };
 
 export function defaultMessageFn(path, tokens) {
-  return get(engb, path).replace(/{(.*?)}/g, (match, token) => tokens[token]);
+  return processMessage(get(locale, path), tokens);
+}
+
+export function processMessage(string, tokens) {
+  return string.replace(/{(.*?)}/g, (match, token) => tokens[token]);
 }
 
 export let t = defaultMessageFn;

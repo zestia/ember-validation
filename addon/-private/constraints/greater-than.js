@@ -13,6 +13,6 @@ export default function greaterThan(options = {}) {
       return;
     }
 
-    return t('greater-than', { value, boundary });
+    return t(options.key ?? 'greater-than', { value, boundary });
   };
 }

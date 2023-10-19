@@ -14,6 +14,15 @@ module('lessThan', function () {
     assert.strictEqual(lessThan({ value: 10 })(10), 'Must be less than 10');
   });
 
+  test('it returns custom message if invalid', function (assert) {
+    assert.expect(1);
+
+    assert.strictEqual(
+      lessThan({ value: 2, message: 'not small enough' })(2),
+      'not small enough'
+    );
+  });
+
   test('optional', function (assert) {
     assert.expect(2);
 

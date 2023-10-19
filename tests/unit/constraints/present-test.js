@@ -13,4 +13,13 @@ module('present', function () {
 
     assert.strictEqual(present()(''), 'Required value');
   });
+
+  test('it returns custom message if invalid', function (assert) {
+    assert.expect(1);
+
+    assert.strictEqual(
+      present({ message: 'nothing there' })(),
+      'nothing there'
+    );
+  });
 });

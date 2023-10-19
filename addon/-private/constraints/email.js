@@ -16,6 +16,6 @@ export default function email(options = {}) {
       return;
     }
 
-    return t('email', { value });
+    return t(options.key ?? 'email', { value });
   };
 }

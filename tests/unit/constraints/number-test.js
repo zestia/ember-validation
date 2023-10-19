@@ -24,6 +24,14 @@ module('number', function () {
     );
   });
 
+  test('it returns custom message if invalid', function (assert) {
+    assert.expect(1);
+
+    const func = number({ message: 'bad number' });
+
+    assert.strictEqual(func('foo@bar'), 'bad number');
+  });
+
   test('inputs', function (assert) {
     assert.expect(7);
 

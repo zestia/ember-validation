@@ -8,7 +8,7 @@ import {
   present
 } from '@zestia/ember-validation/constraints';
 import validate, { setMessageFn, t } from '@zestia/ember-validation';
-import { defaultMessageFn } from '@zestia/ember-validation/-private/messages';
+import { testMessageFn, defaultMessageFn } from 'dummy/tests/unit/helper';
 import { setupTest } from 'ember-qunit';
 import EmberObject from '@ember/object';
 import { resolve } from 'rsvp';
@@ -335,6 +335,53 @@ module('#validate', function (hooks) {
     ]);
   });
 
+  test('it allows custom error messages', async function (assert) {
+    assert.expect(1);
+
+    setMessageFn(testMessageFn);
+
+    const object = {};
+
+    const constraints = {
+      description() {
+        return [present({ key: 'must-enter-description' })];
+      }
+    };
+
+    const errors = await validate(object, constraints);
+
+    assert.deepEqual(errors, {
+      description: ['You must enter a description']
+    });
+  });
+
+  test('it does not escape messages', async function (assert) {
+    assert.expect(1);
+
+    const object = {
+      name: '<script>'
+    };
+
+    const constraints = {
+      name() {
+        return [
+          minLength({
+            min: 9,
+            message(value) {
+              return `Your name ${value} is too short`;
+            }
+          })
+        ];
+      }
+    };
+
+    const errors = await validate(object, constraints);
+
+    assert.deepEqual(errors, {
+      name: ['Your name <script> is too short']
+    });
+  });
+
   test('it supports path properties', async function (assert) {
     assert.expect(1);
 
@@ -634,17 +681,11 @@ module('#validate', function (hooks) {
       }
     };
 
-    const locale = {
-      validation: {
-        constraints: {
-          present: 'Valor requerido'
-        }
-      }
+    const esES = {
+      present: 'Valor requerido'
     };
 
-    setMessageFn((key) => {
-      return locale.validation.constraints[key];
-    });
+    setMessageFn((key) => esES[key]);
 
     const errors = await validate(object, constraints);
 
@@ -674,17 +715,7 @@ module('#validate', function (hooks) {
       }
     };
 
-    const locale = {
-      validation: {
-        constraints: {
-          'is-fred': 'Must be Fred'
-        }
-      }
-    };
-
-    setMessageFn((key) => {
-      return locale.validation.constraints[key];
-    });
+    setMessageFn(testMessageFn);
 
     const errors = await validate(object, constraints);
 
