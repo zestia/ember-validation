@@ -34,13 +34,11 @@ export function setMessageFn(fn) {
   t = fn;
 }
 
-export function messageFor(key, value, _options = {}) {
-  const options = { ..._options };
-  const tokens = { value };
+export function messageFor(key, value, options = {}) {
+  const tokens = { ...options, value };
 
   if ('value' in options) {
     tokens.otherValue = options.value;
-    delete options.value;
   }
 
   return t(options.key ?? key, tokens);

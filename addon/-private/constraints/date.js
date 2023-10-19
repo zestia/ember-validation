@@ -16,7 +16,7 @@ export default function date(options) {
       return;
     }
 
-    if (isValid(parse(value, format, referenceDate, options))) {
+    if (isValid(parse(value, format, referenceDate, dateFnsOptions))) {
       return;
     }
 
