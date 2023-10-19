@@ -229,7 +229,7 @@ export function initialize(appInstance) {
 }
 ```
 
-...then, instead of passing in a `message: 'Too large'` to each constraint, pass in a key, for example `key: 'too-large'`.
+...then, instead of passing in a `message: 'Too large'` to each constraint, pass in a key, e.g. `key: 'too-large'`.
 
 ## Utils
 
