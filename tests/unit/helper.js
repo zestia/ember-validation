@@ -12,6 +12,9 @@ const testLocale = {
   'not-bigger': '{value} is not bigger than {otherValue}',
   'big-decimal': {
     'must-be-a-number': '{value} must be a number'
+  },
+  'is-present': {
+    'nothing-there': 'nothing there'
   }
 };
 
