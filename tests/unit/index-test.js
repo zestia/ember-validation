@@ -337,13 +337,15 @@ module('#validate', function (hooks) {
   test('it allows custom error messages', async function (assert) {
     assert.expect(1);
 
-    setMessageFn(testMessageFn);
-
     const object = {};
 
     const constraints = {
       description() {
-        return [present({ key: 'must-enter-description' })];
+        return [
+          present({
+            message: 'You must enter a description'
+          })
+        ];
       }
     };
 
@@ -351,6 +353,59 @@ module('#validate', function (hooks) {
 
     assert.deepEqual(errors, {
       description: ['You must enter a description']
+    });
+  });
+
+  test('it allows custom error message functions', async function (assert) {
+    assert.expect(1);
+
+    const object = {
+      emailAddress: 'foo@bar'
+    };
+
+    const constraints = {
+      emailAddress() {
+        return [
+          email({
+            message({ value }) {
+              return `The email address ${value} is not valid`;
+            }
+          })
+        ];
+      }
+    };
+
+    const errors = await validate(object, constraints);
+
+    assert.deepEqual(errors, {
+      emailAddress: ['The email address foo@bar is not valid']
+    });
+  });
+
+  test('it does not escape messages', async function (assert) {
+    assert.expect(1);
+
+    const object = {
+      name: '<script>'
+    };
+
+    const constraints = {
+      name() {
+        return [
+          minLength({
+            min: 9,
+            message({ value }) {
+              return `Your name ${value} is too short`;
+            }
+          })
+        ];
+      }
+    };
+
+    const errors = await validate(object, constraints);
+
+    assert.deepEqual(errors, {
+      name: ['Your name <script> is too short']
     });
   });
 
