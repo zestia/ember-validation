@@ -1,6 +1,8 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import { minLength } from '@zestia/ember-validation/constraints';
+import { setMessageFn } from '@zestia/ember-validation';
+import { testMessageFn, defaultMessageFn } from 'dummy/tests/unit/helper';
 
 module('minLength', function (hooks) {
   setupTest(hooks);
@@ -27,8 +29,10 @@ module('minLength', function (hooks) {
   test('it returns custom message if invalid', function (assert) {
     assert.expect(1);
 
+    setMessageFn(testMessageFn);
+
     assert.strictEqual(
-      minLength({ min: 6, message: 'too short' })('hello'),
+      minLength({ min: 6, key: 'min-length.too-short' })('hello'),
       'too short',
       'returns custom message if invalid'
     );
@@ -36,6 +40,8 @@ module('minLength', function (hooks) {
 
   test('supports ember data', function (assert) {
     assert.expect(2);
+
+    setMessageFn(defaultMessageFn);
 
     const foo = this.store.createRecord('foo', {
       bars: [this.store.createRecord('bar')]

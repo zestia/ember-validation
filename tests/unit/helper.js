@@ -18,6 +18,18 @@ const testLocale = {
   },
   truthy: {
     'please-accept-the-terms': 'please accept the terms'
+  },
+  'less-than': {
+    'not-small-enough': 'not small enough'
+  },
+  'max-length': {
+    'exceeds-max': 'exceeds max'
+  },
+  'min-length': {
+    'too-short': 'too short'
+  },
+  number: {
+    'bad-number': 'bad number'
   }
 };
 

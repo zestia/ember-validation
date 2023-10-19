@@ -1,5 +1,7 @@
 import { module, test } from 'qunit';
 import { number } from '@zestia/ember-validation/constraints';
+import { setMessageFn } from '@zestia/ember-validation';
+import { testMessageFn, defaultMessageFn } from 'dummy/tests/unit/helper';
 
 module('number', function () {
   test('is returns nothing when valid', function (assert) {
@@ -27,13 +29,17 @@ module('number', function () {
   test('it returns custom message if invalid', function (assert) {
     assert.expect(1);
 
-    const func = number({ message: 'bad number' });
+    setMessageFn(testMessageFn);
+
+    const func = number({ key: 'number.bad-number' });
 
     assert.strictEqual(func('foo@bar'), 'bad number');
   });
 
   test('inputs', function (assert) {
     assert.expect(7);
+
+    setMessageFn(defaultMessageFn);
 
     assert.strictEqual(number()(), 'Invalid number');
     assert.strictEqual(number()(''), 'Invalid number');

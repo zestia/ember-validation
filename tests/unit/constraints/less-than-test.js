@@ -1,5 +1,7 @@
 import { module, test } from 'qunit';
 import { lessThan } from '@zestia/ember-validation/constraints';
+import { setMessageFn } from '@zestia/ember-validation';
+import { testMessageFn, defaultMessageFn } from 'dummy/tests/unit/helper';
 
 module('lessThan', function () {
   test('it returns nothing when valid', function (assert) {
@@ -17,14 +19,18 @@ module('lessThan', function () {
   test('it returns custom message if invalid', function (assert) {
     assert.expect(1);
 
+    setMessageFn(testMessageFn);
+
     assert.strictEqual(
-      lessThan({ value: 2, message: 'not small enough' })(2),
+      lessThan({ value: 2, key: 'less-than.not-small-enough' })(2),
       'not small enough'
     );
   });
 
   test('optional', function (assert) {
     assert.expect(2);
+
+    setMessageFn(defaultMessageFn);
 
     assert.strictEqual(
       lessThan({ value: 0, optional: true })(0),
