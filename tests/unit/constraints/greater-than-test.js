@@ -1,7 +1,13 @@
 import { module, test } from 'qunit';
-import greaterThan from '@zestia/ember-validation/constraints/greater-than';
+import { greaterThan } from '@zestia/ember-validation/constraints';
+import { setMessageFn } from '@zestia/ember-validation';
+import { testMessageFn, defaultMessageFn } from 'dummy/tests/unit/helper';
 
-module('greaterThan', function () {
+module('greaterThan', function (hooks) {
+  hooks.afterEach(function () {
+    setMessageFn(defaultMessageFn);
+  });
+
   test('it returns nothing when valid', function (assert) {
     assert.expect(1);
 
@@ -20,9 +26,11 @@ module('greaterThan', function () {
   test('it returns custom message if invalid', function (assert) {
     assert.expect(1);
 
+    setMessageFn(testMessageFn);
+
     assert.strictEqual(
-      greaterThan({ value: 2, message: 'not big enough' })(2),
-      'not big enough'
+      greaterThan({ value: 2, key: 'not-bigger' })(1),
+      '1 is not bigger than 2'
     );
   });
 

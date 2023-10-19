@@ -1,7 +1,13 @@
 import { module, test } from 'qunit';
-import bigDecimal from '@zestia/ember-validation/constraints/big-decimal';
+import { bigDecimal } from '@zestia/ember-validation/constraints';
+import { setMessageFn } from '@zestia/ember-validation';
+import { testMessageFn, defaultMessageFn } from 'dummy/tests/unit/helper';
 
-module('bigDecimal', function () {
+module('bigDecimal', function (hooks) {
+  hooks.afterEach(function () {
+    setMessageFn(defaultMessageFn);
+  });
+
   test('it allows blank values if marked as optional', function (assert) {
     assert.expect(1);
 
@@ -17,7 +23,7 @@ module('bigDecimal', function () {
     );
   });
 
-  test('honours the maxIntegerDigits option', function (assert) {
+  test('it honours the maxIntegerDigits option', function (assert) {
     assert.expect(2);
 
     assert.strictEqual(
@@ -96,6 +102,17 @@ module('bigDecimal', function () {
     assert.strictEqual(
       bigDecimal({ maxIntegerDigits: 5, maxDecimalDigits: 2 })('123.'),
       'Value must be a number'
+    );
+  });
+
+  test('it returns custom message if invalid', function (assert) {
+    assert.expect(1);
+
+    setMessageFn(testMessageFn);
+
+    assert.strictEqual(
+      bigDecimal({ key: 'big-decimal.must-be-a-number' })('foo'),
+      'foo must be a number'
     );
   });
 });

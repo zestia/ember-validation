@@ -1,11 +1,17 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import date from '@zestia/ember-validation/constraints/date';
+import { setMessageFn } from '@zestia/ember-validation';
+import { testMessageFn, defaultMessageFn } from 'dummy/tests/unit/helper';
+import { date } from '@zestia/ember-validation/constraints';
 import enGB from 'date-fns/locale/en-GB';
 import enUS from 'date-fns/locale/en-US';
 
 module('date', function (hooks) {
   setupTest(hooks);
+
+  hooks.afterEach(function () {
+    setMessageFn(defaultMessageFn);
+  });
 
   test('it returns nothing when valid', function (assert) {
     assert.expect(1);
@@ -34,9 +40,11 @@ module('date', function (hooks) {
   test('it returns custom message if invalid', function (assert) {
     assert.expect(1);
 
+    setMessageFn(testMessageFn);
+
     assert.strictEqual(
-      date({ message: 'bad date', format: 'dd/MM/yyyy' })('xyz'),
-      'bad date'
+      date({ key: 'date-year', format: 'yyyy' })('foo'),
+      'foo should be in yyyy format'
     );
   });
 

@@ -1,4 +1,5 @@
-import { isArray } from '../utils';
+import { isArray } from '@zestia/ember-validation/-private/utils';
+import { messageFor } from '@zestia/ember-validation';
 
 export default function minLength(options = {}) {
   return function (value) {
@@ -14,6 +15,6 @@ export default function minLength(options = {}) {
       return;
     }
 
-    return options.message || `Length must be at least ${options.min}`;
+    return messageFor('min-length', value, options);
   };
 }

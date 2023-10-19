@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.0.0
+
+- Change import path for `collateErrors` and `flattenErrors` from
+  `@zestia/ember-validation/utils`, to just `@zestia/ember-validation`
+- Makes internationalisation possible by exposing `setMessageFn`, and `messageFor`
+
 ## 4.4.2
 
 - Update `@zestia` scoped packages

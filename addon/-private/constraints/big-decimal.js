@@ -1,4 +1,5 @@
 import { isPresent } from '@ember/utils';
+import { messageFor } from '@zestia/ember-validation';
 
 const fullPattern = /^-?(\d+)(?:\.(\d+))?$/;
 const decimalPattern = /^(\d*?)0*$/;
@@ -18,20 +19,20 @@ export default function bigDecimal(_options = {}) {
     const result = fullPattern.exec(value);
 
     if (!result) {
-      return 'Value must be a number';
+      return messageFor('big-decimal.must-be-a-number', value, options);
     }
 
     const integerPart = result[1];
 
     if (integerPart.length > options.maxIntegerDigits) {
-      return 'Value too large';
+      return messageFor('big-decimal.value-too-large', value, options);
     }
 
     if (result[2]) {
       const decimalPart = decimalPattern.exec(result[2])[1];
 
       if (decimalPart.length > options.maxDecimalDigits) {
-        return `Value must have a maximum of ${options.maxDecimalDigits} decimal places`;
+        return messageFor('big-decimal.max-decimal-places', value, options);
       }
     }
   };

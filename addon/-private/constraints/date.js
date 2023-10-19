@@ -1,6 +1,7 @@
 import { isPresent } from '@ember/utils';
 import isValid from 'date-fns/isValid';
 import parse from 'date-fns/parse';
+import { messageFor } from '@zestia/ember-validation';
 
 export default function date(options) {
   return function (value) {
@@ -15,10 +16,10 @@ export default function date(options) {
       return;
     }
 
-    if (isValid(parse(value, format, referenceDate, options))) {
+    if (isValid(parse(value, format, referenceDate, dateFnsOptions))) {
       return;
     }
 
-    return options.message || `Invalid date, expecting ${format}`;
+    return messageFor('date', value, options);
   };
 }

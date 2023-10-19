@@ -1,4 +1,5 @@
 import { isPresent } from '@ember/utils';
+import { messageFor } from '@zestia/ember-validation';
 
 export default function lessThan(options = {}) {
   return function (value) {
@@ -10,6 +11,6 @@ export default function lessThan(options = {}) {
       return;
     }
 
-    return options.message || `Must be less than ${options.value}`;
+    return messageFor('less-than', value, options);
   };
 }

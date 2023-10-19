@@ -1,7 +1,13 @@
 import { module, test } from 'qunit';
-import truthy from '@zestia/ember-validation/constraints/truthy';
+import { truthy } from '@zestia/ember-validation/constraints';
+import { setMessageFn } from '@zestia/ember-validation';
+import { testMessageFn, defaultMessageFn } from 'dummy/tests/unit/helper';
 
-module('truthy', function () {
+module('truthy', function (hooks) {
+  hooks.afterEach(function () {
+    setMessageFn(defaultMessageFn);
+  });
+
   test('it returns nothing when valid', function (assert) {
     assert.expect(1);
 
@@ -17,8 +23,10 @@ module('truthy', function () {
   test('it returns a custom message if invalid', function (assert) {
     assert.expect(1);
 
+    setMessageFn(testMessageFn);
+
     assert.strictEqual(
-      truthy({ message: 'please accept the terms' })(),
+      truthy({ key: 'truthy.please-accept-the-terms' })(),
       'please accept the terms'
     );
   });

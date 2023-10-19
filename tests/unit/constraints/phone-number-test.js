@@ -1,7 +1,13 @@
 import { module, test } from 'qunit';
-import phoneNumber from '@zestia/ember-validation/constraints/phone-number';
+import { phoneNumber } from '@zestia/ember-validation/constraints';
+import { setMessageFn } from '@zestia/ember-validation';
+import { testMessageFn, defaultMessageFn } from 'dummy/tests/unit/helper';
 
-module('phone-number', function () {
+module('phone-number', function (hooks) {
+  hooks.afterEach(function () {
+    setMessageFn(defaultMessageFn);
+  });
+
   test('it returns nothing when valid', function (assert) {
     assert.expect(1);
 
@@ -23,8 +29,10 @@ module('phone-number', function () {
   test('it returns custom message if invalid', function (assert) {
     assert.expect(1);
 
+    setMessageFn(testMessageFn);
+
     assert.strictEqual(
-      phoneNumber({ message: 'bad phone' })('foo@bar'),
+      phoneNumber({ key: 'phone-number.bad-phone' })('foo@bar'),
       'bad phone'
     );
   });

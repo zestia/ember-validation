@@ -1,12 +1,18 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import minLength from '@zestia/ember-validation/constraints/min-length';
+import { minLength } from '@zestia/ember-validation/constraints';
+import { setMessageFn } from '@zestia/ember-validation';
+import { testMessageFn, defaultMessageFn } from 'dummy/tests/unit/helper';
 
 module('minLength', function (hooks) {
   setupTest(hooks);
 
   hooks.beforeEach(function () {
     this.store = this.owner.lookup('service:store');
+  });
+
+  hooks.afterEach(function () {
+    setMessageFn(defaultMessageFn);
   });
 
   test('it returns nothing when valid', function (assert) {
@@ -27,8 +33,10 @@ module('minLength', function (hooks) {
   test('it returns custom message if invalid', function (assert) {
     assert.expect(1);
 
+    setMessageFn(testMessageFn);
+
     assert.strictEqual(
-      minLength({ min: 6, message: 'too short' })('hello'),
+      minLength({ min: 6, key: 'min-length.too-short' })('hello'),
       'too short',
       'returns custom message if invalid'
     );

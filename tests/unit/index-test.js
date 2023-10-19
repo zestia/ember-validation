@@ -7,16 +7,20 @@ import {
   minLength,
   present
 } from '@zestia/ember-validation/constraints';
-import validate from '@zestia/ember-validation';
+import validate, { setMessageFn, messageFor } from '@zestia/ember-validation';
+import { testMessageFn, defaultMessageFn } from 'dummy/tests/unit/helper';
 import { setupTest } from 'ember-qunit';
 import EmberObject from '@ember/object';
-import { resolve } from 'rsvp';
 
 module('#validate', function (hooks) {
   setupTest(hooks);
 
   hooks.beforeEach(function () {
     this.store = this.owner.lookup('service:store');
+  });
+
+  hooks.afterEach(function () {
+    setMessageFn(defaultMessageFn);
   });
 
   test('it returns no errors by default', async function (assert) {
@@ -333,13 +337,15 @@ module('#validate', function (hooks) {
   test('it allows custom error messages', async function (assert) {
     assert.expect(1);
 
+    setMessageFn(testMessageFn);
+
     const object = {};
 
     const constraints = {
       description() {
         return [
           present({
-            message: 'You must enter a description'
+            key: 'must-enter-description'
           })
         ];
       }
@@ -353,9 +359,7 @@ module('#validate', function (hooks) {
   });
 
   test('it allows custom error message functions', async function (assert) {
-    assert.expect(2);
-
-    let args;
+    assert.expect(1);
 
     const object = {
       emailAddress: 'foo@bar'
@@ -365,9 +369,7 @@ module('#validate', function (hooks) {
       emailAddress() {
         return [
           email({
-            message(value, object) {
-              args = [value, object];
-
+            message({ value }) {
               return `The email address ${value} is not valid`;
             }
           })
@@ -380,8 +382,6 @@ module('#validate', function (hooks) {
     assert.deepEqual(errors, {
       emailAddress: ['The email address foo@bar is not valid']
     });
-
-    assert.deepEqual(args, ['foo@bar', object]);
   });
 
   test('it does not escape messages', async function (assert) {
@@ -396,7 +396,7 @@ module('#validate', function (hooks) {
         return [
           minLength({
             min: 9,
-            message(value) {
+            message({ value }) {
               return `Your name ${value} is too short`;
             }
           })
@@ -526,8 +526,8 @@ module('#validate', function (hooks) {
   test('it resolves the object and its properties', async function (assert) {
     assert.expect(2);
 
-    let object = resolve({
-      amount: resolve(10)
+    let object = Promise.resolve({
+      amount: Promise.resolve(10)
     });
 
     const constraints = {
@@ -542,8 +542,8 @@ module('#validate', function (hooks) {
       amount: ['Must be greater than 10']
     });
 
-    object = resolve({
-      amount: resolve(11)
+    object = Promise.resolve({
+      amount: Promise.resolve(11)
     });
 
     errors = await validate(object, constraints);
@@ -554,7 +554,11 @@ module('#validate', function (hooks) {
   test('it resolves the array and its objects', async function (assert) {
     assert.expect(2);
 
-    let array = resolve([resolve({ amount: resolve(10) })]);
+    let array = Promise.resolve([
+      Promise.resolve({
+        amount: Promise.resolve(10)
+      })
+    ]);
 
     const constraints = () => ({
       amount() {
@@ -570,7 +574,11 @@ module('#validate', function (hooks) {
       }
     ]);
 
-    array = resolve([resolve({ amount: resolve(11) })]);
+    array = Promise.resolve([
+      Promise.resolve({
+        amount: Promise.resolve(11)
+      })
+    ]);
 
     errors = await validate(array, constraints);
 
@@ -697,5 +705,35 @@ module('#validate', function (hooks) {
         value: null
       }
     ]);
+  });
+
+  test('custom constraints can utilise the messageFor function', async function (assert) {
+    assert.expect(1);
+
+    const object = {
+      name: 'John'
+    };
+
+    const isFred = (value) => {
+      if (value === 'Fred') {
+        return;
+      }
+
+      return messageFor('is-fred');
+    };
+
+    const constraints = {
+      name() {
+        return [isFred];
+      }
+    };
+
+    setMessageFn(testMessageFn);
+
+    const errors = await validate(object, constraints);
+
+    assert.deepEqual(errors, {
+      name: ['Must be Fred']
+    });
   });
 });

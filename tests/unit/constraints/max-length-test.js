@@ -1,9 +1,15 @@
 import { module, test } from 'qunit';
-import maxLength from '@zestia/ember-validation/constraints/max-length';
+import { maxLength } from '@zestia/ember-validation/constraints';
 import { setupTest } from 'ember-qunit';
+import { setMessageFn } from '@zestia/ember-validation';
+import { testMessageFn, defaultMessageFn } from 'dummy/tests/unit/helper';
 
 module('maxLength', function (hooks) {
   setupTest(hooks);
+
+  hooks.afterEach(function () {
+    setMessageFn(defaultMessageFn);
+  });
 
   hooks.beforeEach(function () {
     this.store = this.owner.lookup('service:store');
@@ -27,8 +33,10 @@ module('maxLength', function (hooks) {
   test('it returns custom message if invalid', function (assert) {
     assert.expect(1);
 
+    setMessageFn(testMessageFn);
+
     assert.strictEqual(
-      maxLength({ max: 4, message: 'exceeds max' })('hello'),
+      maxLength({ max: 4, key: 'max-length.exceeds-max' })('hello'),
       'exceeds max'
     );
   });

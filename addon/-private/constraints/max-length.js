@@ -1,4 +1,5 @@
-import { isArray } from '../utils';
+import { isArray } from '@zestia/ember-validation/-private/utils';
+import { messageFor } from '@zestia/ember-validation';
 
 export default function maxLength(options = {}) {
   return function (value) {
@@ -14,6 +15,6 @@ export default function maxLength(options = {}) {
       return;
     }
 
-    return options.message || `Length is too long (max ${options.max})`;
+    return messageFor('max-length', value, options);
   };
 }
