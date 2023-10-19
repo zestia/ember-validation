@@ -12,8 +12,8 @@ const locale = {
   },
   date: 'Invalid date, expecting {format}',
   email: 'Invalid email',
-  'greater-than': 'Must be greater than {boundary}',
-  'less-than': 'Must be less than {boundary}',
+  'greater-than': 'Must be greater than {otherValue}',
+  'less-than': 'Must be less than {otherValue}',
   'max-length': 'Length is too long (max {max})',
   'min-length': 'Length must be at least {min}',
   number: 'Invalid number',
@@ -34,6 +34,14 @@ export function setMessageFn(fn) {
   t = fn;
 }
 
-export function messageFor(key, value, options = {}) {
-  return t(options.key ?? key, { value, ...options });
+export function messageFor(key, value, _options = {}) {
+  const options = { ..._options };
+  const tokens = { value };
+
+  if ('value' in options) {
+    tokens.otherValue = options.value;
+    delete options.value;
+  }
+
+  return t(options.key ?? key, tokens);
 }
