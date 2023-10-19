@@ -1,5 +1,5 @@
 import { isPresent } from '@ember/utils';
-import { t } from '@zestia/ember-validation';
+import { messageFor } from '@zestia/ember-validation';
 
 export default function number(options = {}) {
   return function (value) {
@@ -11,6 +11,6 @@ export default function number(options = {}) {
       return;
     }
 
-    return t('number', { value });
+    return messageFor('number', value, options);
   };
 }

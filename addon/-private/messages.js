@@ -1,5 +1,8 @@
 import { get } from '@ember/object';
 
+// Yep, module state
+let t = defaultMessageFn; // eslint-disable-line no-unused-vars
+
 const locale = {
   'big-decimal': {
     'must-be-a-number': 'Value must be a number',
@@ -27,8 +30,10 @@ export function processMessage(string, tokens) {
   return string.replace(/{(.*?)}/g, (match, token) => tokens[token]);
 }
 
-export let t = defaultMessageFn;
-
 export function setMessageFn(fn) {
   t = fn;
+}
+
+export function messageFor(key, value, options = {}) {
+  return t(options.key ?? key, { value, ...options });
 }

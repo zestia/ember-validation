@@ -1,5 +1,5 @@
 import { isPresent } from '@ember/utils';
-import { t } from '@zestia/ember-validation';
+import { messageFor } from '@zestia/ember-validation';
 
 export default function present(options) {
   return function (value) {
@@ -7,6 +7,6 @@ export default function present(options) {
       return;
     }
 
-    return t(options.key ?? 'present', { value });
+    return messageFor('present', value, options);
   };
 }

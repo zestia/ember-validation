@@ -1,18 +1,16 @@
 import { isPresent } from '@ember/utils';
-import { t } from '@zestia/ember-validation';
+import { messageFor } from '@zestia/ember-validation';
 
 export default function lessThan(options = {}) {
   return function (value) {
-    const boundary = options.value;
-
     if (!isPresent(value) && options.optional) {
       return;
     }
 
-    if (value < boundary) {
+    if (value < options.value) {
       return;
     }
 
-    return t('less-than', { value, boundary });
+    return messageFor('less-than', value, options);
   };
 }

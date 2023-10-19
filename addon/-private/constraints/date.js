@@ -1,7 +1,7 @@
 import { isPresent } from '@ember/utils';
 import isValid from 'date-fns/isValid';
 import parse from 'date-fns/parse';
-import { t } from '@zestia/ember-validation';
+import { messageFor } from '@zestia/ember-validation';
 
 export default function date(options) {
   return function (value) {
@@ -20,6 +20,6 @@ export default function date(options) {
       return;
     }
 
-    return t(options.key ?? 'date', { value, format });
+    return messageFor('date', value, options);
   };
 }

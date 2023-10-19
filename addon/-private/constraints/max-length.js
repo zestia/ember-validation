@@ -1,21 +1,20 @@
 import { isArray } from '@zestia/ember-validation/-private/utils';
-import { t } from '@zestia/ember-validation';
+import { messageFor } from '@zestia/ember-validation';
 
 export default function maxLength(options = {}) {
-  return function (_value) {
-    const { max } = options;
-    let value = 0;
+  return function (value) {
+    let length = 0;
 
-    if (isArray(_value)) {
-      value = _value.length;
-    } else if (typeof _value === 'string' || typeof _value === 'number') {
-      value = `${_value}`.length;
+    if (isArray(value)) {
+      length = value.length;
+    } else if (typeof value === 'string' || typeof value === 'number') {
+      length = `${value}`.length;
     }
 
-    if (value <= max) {
+    if (length <= options.max) {
       return;
     }
 
-    return t('max-length', { value, max });
+    return messageFor('max-length', value, options);
   };
 }

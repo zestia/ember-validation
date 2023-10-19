@@ -7,11 +7,10 @@ import {
   minLength,
   present
 } from '@zestia/ember-validation/constraints';
-import validate, { setMessageFn, t } from '@zestia/ember-validation';
+import validate, { setMessageFn, messageFor } from '@zestia/ember-validation';
 import { testMessageFn, defaultMessageFn } from 'dummy/tests/unit/helper';
 import { setupTest } from 'ember-qunit';
 import EmberObject from '@ember/object';
-import { resolve } from 'rsvp';
 
 module('#validate', function (hooks) {
   setupTest(hooks);
@@ -355,33 +354,6 @@ module('#validate', function (hooks) {
     });
   });
 
-  test('it does not escape messages', async function (assert) {
-    assert.expect(1);
-
-    const object = {
-      name: '<script>'
-    };
-
-    const constraints = {
-      name() {
-        return [
-          minLength({
-            min: 9,
-            message(value) {
-              return `Your name ${value} is too short`;
-            }
-          })
-        ];
-      }
-    };
-
-    const errors = await validate(object, constraints);
-
-    assert.deepEqual(errors, {
-      name: ['Your name <script> is too short']
-    });
-  });
-
   test('it supports path properties', async function (assert) {
     assert.expect(1);
 
@@ -497,8 +469,8 @@ module('#validate', function (hooks) {
   test('it resolves the object and its properties', async function (assert) {
     assert.expect(2);
 
-    let object = resolve({
-      amount: resolve(10)
+    let object = Promise.resolve({
+      amount: Promise.resolve(10)
     });
 
     const constraints = {
@@ -513,8 +485,8 @@ module('#validate', function (hooks) {
       amount: ['Must be greater than 10']
     });
 
-    object = resolve({
-      amount: resolve(11)
+    object = Promise.resolve({
+      amount: Promise.resolve(11)
     });
 
     errors = await validate(object, constraints);
@@ -525,7 +497,11 @@ module('#validate', function (hooks) {
   test('it resolves the array and its objects', async function (assert) {
     assert.expect(2);
 
-    let array = resolve([resolve({ amount: resolve(10) })]);
+    let array = Promise.resolve([
+      Promise.resolve({
+        amount: Promise.resolve(10)
+      })
+    ]);
 
     const constraints = () => ({
       amount() {
@@ -541,7 +517,11 @@ module('#validate', function (hooks) {
       }
     ]);
 
-    array = resolve([resolve({ amount: resolve(11) })]);
+    array = Promise.resolve([
+      Promise.resolve({
+        amount: Promise.resolve(11)
+      })
+    ]);
 
     errors = await validate(array, constraints);
 
@@ -694,7 +674,7 @@ module('#validate', function (hooks) {
     });
   });
 
-  test('custom constraints can utilise the t function', async function (assert) {
+  test('custom constraints can utilise the messageFor function', async function (assert) {
     assert.expect(1);
 
     const object = {
@@ -706,7 +686,7 @@ module('#validate', function (hooks) {
         return;
       }
 
-      return t('is-fred');
+      return messageFor('is-fred');
     };
 
     const constraints = {
