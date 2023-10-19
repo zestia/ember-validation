@@ -22,9 +22,8 @@ module('present', function () {
     setMessageFn(testMessageFn);
 
     assert.strictEqual(
-      present({ key: 'is-present.nothing-there' })(),
+      present({ key: 'present.nothing-there' })(),
       'nothing there'
     );
   });
 });
-

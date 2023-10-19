@@ -13,8 +13,11 @@ const testLocale = {
   'big-decimal': {
     'must-be-a-number': '{value} must be a number'
   },
-  'is-present': {
+  present: {
     'nothing-there': 'nothing there'
+  },
+  truthy: {
+    'please-accept-the-terms': 'please accept the terms'
   }
 };
 

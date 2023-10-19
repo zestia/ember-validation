@@ -1,5 +1,4 @@
 import { get } from '@ember/object';
-import { isFunction } from '@zestia/ember-validation/-private/utils';
 
 // Yep, module state
 let t = defaultMessageFn; // eslint-disable-line no-unused-vars
@@ -36,7 +35,6 @@ export function setMessageFn(fn) {
 }
 
 export function messageFor(key, value, options = {}) {
-  const message = options.message;
   const tokens = { ...options, value };
 
   delete options.message;
