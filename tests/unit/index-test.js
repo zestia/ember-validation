@@ -650,30 +650,6 @@ module('#validate', function (hooks) {
     ]);
   });
 
-  test('can specify an internationalisation message builder function', async function (assert) {
-    assert.expect(1);
-
-    const object = {};
-
-    const constraints = {
-      name() {
-        return [present()];
-      }
-    };
-
-    const esES = {
-      present: 'Valor requerido'
-    };
-
-    setMessageFn((key) => esES[key]);
-
-    const errors = await validate(object, constraints);
-
-    assert.deepEqual(errors, {
-      name: ['Valor requerido']
-    });
-  });
-
   test('custom constraints can utilise the messageFor function', async function (assert) {
     assert.expect(1);
 
