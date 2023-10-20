@@ -457,7 +457,7 @@ module('#validate', function (hooks) {
     });
   });
 
-  test('cumulative validity', async function (assert) {
+  test('cumulative validity regression test', async function (assert) {
     assert.expect(1);
 
     const object = {
