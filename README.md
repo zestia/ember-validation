@@ -12,7 +12,9 @@
 [ember-observer-badge]: https://emberobserver.com/badges/-zestia-ember-validation.svg
 [ember-observer-url]: https://emberobserver.com/addons/@zestia/ember-validation
 
-This lightweight addon lets you validate an object, or an array of objects. It will return a structured response with an array of error messages for anything that failed a _constraint_. Or, null if it passes validation.
+This lightweight addon lets you validate an object, or an array of objects.
+
+It works by running one or more functions against each property on the object (or array of objects), and returns a matching structure containing an array of messages that describe each property.
 
 ### Installation
 
