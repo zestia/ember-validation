@@ -219,7 +219,25 @@ The following constraints come with this addon. Creating a constraint is as simp
 
 ## Internationalisation
 
-You can provide a function that will be called with a key for each failed constraint. Allowing you to generate internationalised messages. For example:
+There are a few approaches you can take to internationalise the error messages. The most obvious one would be to set the message property as the translated string, e.g.
+
+```javascript
+message: this.intl.t('too-large');
+```
+
+Alternatively, you could set the message just as the key, and internationalise it later in handlebars, e.g.
+
+```javascript
+message: 'too-large';
+```
+
+Or, as of version 5, you can provide a key, e.g.
+
+```javascript
+key: 'too-large';
+```
+
+...along with a function that will be called for each failed constraint, e.g.
 
 ```javascript
 import { setMessageFn } from '@zestia/ember-validation';
@@ -230,8 +248,6 @@ export function initialize(appInstance) {
   setMessageFn((key, tokens) => intl.t(`validation.${key}`, tokens));
 }
 ```
-
-...then, instead of passing in a `message: 'Too large'` to each constraint, pass in a key, e.g. `key: 'too-large'`.
 
 ## Utils
 
