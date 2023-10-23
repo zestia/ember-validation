@@ -41,11 +41,12 @@ module('number', function (hooks) {
   });
 
   test('inputs', function (assert) {
-    assert.expect(7);
+    assert.expect(8);
 
     assert.strictEqual(number()(), 'Invalid number');
     assert.strictEqual(number()(''), 'Invalid number');
     assert.strictEqual(number()('abc'), 'Invalid number');
+    assert.strictEqual(number()(12345), undefined);
     assert.strictEqual(number()('12345'), undefined);
     assert.strictEqual(number()('-12345'), undefined);
     assert.strictEqual(number()('123,456,789'), undefined);
