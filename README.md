@@ -22,7 +22,7 @@ It works by running one or more functions against each property on the object (o
 ember install @zestia/ember-validation
 ```
 
-Add the following to `~/.npmrc` to pull Zestia packages from Github instead of NPM.
+Add the following to `~/.npmrc` to pull @zestia scoped packages from Github instead of NPM.
 
 ```
 @zestia:registry=https://npm.pkg.github.com
