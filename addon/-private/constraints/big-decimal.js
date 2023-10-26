@@ -11,28 +11,29 @@ export default function bigDecimal(_options = {}) {
     ..._options
   };
 
-  return function (value) {
+  return function (value, object) {
     if (!isPresent(value) && options.optional) {
       return;
     }
 
     const result = fullPattern.exec(value);
+    const args = [value, object, options];
 
     if (!result) {
-      return messageFor('big-decimal.must-be-a-number', value, options);
+      return messageFor('big-decimal.must-be-a-number', ...args);
     }
 
     const integerPart = result[1];
 
     if (integerPart.length > options.maxIntegerDigits) {
-      return messageFor('big-decimal.value-too-large', value, options);
+      return messageFor('big-decimal.value-too-large', ...args);
     }
 
     if (result[2]) {
       const decimalPart = decimalPattern.exec(result[2])[1];
 
       if (decimalPart.length > options.maxDecimalDigits) {
-        return messageFor('big-decimal.max-decimal-places', value, options);
+        return messageFor('big-decimal.max-decimal-places', ...args);
       }
     }
   };

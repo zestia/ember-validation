@@ -4,7 +4,7 @@ import parse from 'date-fns/parse';
 import { messageFor } from '@zestia/ember-validation';
 
 export default function date(options) {
-  return function (value) {
+  return function (value, object) {
     const format = options.format;
     const referenceDate = options.referenceDate || new Date();
     const dateFnsOptions = { ...options };
@@ -20,6 +20,6 @@ export default function date(options) {
       return;
     }
 
-    return messageFor('date', value, options);
+    return messageFor('date', value, object, options);
   };
 }

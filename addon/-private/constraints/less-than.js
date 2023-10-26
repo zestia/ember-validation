@@ -2,7 +2,7 @@ import { isPresent } from '@ember/utils';
 import { messageFor } from '@zestia/ember-validation';
 
 export default function lessThan(options = {}) {
-  return function (value) {
+  return function (value, object) {
     if (!isPresent(value) && options.optional) {
       return;
     }
@@ -11,6 +11,6 @@ export default function lessThan(options = {}) {
       return;
     }
 
-    return messageFor('less-than', value, options);
+    return messageFor('less-than', value, object, options);
   };
 }

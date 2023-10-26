@@ -2,7 +2,7 @@ import { isArray } from '@zestia/ember-validation/-private/utils';
 import { messageFor } from '@zestia/ember-validation';
 
 export default function maxLength(options = {}) {
-  return function (value) {
+  return function (value, object) {
     let length = 0;
 
     if (isArray(value)) {
@@ -15,6 +15,6 @@ export default function maxLength(options = {}) {
       return;
     }
 
-    return messageFor('max-length', value, options);
+    return messageFor('max-length', value, object, options);
   };
 }

@@ -11,13 +11,13 @@ const testLocale = {
     'nothing-there': 'nothing there'
   },
   date: {
-    year: '{value} should be in {format} format'
+    year: '{value} should be in {_format} format'
   },
   email: {
     bad: '{value} is not valid'
   },
   'greater-than': {
-    'not-bigger': '{value} is not bigger than {otherValue}'
+    'not-bigger': '{value} is not bigger than {_value}'
   },
   'big-decimal': {
     'must-be-a-number': '{value} must be a number'

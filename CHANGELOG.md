@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.1.0
+
+- Ensure message functions receive the object context
+- Avoid clashes of message tokens by prefixing options with underscore
+
 ## 5.0.0
 
 - Change import path for `collateErrors` and `flattenErrors` from

@@ -3,6 +3,7 @@ import {
   date,
   email,
   number,
+  lessThan,
   greaterThan,
   minLength,
   present
@@ -362,15 +363,17 @@ module('#validate', function (hooks) {
     assert.expect(1);
 
     const object = {
-      emailAddress: 'foo@bar'
+      name: 'file.txt',
+      size: 123
     };
 
     const constraints = {
-      emailAddress() {
+      size() {
         return [
-          email({
-            message({ value }) {
-              return `The email address ${value} is not valid`;
+          lessThan({
+            value: 100,
+            message({ name, value, _value }) {
+              return `${name} is too large (${value} > ${_value})`;
             }
           })
         ];
@@ -380,7 +383,7 @@ module('#validate', function (hooks) {
     const errors = await validate(object, constraints);
 
     assert.deepEqual(errors, {
-      emailAddress: ['The email address foo@bar is not valid']
+      size: ['file.txt is too large (123 > 100)']
     });
   });
 
@@ -719,7 +722,10 @@ module('#validate', function (hooks) {
         return;
       }
 
-      return messageFor('is-foo', value, { baz: 'qux' });
+      return messageFor('is-foo', value, {
+        baz: 'qux',
+        value: 'ignored'
+      });
     };
 
     const constraints = {
