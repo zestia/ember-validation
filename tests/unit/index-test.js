@@ -711,35 +711,52 @@ module('#validate', function (hooks) {
   });
 
   test('custom constraints can utilise the messageFor function', async function (assert) {
-    assert.expect(1);
+    assert.expect(2);
+
+    let msgArgs;
 
     const object = {
-      name: 'Bar'
+      flavour: 'sweet',
+      foo: 'bar'
     };
 
-    const isFoo = (value) => {
-      if (value === 'Foo') {
-        return;
-      }
+    const umami = (options) => {
+      return (value, object) => {
+        if (value === 'umami') {
+          return;
+        }
 
-      return messageFor('is-foo', value, {
-        baz: 'qux',
-        value: 'ignored'
-      });
+        return messageFor('umami', value, object, options);
+      };
     };
 
     const constraints = {
-      name() {
-        return [isFoo];
+      flavour() {
+        return [umami({ baz: 'qux' })];
       }
     };
 
-    setMessageFn(testMessageFn);
+    setMessageFn((...args) => {
+      msgArgs = args;
+      return testMessageFn(...args);
+    });
 
     const errors = await validate(object, constraints);
 
+    assert.deepEqual(msgArgs, [
+      // message key
+      'umami',
+      // message tokens
+      {
+        value: 'sweet', // the value in question
+        _baz: 'qux', // a constraint option
+        flavour: 'sweet', // a property of the object under validation
+        foo: 'bar' // a property of the object under validation
+      }
+    ]);
+
     assert.deepEqual(errors, {
-      name: ['validation failed for Bar. Extra data: qux']
+      flavour: ['Not umami']
     });
   });
 });
