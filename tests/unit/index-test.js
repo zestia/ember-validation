@@ -340,9 +340,16 @@ module('#validate', function (hooks) {
 
     setMessageFn(testMessageFn);
 
-    const file = new File(['Hello World'], 'test.txt', {
-      type: 'text/plain'
-    });
+    const filePrototype = {
+      get name() {
+        return this._name;
+      }
+    };
+
+    const file = Object.create(filePrototype);
+
+    file.size = 11;
+    file._name = 'test.txt';
 
     const constraints = {
       size() {
