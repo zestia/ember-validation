@@ -22,7 +22,7 @@ export default async function validate(_input, constraints) {
 async function validateObject(_object, _constraints) {
   assert('Constraints must be an object', isObject(_constraints));
 
-  const object = (await _object) || {};
+  const object = (await _object) ?? {};
 
   const errors = await keys(_constraints).reduce(async (_errors, key) => {
     const errors = await _errors;

@@ -340,22 +340,25 @@ module('#validate', function (hooks) {
 
     setMessageFn(testMessageFn);
 
-    const object = {};
+    const file = new File(['Hello World'], 'test.txt', {
+      type: 'text/plain'
+    });
 
     const constraints = {
-      description() {
+      size() {
         return [
-          present({
-            key: 'present.must-enter-description'
+          lessThan({
+            value: 11,
+            key: 'test.file.size'
           })
         ];
       }
     };
 
-    const errors = await validate(object, constraints);
+    const errors = await validate(file, constraints);
 
     assert.deepEqual(errors, {
-      description: ['You must enter a description']
+      size: ['test.txt is must be less than 11 bytes']
     });
   });
 
@@ -726,7 +729,7 @@ module('#validate', function (hooks) {
           return;
         }
 
-        return messageFor('umami', value, object, options);
+        return messageFor('test.umami', value, object, options);
       };
     };
 
@@ -745,7 +748,7 @@ module('#validate', function (hooks) {
 
     assert.deepEqual(msgArgs, [
       // message key
-      'umami',
+      'test.umami',
       // message tokens
       {
         value: 'sweet', // the value in question

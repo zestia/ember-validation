@@ -5,9 +5,7 @@ import {
 } from '@zestia/ember-validation/-private/messages';
 
 const testLocale = {
-  umami: 'Not umami',
   present: {
-    'must-enter-description': 'You must enter a description',
     'nothing-there': 'nothing there'
   },
   date: {
@@ -39,6 +37,12 @@ const testLocale = {
   },
   'phone-number': {
     'bad-phone': 'bad phone'
+  },
+  test: {
+    umami: 'Not umami',
+    file: {
+      size: '{name} is must be less than {_value} bytes'
+    }
   }
 };
 

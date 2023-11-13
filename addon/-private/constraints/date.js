@@ -6,7 +6,7 @@ import { messageFor } from '@zestia/ember-validation';
 export default function date(options) {
   return function (value, object) {
     const format = options.format;
-    const referenceDate = options.referenceDate || new Date();
+    const referenceDate = options.referenceDate ?? new Date();
     const dateFnsOptions = { ...options };
 
     delete dateFnsOptions.format;

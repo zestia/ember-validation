@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.1.1
+
+- Allow building message tokens from properties in the object's prototype
+
 ## 5.1.0
 
 - Ensure message functions receive the object context
