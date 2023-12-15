@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.1.2
+
+- Run ember-cli-update
+- Upgrade dependencies
+
 ## 5.1.1
 
 - Allow building message tokens from properties in the object's prototype
