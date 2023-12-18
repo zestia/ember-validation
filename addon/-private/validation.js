@@ -1,6 +1,5 @@
 import { get } from '@ember/object';
 import { assert } from '@ember/debug';
-import { all } from 'rsvp';
 import {
   result,
   isArray,
@@ -40,7 +39,7 @@ async function validateObject(_object, _constraints) {
 async function validateArray(array, constraints) {
   assert('Constraints must be a function', isFunction(constraints));
 
-  const errors = await all(
+  const errors = await Promise.all(
     array.map((object) => validateObject(object, constraints(object)))
   );
 
