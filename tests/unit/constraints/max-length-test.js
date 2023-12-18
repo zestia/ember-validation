@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { maxLength } from '@zestia/ember-validation/constraints';
-import { setupTest } from 'ember-qunit';
+import { setupTest } from 'dummy/tests/helpers';
 import { setMessageFn } from '@zestia/ember-validation';
 import { testMessageFn, defaultMessageFn } from 'dummy/tests/unit/helper';
 

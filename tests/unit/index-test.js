@@ -10,7 +10,7 @@ import {
 } from '@zestia/ember-validation/constraints';
 import validate, { setMessageFn, messageFor } from '@zestia/ember-validation';
 import { testMessageFn, defaultMessageFn } from 'dummy/tests/unit/helper';
-import { setupTest } from 'ember-qunit';
+import { setupTest } from 'dummy/tests/helpers';
 import EmberObject from '@ember/object';
 
 module('#validate', function (hooks) {
