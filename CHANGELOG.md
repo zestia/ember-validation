@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.2.0
+
+- Add whole number constraint option
+
 ## 5.1.2
 
 - Run ember-cli-update
