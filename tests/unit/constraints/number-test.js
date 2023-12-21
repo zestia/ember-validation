@@ -67,7 +67,7 @@ module('number', function (hooks) {
   });
 
   test('inputs, natural', function (assert) {
-    assert.expect(9);
+    assert.expect(10);
 
     const options = { natural: true };
 
@@ -75,6 +75,7 @@ module('number', function (hooks) {
     assert.strictEqual(number(options)(''), 'Invalid number');
     assert.strictEqual(number(options)('abc'), 'Invalid number');
     assert.strictEqual(number(options)('-12345'), 'Invalid number');
+    assert.strictEqual(number(options)('123.45'), 'Invalid number');
     assert.strictEqual(number(options)('01'), 'Invalid number');
     assert.strictEqual(number(options)(12345), undefined);
     assert.strictEqual(number(options)('12345'), undefined);
