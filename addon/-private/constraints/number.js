@@ -7,7 +7,7 @@ export default function number(options = {}) {
       return;
     }
 
-    if (options.natural) {
+    if (options.whole) {
       if (/^([0-9]|[1-9,]+)$/i.test(value)) {
         return;
       }

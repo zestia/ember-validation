@@ -30,16 +30,16 @@ module('number', function (hooks) {
     );
   });
 
-  test('it returns default message if negative with natural option', function (assert) {
+  test('it returns default message if negative with whole option', function (assert) {
     assert.expect(1);
 
-    assert.strictEqual(number({ natural: true })('-24'), 'Invalid number');
+    assert.strictEqual(number({ whole: true })('-24'), 'Invalid number');
   });
 
-  test('it returns default message if fractional with natural option', function (assert) {
+  test('it returns default message if fractional with whole option', function (assert) {
     assert.expect(1);
 
-    assert.strictEqual(number({ natural: true })('2.4'), 'Invalid number');
+    assert.strictEqual(number({ whole: true })('2.4'), 'Invalid number');
   });
 
   test('it returns custom message if invalid', function (assert) {
@@ -66,10 +66,10 @@ module('number', function (hooks) {
     assert.strictEqual(number()('0'), undefined);
   });
 
-  test('inputs, natural', function (assert) {
+  test('inputs, whole', function (assert) {
     assert.expect(10);
 
-    const options = { natural: true };
+    const options = { whole: true };
 
     assert.strictEqual(number(options)(), 'Invalid number');
     assert.strictEqual(number(options)(''), 'Invalid number');
