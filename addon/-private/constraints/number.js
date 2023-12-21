@@ -7,7 +7,11 @@ export default function number(options = {}) {
       return;
     }
 
-    if (/^-?[0-9,.]+$/i.test(value)) {
+    if (options.natural) {
+      if (/^([0-9]|[1-9,]+)$/i.test(value)) {
+        return;
+      }
+    } else if (/^-?[0-9,.]+$/i.test(value)) {
       return;
     }
 

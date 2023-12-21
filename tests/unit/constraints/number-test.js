@@ -8,7 +8,7 @@ module('number', function (hooks) {
     setMessageFn(defaultMessageFn);
   });
 
-  test('is returns nothing when valid', function (assert) {
+  test('it returns nothing when valid', function (assert) {
     assert.expect(1);
 
     assert.strictEqual(number()('123'), undefined);
@@ -20,7 +20,7 @@ module('number', function (hooks) {
     assert.strictEqual(number()('xyz'), 'Invalid number');
   });
 
-  test('it returns nothing if invalid, but options', function (assert) {
+  test('it returns nothing if invalid, but optional', function (assert) {
     assert.expect(1);
 
     assert.strictEqual(
@@ -28,6 +28,18 @@ module('number', function (hooks) {
       undefined,
       'returns nothing if invalid, but optional'
     );
+  });
+
+  test('it returns default message if negative with natural option', function (assert) {
+    assert.expect(1);
+
+    assert.strictEqual(number({ natural: true })('-24'), 'Invalid number');
+  });
+
+  test('it returns default message if fractional with natural option', function (assert) {
+    assert.expect(1);
+
+    assert.strictEqual(number({ natural: true })('2.4'), 'Invalid number');
   });
 
   test('it returns custom message if invalid', function (assert) {
@@ -41,7 +53,7 @@ module('number', function (hooks) {
   });
 
   test('inputs', function (assert) {
-    assert.expect(8);
+    assert.expect(9);
 
     assert.strictEqual(number()(), 'Invalid number');
     assert.strictEqual(number()(''), 'Invalid number');
@@ -51,5 +63,22 @@ module('number', function (hooks) {
     assert.strictEqual(number()('-12345'), undefined);
     assert.strictEqual(number()('123,456,789'), undefined);
     assert.strictEqual(number()('123.456'), undefined);
+    assert.strictEqual(number()('0'), undefined);
+  });
+
+  test('inputs, natural', function (assert) {
+    assert.expect(9);
+
+    const options = { natural: true };
+
+    assert.strictEqual(number(options)(), 'Invalid number');
+    assert.strictEqual(number(options)(''), 'Invalid number');
+    assert.strictEqual(number(options)('abc'), 'Invalid number');
+    assert.strictEqual(number(options)('-12345'), 'Invalid number');
+    assert.strictEqual(number(options)('01'), 'Invalid number');
+    assert.strictEqual(number(options)(12345), undefined);
+    assert.strictEqual(number(options)('12345'), undefined);
+    assert.strictEqual(number(options)('123,456,789'), undefined);
+    assert.strictEqual(number(options)('0'), undefined);
   });
 });
