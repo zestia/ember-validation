@@ -8,7 +8,7 @@ module('number', function (hooks) {
     setMessageFn(defaultMessageFn);
   });
 
-  test('is returns nothing when valid', function (assert) {
+  test('it returns nothing when valid', function (assert) {
     assert.expect(1);
 
     assert.strictEqual(number()('123'), undefined);
@@ -20,7 +20,7 @@ module('number', function (hooks) {
     assert.strictEqual(number()('xyz'), 'Invalid number');
   });
 
-  test('it returns nothing if invalid, but options', function (assert) {
+  test('it returns nothing if invalid, but optional', function (assert) {
     assert.expect(1);
 
     assert.strictEqual(
@@ -28,6 +28,18 @@ module('number', function (hooks) {
       undefined,
       'returns nothing if invalid, but optional'
     );
+  });
+
+  test('it returns default message if negative with whole option', function (assert) {
+    assert.expect(1);
+
+    assert.strictEqual(number({ whole: true })('-24'), 'Invalid number');
+  });
+
+  test('it returns default message if fractional with whole option', function (assert) {
+    assert.expect(1);
+
+    assert.strictEqual(number({ whole: true })('2.4'), 'Invalid number');
   });
 
   test('it returns custom message if invalid', function (assert) {
@@ -40,16 +52,52 @@ module('number', function (hooks) {
     assert.strictEqual(func('foo@bar'), 'bad number');
   });
 
-  test('inputs', function (assert) {
-    assert.expect(8);
+  test('inputs, non-whole', function (assert) {
+    assert.expect(13);
 
-    assert.strictEqual(number()(), 'Invalid number');
-    assert.strictEqual(number()(''), 'Invalid number');
-    assert.strictEqual(number()('abc'), 'Invalid number');
-    assert.strictEqual(number()(12345), undefined);
-    assert.strictEqual(number()('12345'), undefined);
-    assert.strictEqual(number()('-12345'), undefined);
-    assert.strictEqual(number()('123,456,789'), undefined);
-    assert.strictEqual(number()('123.456'), undefined);
+    const validExamples = [
+      12345,
+      '12345',
+      -12345,
+      '-12345',
+      '123,456,789',
+      123.45,
+      '123.45',
+      '01',
+      0,
+      '0'
+    ];
+    const invalidExamples = [null, '', 'abc'];
+
+    testInputs(assert, {}, validExamples, invalidExamples);
   });
+
+  test('inputs, whole', function (assert) {
+    assert.expect(14);
+
+    const options = { whole: true };
+    const validExamples = [0, '0', 12345, '12345', 123456789, '123,456,789'];
+    const invalidExamples = [
+      null,
+      '',
+      'abc',
+      -12345,
+      '-12345',
+      123.45,
+      '123.45',
+      '01'
+    ];
+
+    testInputs(assert, options, validExamples, invalidExamples);
+  });
+
+  function testInputs(assert, options, validExamples, invalidExamples) {
+    validExamples.forEach((input) => {
+      assert.strictEqual(number(options)(input), undefined);
+    });
+
+    invalidExamples.forEach((input) => {
+      assert.strictEqual(number(options)(input), 'Invalid number');
+    });
+  }
 });
