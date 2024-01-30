@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.2.1
+
+- Fix whole number constraint option not matching some numbers with zeros
+
 ## 5.2.0
 
 - Add whole number constraint option
