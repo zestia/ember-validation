@@ -53,7 +53,7 @@ module('number', function (hooks) {
   });
 
   test('inputs, non-whole', function (assert) {
-    assert.expect(13);
+    assert.expect(15);
 
     const validExamples = [
       12345,
@@ -65,7 +65,9 @@ module('number', function (hooks) {
       '123.45',
       '01',
       0,
-      '0'
+      '0',
+      10,
+      '10'
     ];
     const invalidExamples = [null, '', 'abc'];
 
@@ -73,10 +75,19 @@ module('number', function (hooks) {
   });
 
   test('inputs, whole', function (assert) {
-    assert.expect(14);
+    assert.expect(15);
 
     const options = { whole: true };
-    const validExamples = [0, '0', 12345, '12345', 123456789, '123,456,789'];
+    const validExamples = [
+      0,
+      '0',
+      12345,
+      '12345',
+      123456789,
+      '123,456,789',
+      10,
+      '10'
+    ];
     const invalidExamples = [
       null,
       '',
@@ -84,8 +95,7 @@ module('number', function (hooks) {
       -12345,
       '-12345',
       123.45,
-      '123.45',
-      '01'
+      '123.45'
     ];
 
     testInputs(assert, options, validExamples, invalidExamples);
