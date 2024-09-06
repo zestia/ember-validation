@@ -1,10 +1,11 @@
 import { isPresent } from '@ember/utils';
-import isValid from 'date-fns/isValid';
-import parse from 'date-fns/parse';
+import { isValid } from 'date-fns/isValid';
+import { parse } from 'date-fns/parse';
 import { messageFor } from '@zestia/ember-validation';
 
 export default function date(options) {
-  return function (value, object) {
+  return function (_value, object) {
+    const value = _value || '';
     const format = options.format;
     const referenceDate = options.referenceDate ?? new Date();
     const dateFnsOptions = { ...options };

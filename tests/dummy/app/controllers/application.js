@@ -30,7 +30,7 @@ export default class ApplicationController extends Controller {
     dateOfBirth() {
       return [
         present(),
-        date({ format: 'dd/MM/yy', message: 'Invalid date expecting dd/mm/yy' })
+        date({ format: 'P', message: 'Invalid date expecting dd/mm/yy' })
       ];
     },
     terms() {

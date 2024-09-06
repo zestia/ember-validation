@@ -3,8 +3,8 @@ import { setupTest } from 'dummy/tests/helpers';
 import { setMessageFn } from '@zestia/ember-validation';
 import { testMessageFn, defaultMessageFn } from 'dummy/tests/unit/helper';
 import { date } from '@zestia/ember-validation/constraints';
-import enGB from 'date-fns/locale/en-GB';
-import enUS from 'date-fns/locale/en-US';
+import { enGB } from 'date-fns/locale/en-GB';
+import { enUS } from 'date-fns/locale/en-US';
 
 module('date', function (hooks) {
   setupTest(hooks);
@@ -17,6 +17,15 @@ module('date', function (hooks) {
     assert.expect(1);
 
     assert.strictEqual(date({ format: 'dd/MM/yyyy' })('25/12/2020'), undefined);
+  });
+
+  test('empty values', function (assert) {
+    assert.expect(1);
+
+    assert.strictEqual(
+      date({ format: 'dd/MM/yyyy' })(),
+      'Invalid date, expecting dd/MM/yyyy'
+    );
   });
 
   test('it returns default message if invalid', function (assert) {

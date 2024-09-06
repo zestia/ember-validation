@@ -1,3 +1,5 @@
+{{! template-lint-disable no-action-on-submit-button }}
+
 <h1>
   @zestia/ember-validation
 </h1>
@@ -23,33 +25,36 @@
     </legend>
 
     <p>
-      <Input
-        @type="text"
-        @value={{this.person.name}}
+      <input
+        type="text"
+        value={{this.person.name}}
         placeholder="Name"
         aria-label="Name"
+        {{on "change" (set this.person "name")}}
       />
     </p>
     <Errors @errors={{this.personErrors.name}} />
 
     <p>
       {{this.errors.person.emailAddress}}
-      <Input
-        @type="email"
-        @value={{this.person.emailAddress}}
+      <input
+        type="email"
+        value={{this.person.emailAddress}}
         placeholder="Email address"
         aria-label="Email address"
+        {{on "change" (set this.person "emailAddress")}}
       />
     </p>
     <Errors @errors={{this.personErrors.emailAddress}} />
 
     <p>
       {{this.errors.person.dateOfBirth}}
-      <Input
-        @type="text"
-        @value={{this.person.dateOfBirth}}
+      <input
+        type="text"
+        value={{this.person.dateOfBirth}}
         placeholder="Date of birth"
         aria-label="Date of birth"
+        {{on "change" (set this.person "dateOfBirth")}}
       />
     </p>
     <Errors @errors={{this.personErrors.dateOfBirth}} />
@@ -57,7 +62,11 @@
     <p>
       {{this.errors.person.terms}}
       <label>
-        <Input @type="checkbox" @checked={{this.person.terms}} />
+        <input
+          type="checkbox"
+          checked={{this.person.terms}}
+          {{on "change" (set this.person "terms")}}
+        />
         Agree to terms
       </label>
     </p>
@@ -99,11 +108,12 @@
         </legend>
 
         <p>
-          <Input
-            @type="text"
-            @value={{meal.description}}
+          <input
+            type="text"
+            value={{meal.description}}
             placeholder="Description"
             aria-label="Description"
+            {{on "change" (set meal "description")}}
           />
         </p>
         <Errors @errors={{get (get this.mealErrors index) "description"}} />
