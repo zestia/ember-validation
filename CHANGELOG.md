@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.2.2
+
+- Run ember-cli-update
+- Upgrade dependencies
+
 ## 5.2.1
 
 - Fix whole number constraint option not matching some numbers with zeros
