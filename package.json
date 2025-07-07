@@ -1,6 +1,6 @@
 {
   "name": "@zestia/ember-validation",
-  "version": "5.2.2",
+  "version": "6.0.0-0",
   "description": "Simple validation utilities for Ember apps",
   "keywords": [
     "ember-addon",
