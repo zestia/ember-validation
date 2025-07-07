@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { present } from '@zestia/ember-validation/constraints';
 import { setMessageFn } from '@zestia/ember-validation';
-import { testMessageFn } from 'dummy/tests/unit/helper';
+import { testMessageFn } from '../helper';
 
 module('present', function () {
   test('it returns nothing when valid', function (assert) {

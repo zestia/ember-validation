@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
-import { setupTest } from 'dummy/tests/helpers';
+import { setupTest } from 'ember-qunit';
 import { setMessageFn } from '@zestia/ember-validation';
-import { testMessageFn, defaultMessageFn } from 'dummy/tests/unit/helper';
+import { testMessageFn, defaultMessageFn } from '../helper';
 import { date } from '@zestia/ember-validation/constraints';
 import { enGB } from 'date-fns/locale/en-GB';
 import { enUS } from 'date-fns/locale/en-US';

@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { truthy } from '@zestia/ember-validation/constraints';
 import { setMessageFn } from '@zestia/ember-validation';
-import { testMessageFn, defaultMessageFn } from 'dummy/tests/unit/helper';
+import { testMessageFn, defaultMessageFn } from '../helper';
 
 module('truthy', function (hooks) {
   hooks.afterEach(function () {

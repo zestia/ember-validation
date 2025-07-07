@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { lessThan } from '@zestia/ember-validation/constraints';
 import { setMessageFn } from '@zestia/ember-validation';
-import { testMessageFn, defaultMessageFn } from 'dummy/tests/unit/helper';
+import { testMessageFn, defaultMessageFn } from '../helper';
 
 module('lessThan', function (hooks) {
   hooks.afterEach(function () {

@@ -1,5 +1,9 @@
 # Changelog
 
+## 6.0.0
+
+- Convert to a v2 addon
+
 ## 5.2.2
 
 - Run ember-cli-update
