@@ -85,9 +85,7 @@
     "version": 2,
     "type": "addon",
     "main": "addon-main.cjs",
-    "app-js": {
-      "./modifiers/auto-focus.js": "./dist/_app_/modifiers/auto-focus.js"
-    }
+    "app-js": {}
   },
   "imports": {
     "#app/*": "./demo/*",
