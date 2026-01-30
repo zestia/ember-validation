@@ -223,11 +223,13 @@ The following constraints come with this addon. Creating a constraint is as simp
 
 ## Internationalisation
 
-There are a few approaches you can take to internationalise the error messages. The most obvious one would be to set the message property as the translated string, e.g. This only works if there are no dynamic parts:
+There are a few approaches you can take to internationalise the error messages. The most obvious one would be to set the message property as the translated string, e.g.
 
 ```javascript
 message: this.intl.t('too-large');
 ```
+
+(This only works if there are no dynamic parts).
 
 Alternatively, you could set the message just as the key, and internationalise it later in the template, e.g.
 
