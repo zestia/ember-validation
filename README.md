@@ -223,22 +223,26 @@ The following constraints come with this addon. Creating a constraint is as simp
 
 ## Internationalisation
 
-There are a few approaches you can take to internationalise the error messages. The most obvious one would be to set the message property as the translated string, e.g.
+There are a few approaches you can take to internationalise the error messages. The most obvious one would be to set the message property as the translated string, e.g. This only works if there are no dynamic parts:
 
 ```javascript
 message: this.intl.t('too-large');
 ```
 
-Alternatively, you could set the message just as the key, and internationalise it later in handlebars, e.g.
+Alternatively, you could set the message just as the key, and internationalise it later in the template, e.g.
 
 ```javascript
 message: 'too-large';
 ```
 
-Or, as of version 5, you can provide a key, e.g.
+```hbs
+{{t this.error}}
+```
+
+Or, you can provide a key, e.g.
 
 ```javascript
-key: 'too-large';
+key: tKey('too-large');
 ```
 
 ...along with a function that will be called for each failed constraint, e.g.
@@ -249,9 +253,11 @@ import { setMessageFn } from '@zestia/ember-validation';
 export function initialize(appInstance) {
   const intl = this.owner.lookup('service:intl');
 
-  setMessageFn((key, tokens) => intl.t(`validation.${key}`, tokens));
+  setMessageFn((key, tokens) => intl.t(key, tokens));
 }
 ```
+
+This effectively hands off translation to ember-intl.
 
 ## Utils
 
