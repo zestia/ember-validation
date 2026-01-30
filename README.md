@@ -226,7 +226,9 @@ The following constraints come with this addon. Creating a constraint is as simp
 There are a few approaches you can take to internationalise the error messages. The most obvious one would be to set the message property as the translated string, e.g.
 
 ```javascript
-message: this.intl.t('too-large');
+size() {
+  return [lessThan({ value: 1024, message: this.intl.t('too-large') })]
+}
 ```
 
 (This only works if there are no dynamic parts).
@@ -234,17 +236,21 @@ message: this.intl.t('too-large');
 Alternatively, you could set the message just as the key, and internationalise it later in the template, e.g.
 
 ```javascript
-message: 'too-large';
+size() {
+  return [lessThan({ value: 1024, message: 'too-large' })]
+}
 ```
 
 ```hbs
-{{t this.error}}
+{{t this.errors.size}}
 ```
 
 Or, you can provide a key, e.g.
 
 ```javascript
-key: tKey('too-large');
+size() {
+  return [lessThan({ value: 1024, key: tKey('too-large') })]
+}
 ```
 
 ...along with a function that will be called for each failed constraint, e.g.
@@ -258,8 +264,6 @@ export function initialize(appInstance) {
   setMessageFn((key, tokens) => intl.t(key, tokens));
 }
 ```
-
-This effectively hands off translation to ember-intl.
 
 ## Utils
 
