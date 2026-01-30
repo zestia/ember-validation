@@ -231,7 +231,7 @@ size() {
 }
 ```
 
-(This only works if there are no dynamic parts).
+...but this only works if there are no dynamic parts.
 
 Alternatively, you could set the message just as the key, and internationalise it later in the template, e.g.
 
