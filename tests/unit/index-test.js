@@ -12,6 +12,7 @@ import validate, { setMessageFn, messageFor } from '@zestia/ember-validation';
 import { testMessageFn, defaultMessageFn } from './helper';
 import { setupTest } from 'ember-qunit';
 import EmberObject from '@ember/object';
+import { tKey } from 'ember-intl';
 
 module('#validate', function (hooks) {
   setupTest(hooks);
@@ -366,6 +367,26 @@ module('#validate', function (hooks) {
 
     assert.deepEqual(errors, {
       size: ['test.txt is must be less than 11 bytes']
+    });
+  });
+
+  test('it works with ember-intl', async function (assert) {
+    assert.expect(1);
+
+    setMessageFn(testMessageFn);
+
+    const object = {};
+
+    const constraints = {
+      name() {
+        return [present({ key: tKey('present.nothing-there') })];
+      }
+    };
+
+    const errors = await validate(object, constraints);
+
+    assert.deepEqual(errors, {
+      name: ['nothing there']
     });
   });
 
