@@ -11,7 +11,7 @@ import {
   maxLength,
   email,
   truthy,
-  date,
+  date
 } from '@zestia/ember-validation/constraints';
 const { stringify } = JSON;
 
@@ -37,7 +37,7 @@ class ApplicationRoute extends Component {
     name() {
       return [
         present({ message: 'Please enter your name' }),
-        maxLength({ max: 255 }),
+        maxLength({ max: 255 })
       ];
     },
     emailAddress() {
@@ -48,33 +48,33 @@ class ApplicationRoute extends Component {
         present(),
         date({
           format: 'dd/MM/yy',
-          message: 'Invalid date expecting dd/mm/yy',
-        }),
+          message: 'Invalid date expecting dd/mm/yy'
+        })
       ];
     },
     terms() {
       return [truthy({ message: 'Please accept the terms' })];
-    },
+    }
   };
 
   meals = [
     {
-      name: 'Starter',
+      name: 'Starter'
     },
     {
-      name: 'Main',
+      name: 'Main'
     },
     {
-      name: 'Dessert',
-    },
+      name: 'Dessert'
+    }
   ];
 
   mealConstraints = (meal) => ({
     description() {
       return [
-        present({ message: `Please describe your ${meal.name.toLowerCase()}` }),
+        present({ message: `Please describe your ${meal.name.toLowerCase()}` })
       ];
-    },
+    }
   });
 
   get personValidates() {
