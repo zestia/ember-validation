@@ -1,5 +1,5 @@
 import { get } from '@ember/object';
-import { isFunction } from '@zestia/ember-validation/-private/utils';
+import { isFunction } from './utils.js';
 
 // Yep, module state
 let t = defaultMessageFn;

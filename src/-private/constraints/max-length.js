@@ -1,5 +1,5 @@
-import { isArray } from '@zestia/ember-validation/-private/utils';
-import { messageFor } from '@zestia/ember-validation';
+import { isArray } from '../utils.js';
+import { messageFor } from '../../index.js';
 
 export default function maxLength(options = {}) {
   return function (value, object) {

@@ -1,5 +1,5 @@
 import { isPresent } from '@ember/utils';
-import { messageFor } from '@zestia/ember-validation';
+import { messageFor } from '../../index.js';
 
 export default function present(options) {
   return function (value, object) {

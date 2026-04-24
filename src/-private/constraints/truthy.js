@@ -1,4 +1,4 @@
-import { messageFor } from '@zestia/ember-validation';
+import { messageFor } from '../../index.js';
 
 export default function truthy(options) {
   return function (value, object) {

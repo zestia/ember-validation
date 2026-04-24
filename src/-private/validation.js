@@ -1,11 +1,6 @@
 import { get } from '@ember/object';
 import { assert } from '@ember/debug';
-import {
-  result,
-  isArray,
-  isObject,
-  isFunction
-} from '@zestia/ember-validation/-private/utils';
+import { result, isArray, isObject, isFunction } from './utils.js';
 const { keys } = Object;
 
 export default async function validate(_input, constraints) {
