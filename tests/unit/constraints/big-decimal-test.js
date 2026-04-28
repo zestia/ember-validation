@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { bigDecimal } from '@zestia/ember-validation/constraints';
 import { setMessageFn } from '@zestia/ember-validation';
-import { testMessageFn, defaultMessageFn } from '../helper';
+import { testMessageFn, defaultMessageFn } from '#tests/unit/helper';
 
 module('bigDecimal', function (hooks) {
   hooks.afterEach(function () {

@@ -9,7 +9,7 @@ import {
   present
 } from '@zestia/ember-validation/constraints';
 import validate, { setMessageFn, messageFor } from '@zestia/ember-validation';
-import { testMessageFn, defaultMessageFn } from './helper';
+import { testMessageFn, defaultMessageFn } from '#tests/unit/helper';
 import { setupTest } from 'ember-qunit';
 import EmberObject from '@ember/object';
 import { tKey } from 'ember-intl';
