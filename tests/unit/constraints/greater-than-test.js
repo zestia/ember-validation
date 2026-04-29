@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
-import { greaterThan } from '@zestia/ember-validation/constraints';
-import { setMessageFn } from '@zestia/ember-validation';
+import { greaterThan } from '#src/constraints';
+import { setMessageFn } from '#src/index';
 import { testMessageFn, defaultMessageFn } from '#tests/unit/helper';
 
 module('greaterThan', function (hooks) {

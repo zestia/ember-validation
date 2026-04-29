@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
-import { email } from '@zestia/ember-validation/constraints';
-import { setMessageFn } from '@zestia/ember-validation';
+import { email } from '#src/constraints';
+import { setMessageFn } from '#src/index';
 import { testMessageFn, defaultMessageFn } from '#tests/unit/helper';
 
 module('email', function (hooks) {

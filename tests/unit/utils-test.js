@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { flattenErrors, collateErrors } from '@zestia/ember-validation';
+import { flattenErrors, collateErrors } from '#src/index';
 
 module('utils', function (hooks) {
   hooks.beforeEach(function () {

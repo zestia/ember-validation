@@ -4,15 +4,9 @@ import { on } from '@ember/modifier';
 import { get } from '@ember/helper';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import validate from '@zestia/ember-validation';
+import validate from '#src/index';
 import { pick } from '@nullvoxpopuli/ember-composable-helpers';
-import {
-  present,
-  maxLength,
-  email,
-  truthy,
-  date
-} from '@zestia/ember-validation/constraints';
+import { present, maxLength, email, truthy, date } from '#src/constraints';
 const { stringify } = JSON;
 
 const Errors = <template>

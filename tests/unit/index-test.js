@@ -7,8 +7,8 @@ import {
   greaterThan,
   minLength,
   present
-} from '@zestia/ember-validation/constraints';
-import validate, { setMessageFn, messageFor } from '@zestia/ember-validation';
+} from '#src/constraints';
+import validate, { setMessageFn, messageFor } from '#src/index';
 import { testMessageFn, defaultMessageFn } from '#tests/unit/helper';
 import { setupTest } from 'ember-qunit';
 import EmberObject from '@ember/object';

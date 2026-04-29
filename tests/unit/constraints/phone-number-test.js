@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
-import { phoneNumber } from '@zestia/ember-validation/constraints';
-import { setMessageFn } from '@zestia/ember-validation';
+import { phoneNumber } from '#src/constraints';
+import { setMessageFn } from '#src/index';
 import { testMessageFn, defaultMessageFn } from '#tests/unit/helper';
 
 module('phone-number', function (hooks) {

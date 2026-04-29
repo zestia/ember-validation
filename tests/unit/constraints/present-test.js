@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
-import { present } from '@zestia/ember-validation/constraints';
-import { setMessageFn } from '@zestia/ember-validation';
+import { present } from '#src/constraints';
+import { setMessageFn } from '#src/index';
 import { testMessageFn } from '#tests/unit/helper';
 
 module('present', function () {

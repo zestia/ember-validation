@@ -1,7 +1,7 @@
 import { module, test, skip } from 'qunit';
-import { maxLength } from '@zestia/ember-validation/constraints';
+import { maxLength } from '#src/constraints';
 import { setupTest } from 'ember-qunit';
-import { setMessageFn } from '@zestia/ember-validation';
+import { setMessageFn } from '#src/index';
 import { testMessageFn, defaultMessageFn } from '#tests/unit/helper';
 
 module('maxLength', function (hooks) {

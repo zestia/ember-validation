@@ -1,7 +1,7 @@
 import { module, test, skip } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import { minLength } from '@zestia/ember-validation/constraints';
-import { setMessageFn } from '@zestia/ember-validation';
+import { minLength } from '#src/constraints';
+import { setMessageFn } from '#src/index';
 import { testMessageFn, defaultMessageFn } from '#tests/unit/helper';
 
 module('minLength', function (hooks) {

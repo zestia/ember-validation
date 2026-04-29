@@ -1,8 +1,5 @@
 import { get } from '@ember/object';
-import {
-  processMessage,
-  defaultMessageFn
-} from '@zestia/ember-validation/-private/messages';
+import { processMessage, defaultMessageFn } from '#src/-private/messages';
 
 const testLocale = {
   present: {
