@@ -108,7 +108,7 @@ class ApplicationRoute extends Component {
 
     <p>
       <a
-        href="https://github.com/zestia/ember-validation/tree/master/demo/templates/application.gjs"
+        href="https://github.com/zestia/ember-validation/blob/main/demo-app/templates/application.gts"
       >
         View the code
       </a>
